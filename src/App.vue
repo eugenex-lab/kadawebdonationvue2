@@ -1,12 +1,64 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
+
+
+    <LoadingScreen
+        v-if = "loading"
+    ></LoadingScreen>
+
+    <the-header></the-header>
+
+    <!--  <router-view v-slot="{ Component }">-->
+    <!--    <transition name="fade" mode="out-in">-->
+    <!--      <component :is="Component" />-->
+    <!--    </transition>-->
+    <!--  </router-view>-->
+
+    <router-view></router-view>
+
+    <the-footer></the-footer>
   </div>
 </template>
+
+
+<script>
+// import logo from './assets/logo.png'
+import TheHeader from "@/components/layout/TheHeader";
+import TheFooter from "@/components/layout/TheFooter";
+// import LoadingScreen from "@/components/layout/LoadingScreen.vue";
+// import {useRoute} from "vue-router";
+
+
+export default {
+  name: 'App',
+  components: {
+    // LoadingScreen,
+    TheHeader,TheFooter
+  },
+  data() {
+    return {
+
+    }
+  },
+  computed: {
+    loading() {
+      return this.$store.getters.loadingStatus;
+    }
+  },
+  mounted() {
+    // console.log("mounted");
+    //
+    // const route = useRoute()
+    // //  generate id from url  and set it to id
+    // const id = route.params.id
+    // console.log("c% &&$$$$ ZZZZZZZZZZ id is " + id, "color: pink; font-size: 200px;");
+    //
+    //
+    // this.$store.dispatch("getCauseXdata" , id );
+  }
+}
+</script>
+
 
 <style lang="scss">
 #app {
@@ -16,6 +68,7 @@
   text-align: center;
   color: #2c3e50;
 }
+
 
 nav {
   padding: 30px;

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="328px" height="88px" viewBox="0 0 328 88" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group 8</title>
+    <defs>
+        <filter x="-8.8%" y="-51.0%" width="117.6%" height="202.0%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="5" dy="5" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="4" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0.378159842   0 0 0 0 0.857612499  0 0 0 0.348643056 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="WhatsApp-Sharing" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Cause-Landing" transform="translate(-544.000000, -595.000000)">
+            <g id="Group-8" filter="url(#filter-1)" transform="translate(563.000000, 614.000000)">
+                <rect id="Rectangle" fill="#023B88" x="0" y="0" width="290" height="50" rx="5"></rect>
+                <g id="Group-5" transform="translate(95.000000, 15.000000)" fill="#FFFFFF">
+                    <text id="Continue" font-family="Inter-SemiBold, Inter" font-size="16" font-weight="500">
+                        <tspan x="0" y="16">Continue</tspan>
+                    </text>
+                    <g id="chevron-right" transform="translate(86.859208, 3.176827)" fill-rule="nonzero">
+                        <path d="M8.06188239,7.35352098 C8.35475889,7.06061396 8.35475889,6.58576158 8.06185187,6.29288508 L1.98865468,0.219657374 C1.69577819,-0.0732191247 1.2209258,-0.0732191247 0.928018785,0.219657374 L0.219676968,0.927999191 C-0.0727417684,1.22041793 -0.0732910835,1.69432427 0.21842575,1.98741439 L5.03155514,6.82318777 L0.21842575,11.6589917 C-0.0732910835,11.9520818 -0.0727417684,12.4259881 0.219676968,12.7184069 L0.928018785,13.4267487 C1.22089528,13.7196252 1.69574767,13.7196252 1.98865468,13.4267487 L8.06188239,7.35352098 Z" id="Path"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

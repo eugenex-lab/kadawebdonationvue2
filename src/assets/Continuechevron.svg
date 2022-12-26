@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="330px" height="50px" viewBox="0 0 330 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group 12</title>
+    <g id="WhatsApp-Sharing" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-12">
+            <g id="Group-3" fill="#023B88">
+                <rect id="Rectangle" x="0" y="0" width="330" height="50" rx="5"></rect>
+            </g>
+            <g id="Group-5-Copy" transform="translate(42.000000, 15.000000)" fill="#FFFFFF">
+                <text id="Continue" font-family="Inter-SemiBold, Inter" font-size="16" font-weight="500">
+                    <tspan x="0" y="16">Continue</tspan>
+                </text>
+                <g id="chevron-right" transform="translate(235.505042, 3.176827)" fill-rule="nonzero">
+                    <path d="M8.06188239,7.35352098 C8.35475889,7.06061396 8.35475889,6.58576158 8.06185187,6.29288508 L1.98865468,0.219657374 C1.69577819,-0.0732191247 1.2209258,-0.0732191247 0.928018785,0.219657374 L0.219676968,0.927999191 C-0.0727417684,1.22041793 -0.0732910835,1.69432427 0.21842575,1.98741439 L5.03155514,6.82318777 L0.21842575,11.6589917 C-0.0732910835,11.9520818 -0.0727417684,12.4259881 0.219676968,12.7184069 L0.928018785,13.4267487 C1.22089528,13.7196252 1.69574767,13.7196252 1.98865468,13.4267487 L8.06188239,7.35352098 Z" id="Path"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
