@@ -95,8 +95,8 @@ export default {
     idCause() {
       return this.$store.state.idCause;
     },
-
-    // if currency is equal to Naira return ₦ else return $
+    //
+    // // if currency is equal to Naira return ₦ else return $
     currencySymbol() {
       if (this.currency === "₦") {
         return "₦";
@@ -124,6 +124,21 @@ export default {
 
 
       const causeId = this.$store.state.idCause;
+
+
+      // set set_first_name to null
+      this.$store.commit("SET_FIRST_NAME", null);
+
+      // set set_last_name to null
+      this.$store.commit("SET_LAST_NAME", null);
+
+      // set set_email to null
+      this.$store.commit("SET_EMAIL", null);
+
+      // set set_phone to null
+      this.$store.commit("SET_AMOUNT", null);
+
+
 
 
 
@@ -174,41 +189,41 @@ export default {
 
 
     },
-    checkDonationUnit() {
-
-      const donationValue = this.$store.state.amountDonation.donationValue; //
-
-      console.log('donation XXXXXX in 175 Payment sucesss value --> ' + donationValue);
-
-      if (this.donationVal === null || this.donationVal === "" || this.donationVal === 0) {
-
-        // alert("donation value is null");
-
-        console.log("$$$$$$ %c donation value is null" + this.donationVal, "color: gold; font-size: 20px");
-        console.log("$$$$$$ %c donation value is null" + this.donationValue, "color: gold; font-size: 20px");
-        // redirect to google page
-        console.log("name me dey here")
-        setTimeout(() => {
-          console.log("name me dey here")
-          // return window.location = "/home";
-        }, 0);
-
-      }
-
-      // alert("donation value is not null");
-      console.log("$$$$$$ %c donation value is not null" + this.donationVal, "color: gold; font-size: 20px");
-
-    },
+    // checkDonationUnit() {
+    //
+    //   const donationValue = this.$store.state.amountDonation.donationValue; //
+    //
+    //   console.log('donation XXXXXX in 175 Payment sucesss value --> ' + donationValue);
+    //
+    //   if (this.donationVal === null || this.donationVal === "" || this.donationVal === 0) {
+    //
+    //     // alert("donation value is null");
+    //
+    //     console.log("$$$$$$ %c donation value is null" + this.donationVal, "color: gold; font-size: 20px");
+    //     console.log("$$$$$$ %c donation value is null" + this.donationValue, "color: gold; font-size: 20px");
+    //     // redirect to google page
+    //     console.log("name me dey here")
+    //     setTimeout(() => {
+    //       console.log("name me dey here")
+    //       // return window.location = "/home";
+    //     }, 0);
+    //
+    //   }
+    //
+    //   // alert("donation value is not null");
+    //   console.log("$$$$$$ %c donation value is not null" + this.donationVal, "color: gold; font-size: 20px");
+    //
+    // },
   },
 
   created() {
     // alert("created success page");
     // alert("%c we outtta " + this.donationValue + " " + this.currency, 'color: purple');
-    this.checkDonationUnit();
+    // this.checkDonationUnit();
   },
   afterMount() {
     console.log("PaymentFlowTwo mounted");
-    this.checkDonationUnit();
+    // this.checkDonationUnit();
   }
   ,
 }

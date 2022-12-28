@@ -5,6 +5,7 @@
   <a class="button" @click="makePayment">
     <img class="submitIconFormat" :src="continueToForm">
   </a>
+
   <!--  </div>-->
 
 
@@ -178,12 +179,15 @@ export default {
       }
 
 
+
+
+
     }
 
     ,
     makePayment() {
 
-// alert("initial click")
+// alert("initial click  ---->>>>  "  + this.donatedAmount   )
 
       this.validateForm();
 
@@ -242,8 +246,8 @@ export default {
                   "deviceName": "string",
                   "deviceOS": "string",
                   "osVersion": "string",
-                  // "paymentId": response.transaction_id,
-                  "paymentId": "232322",
+                  "paymentId": response.transaction_id,
+                  // "paymentId": "232322",
                   "paymentReference": response.flw_ref,
                   "paymentChannel": "Flutterwave",
                 })
@@ -252,22 +256,28 @@ export default {
 1
                     if(response.data.responseMessage === "Payment Completed!")
                     {
-                      window.location.href = '/causecontribution/paymentsuccess'
+                      // window.location.href = '/causecontribution/paymentsuccess'
+                      this.$router.push('/causecontribution/paymentsuccess')
                     }
                     else
                     {
-                      window.location.href = '/causecontribution/paymentfailure'
+                      // window.location.href = '/causecontribution/paymentfailure'
+
+                      this.$router.push('/causecontribution/paymentfailure')
 
                     }
 
                   })
                   .catch(error => {
-                    window.location.href = '/causecontribution/paymentfailure'
+                    // window.location.href = '/causecontribution/paymentfailure'
+                    this.$router.push('/causecontribution/paymentfailure')
+
                     console.log(error);
                   });
 
               } catch (e) {
                 console.log(e)
+                this.$router.push('/causecontribution/paymentfailure')
               }
 
             }

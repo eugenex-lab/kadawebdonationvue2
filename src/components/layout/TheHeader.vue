@@ -34,7 +34,7 @@ import kadaLogo from '@/assets/kadaLogo.svg';
 
 import kadaLogoIOS from '@/assets/appStoreBadgeIos.webp';
 import kadaLogoAndriod from '@/assets/appStoreBadgePlayStore.webp';
-import {useStore} from "vuex";
+// import {useStore} from "vuex";
 export default {
   name: "TheHeader",
   data() {
@@ -64,13 +64,15 @@ export default {
 
   },
 
-  beforeCreate() {
 
-    const store = useStore()
-    // use store.commit to run any mutation. Below we are running the loadStore mutation
-    store.commit('initializeStoreErorrStatus');
 
-  }
+  // beforeCreate: function (){
+  //
+  //   const store = useStore()
+  //   // use store.commit to run any mutation. Below we are running the loadStore mutation
+  //   store.commit('initializeStoreErorrStatus');
+  //
+  // }
 
 }
 </script>

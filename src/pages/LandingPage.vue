@@ -56,12 +56,16 @@
 
 
 
-          <router-view v-slot="{ Component }">
-            <transition name="fade" mode="out-in">
-              <component :is="Component" />
-            </transition>
-          </router-view>
+<!--          <router-view v-slot="{ Component }">-->
+<!--            <transition name="fade" mode="out-in">-->
+<!--              <component :is="Component" />-->
+<!--            </transition>-->
+<!--          </router-view>-->
 
+<!--          <router-view></router-view>-->
+
+
+          <FormPageOneWeb/>
 
         </div>
       </div>
@@ -78,11 +82,12 @@ import causeImage from "@/assets/projectIMage.png";
 import NavBarButtons from "@/components/layout/NavBarButtons";
 import FormInfoPage from "@/pages/FormInfoPage";
 import SchoolInfoSection from "@/pages/SchoolInfoSection";
-import axios from "axios";
+
+// import axios from "axios";
 
 // import FormPageOne from "@/pages/FormPageOne";
-// import FormPageOneWeb from "@/pages/FormPageOneWeb";
-import {useRoute} from "vue-router";
+import FormPageOneWeb from "@/pages/FormPageOneWeb";
+// import {useRoute} from "vue-router";
 import { mapState,mapGetters ,mapActions} from 'vuex';
 import ErrorPage from "@/pages/ErrorPage.vue";
 // import {createHelpers} from "vuex-map-fields";
@@ -100,8 +105,8 @@ export default {
     FormInfoPage,
     NavBarButtons, SchoolInfoSection
     // ,FormPageOne
-    ,
-    // FormPageOneWeb
+    , FormPageOneWeb
+
   },
   data() {
     return {
@@ -138,50 +143,53 @@ export default {
 
   methods: {
 
-    causeInfoApiCall() {
-      this.loadingStatus = true;
-
-      const route = useRoute()
-      // console.log("%c Dynamic Id rendering" , "color: yellow; font-size: 40px" , route.params.id)
-      this.idCause = route.params.id
-      // send the id to the store
-
-
-      this.$store.dispatch("causeInfo", this.idCause);//  //
-
-
-
-
-
-
-      // console.log("%c Dynamic Id rendering" , "color: yellow; font-size: 40px" , this.idCause)
-
-      const url = `https://kada.identity.stage.wealthtech.ng/school/cause/public/view/${this.idCause}/details`
-      // console.log(url)
-      axios.get(url)
-          .then(response => {
-            // console.log(response.data)
-
-            // save the data to the store using mapState
-
-            this.sudoExample = response.data.responseCode;
-
-            // set loading to false in the store
-            this.$store.commit("loadingStatus", true);
-            // this.getDataToStore(response.data)
-
-
-          })
-          .catch(error => {
-            console.log(error)
-            this.$store.commit("loadingStatus", false);
-          })
-          .finally(() => {
-            // console.log("finally")
-            this.$store.commit("loadingStatus", false);          })
-
-
-    },
+    // causeInfoApiCall() {
+    //
+    //
+    //   alert("causeInfoApiCall wherre u disabbled useRoute");
+    //   this.loadingStatus = true;
+    //
+    //   const route = useRoute()
+    //   // console.log("%c Dynamic Id rendering" , "color: yellow; font-size: 40px" , route.params.id)
+    //   this.idCause = route.params.id
+    //   // send the id to the store
+    //
+    //
+    //   this.$store.dispatch("causeInfo", this.idCause);//  //
+    //
+    //
+    //
+    //
+    //
+    //
+    //   // console.log("%c Dynamic Id rendering" , "color: yellow; font-size: 40px" , this.idCause)
+    //
+    //   const url = `https://kada.identity.stage.wealthtech.ng/school/cause/public/view/${this.idCause}/details`
+    //   // console.log(url)
+    //   axios.get(url)
+    //       .then(response => {
+    //         // console.log(response.data)
+    //
+    //         // save the data to the store using mapState
+    //
+    //         this.sudoExample = response.data.responseCode;
+    //
+    //         // set loading to false in the store
+    //         this.$store.commit("loadingStatus", true);
+    //         // this.getDataToStore(response.data)
+    //
+    //
+    //       })
+    //       .catch(error => {
+    //         console.log(error)
+    //         this.$store.commit("loadingStatus", false);
+    //       })
+    //       .finally(() => {
+    //         // console.log("finally")
+    //         this.$store.commit("loadingStatus", false);          })
+    //
+    //
+    // },
 
     ...mapActions({
       getDataToStore: "getApiData",

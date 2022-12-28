@@ -15,8 +15,9 @@
     "vue": "^2.6.14",
     "vue-axios": "^3.5.2",
     "vue-currency-input": "^3.0.3",
-    "vue-router": "^3.5.1",
+    "vue-router": "^3.6.5",
     "vue-select": "^3.20.2",
+    "vue2-helpers": "^2.1.1",
     "vuex": "^3.6.2",
     "vuex-map-fields": "^1.4.1",
     "vuex-persistedstate": "^4.1.0"

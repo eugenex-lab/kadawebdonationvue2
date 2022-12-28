@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import App from './App.vue'
 import './registerServiceWorker'
-import router from './router'
+import Routes from './router'
 import store from './store'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-import vSelect from 'vue-select';
+import VueRouter   from "vue-router";
+// import vSelect from 'vue-select';
 // eslint-disable-next-line
-import styles from './fonts/fonts.css';
+// import styles from './fonts/fonts.css';
 
 
 
@@ -23,17 +24,23 @@ store.subscribe((mutation, state) => {
 })
 
 
+Vue.use(VueAxios, axios)
+Vue.use(VueRouter)
+// Vue.component('v-select', vSelect)
+
+
+const router = new VueRouter({
+    mode: 'history',
+    routes: Routes
+
+}
+)
 
 
 new Vue({
-  router,
-  store,
-  // add axios and vue-axios to the Vue instance
-    axios,
-    VueAxios,
-    render: h => h(App
-        .component('v-select', vSelect)
-        .use(store)
-        .use(router)
-    )
+    store,
+    router : router,
+    render: h => h(App)
 }).$mount('#app')
+
+

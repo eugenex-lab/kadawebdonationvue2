@@ -84,7 +84,10 @@
 
 
 
-          <div class="paymentFormBodyHeader asterix formatTop"> How much would you like to donate?     </div>
+          <div class="paymentFormBodyHeader asterix formatTop"> How much would you like to donate
+
+
+          </div>
             <div class="paymentFormBodyCardAmount">
           <span class="paymentFormBodyCardAmountInput "
                 :class="{invalid: !amountDonationValValid}"
@@ -98,6 +101,7 @@
                   {{ option.currencySymbol }}
                 </option>
               </select>
+
  <DebouncedCurrencyInput
      :options="{
       currency: 'Ngn',
@@ -354,6 +358,10 @@ export default   ({
 
 donationValue: function (val) {
 
+
+alert("beep boop ")
+
+
       const newDonationValue = this.watchSelectedCurrency.replace(/,/g, '').replace(/₦/g, '').replace(/\$/g, '')
 
       console.log("%c Watch this currency change here ",
@@ -392,7 +400,9 @@ donationValue: function (val) {
 
   },
   computed: {
-    ...mapFields(["emailInput","firstName","firstName.isValid", "lastName","email","amountDonation.donationValue", "amountDonation.options", "currency", "minimumDonation", "dollarMinimumDonation", "nairaMinimumDonation", "currencyXData"])
+    ...mapFields(["emailInput","firstName","firstName.isValid", "lastName","email"
+      ,"amountDonation.donationValue",
+      "amountDonation.options", "currency", "minimumDonation", "dollarMinimumDonation", "nairaMinimumDonation", "currencyXData"])
     ,
 
     ...mapState({
@@ -482,8 +492,10 @@ donationValue: function (val) {
     },
 
     donatedAmount(){
+
       const indoData = this.$store.state.amountDonation.donationValue
       return indoData
+
     },
     showNGN() {
       return this.$store.state.currency === "₦";
@@ -614,6 +626,8 @@ donationValue: function (val) {
       this.formIsValid = true;
 
 
+
+
       if (this.firstName === null || this.firstName.length < 1 ||  !this.firstName) {
         // alert("Please enter a valid first name");
         this.formIsValid = false;
@@ -641,15 +655,19 @@ donationValue: function (val) {
     submit(){
 
 
+      alert("Hi hi Captain")
 
       this.validateForm()
 
 
       if (this.donatedAmount === null || this.donatedAmount === undefined || this.donatedAmount < this.minimumAMountNaira) {
 
+
 alert("Please enter a valid amount" + this.minimumAMountNaira + " " + this.donatedAmount)
         return  this.$store.commit("SET_MIN_AMOUNT_ALERT", 'red')  ,
             this.$store.commit("SET_AMOUNT_DONATION_VALID", false)
+
+
 
 
 

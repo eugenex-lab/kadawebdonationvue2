@@ -79,7 +79,8 @@
 import schoolLogo from "@/assets/schoolLogo.svg";
 import causeImage from "@/assets/projectIMage.png";
 // import { mapState} from 'vuex';
-import {useRoute} from "vue-router";
+// import {useRoute} from "vue-router";
+import { useRoute } from 'vue2-helpers/vue-router';
 
 export default {
   name: "SchoolInfoSection",

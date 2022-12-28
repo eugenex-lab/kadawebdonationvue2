@@ -1,31 +1,83 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+// import Vue from 'vue '
+// import VueRouter from 'vue-router'
+import LandingPage from "@/pages/LandingPage.vue";
+import FormPageOneWeb from "@/pages/FormPageOneWeb.vue";
+import PaymentFailure from "@/pages/PaymentFailPage.vue";
+import SuccessPage from "@/pages/SuccessPage.vue";
+import ErrorPagePayment from "@/pages/ErrorPagePayment.vue";
+import FormPageOne from "@/pages/FormPageOne.vue";
+import FormPageTwo from "@/pages/FormPageTwo.vue";
+import PaymentPageWeb from "@/pages/PaymentCompleteWeb.vue";
+import FormPageThree from "@/pages/FormPageThree.vue";
+import sample from "@/pages/SampleVue.vue";
+import SampleOutput from "@/pages/SampleOutput.vue";
 
-Vue.use(VueRouter)
+export default  [
 
-const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: HomeView
+
+  { path: '/causecontribution/:id/' , component: LandingPage,
+
+    children: [
+      { path: '/causecontribution/:id/', component: FormPageOneWeb , name : 'home',
+        // params: true,
+      props: true},
+
+        // // add to be a ble to route to a success page after payment
+        // { path: '/causecontribution/:id/paymentfailure', component: PaymentPageWeb , name : 'PaymentFailure',
+        // // params: true,
+        // props: true},
+        // { path: '/causecontribution/:id/paymentsuccess', component: ErrorPagePayment , name : 'SuccessPage',
+        // // params: true,
+        // props: true},
+
+
+
+    ]
   },
+
+  { path: '/causecontribution/:id/paymentfailure', component: PaymentFailure , name : 'PaymentFailure',
+    // params: true,
+    props: true},
+  { path: '/causecontribution/:id/paymentsuccess', component: SuccessPage , name : 'SuccessPage',
+    // params: true,
+    props: true},
+
+
+
+  { path: '/causecontribution/payment-error',
+    name: 'error',
+    component: ErrorPagePayment    , props: true}
+  ,
+
+  {path: '/causecontribution/form', component: FormPageOne,
+    name: 'mobileform'
+    , props: true
+  },
+
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: function () {
-      return import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-    }
-  }
+    path: '/causecontribution/success', component: FormPageTwo,
+    name: 'mobilesucess'
+    , props: true
+
+  },
+
+
+  {path: '/paymentinfoweb', component: PaymentPageWeb},
+  {path: '/paymentinfo', component: FormPageTwo},
+  {path: '/paymentcard', component: FormPageThree},
+  { path: '/sample', component: sample },
+  {path: '/output', component: SampleOutput},
+
+
+  // { path: '/:notFound(.*)', component: ErrorPagePayment }
+  // error page
+
+
+
+  { path: '/:notFound(.*)', component: ErrorPagePayment },
+
+
+
 ]
 
-const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
-})
 
-export default router
