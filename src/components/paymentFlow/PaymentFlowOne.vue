@@ -1,36 +1,48 @@
-
 <template>
   <div>
+<!--{{this.stripeDataINfo}}-->
+    <div class="smallWidthContainer" v-cloak>
+      <div>
 
-  <div class="smallWidthContainer" v-cloak>
 
-    <div>
+        <div v-if="enterStripCheckout">
+          <div class="formatStripe">
+            <stripe-element-payment
+                ref="paymentRef"
+                :pk=this.initStripePublicKey
+                :elements-options="elementsOptions"
+                :confirm-params="confirmParams"
 
 
-        <div class="paymentFormBody">
+            />
+          </div>
+
+
+        </div>
+
+
+        <div class="paymentFormBody"
+             v-if="!enterStripCheckout">
 
           <div class="paymentFormBodyHeader">
-            <div class="paymentFormBodyHeader asterix " >
+            <div class="paymentFormBodyHeader asterix ">
               Please enter your names
-
-
-
             </div>
           </div>
 
-            <div class="inputEMail">
+          <div class="inputEMail">
 
 
-             <input
-                 :class="{invalid: !firstNameValid}"
-                 id="alightText"
-                 name="payCardDigit"
-                  class=" paymentFormBodyCardAmountInputField inputEMail inputFirstName placeholder "
-                  v-model.trim="firstName"
-                  placeholder="First Name"
-             />
+            <input
+                :class="{invalid: !firstNameValid}"
+                id="alightText"
+                name="payCardDigit"
+                class=" paymentFormBodyCardAmountInputField inputEMail inputFirstName placeholder "
+                v-model.trim="firstName"
+                placeholder="First Name"
+            />
 
-              <span class="formatSPace">
+            <span class="formatSPace">
               <input
                   :class="{invalid: !lastNameValid}"
                   name="payCardDigit"
@@ -43,54 +55,44 @@
               />
                  </span>
 
-            </div>
+          </div>
           <div class="fixFOrmatError">
-            <p v-if="!firstNameValid" class="validationAlert topFormFOrmat sideleftFormat" >Enter your
-
-
-
+            <p v-if="!firstNameValid" class="validationAlert topFormFOrmat sideleftFormat">Enter your
 
 
               First Name</p>
 
 
-
-            <p v-if="!lastNameValid" class="validationAlert topFormFOrmat leftFormat " >Enter your Last Name </p>
+            <p v-if="!lastNameValid" class="validationAlert topFormFOrmat leftFormat ">Enter your Last Name </p>
 
 
           </div>
 
 
+          <div class="paymentFormBodyHeader asterix formatTop"> Enter your Email Address</div>
 
+          <div class="inputEMail emialFOrmat">
+            <input
+                :class="{invalid: !emailValid}"
+                name="payCardDigit"
+                class=" paymentFormBodyCardAmountInputField inputEMail placeholder "
+                v-model.trim="emailInput"
+                placeholder="username@email.com"
+                id="alightText"
+            />
 
-          <div class="paymentFormBodyHeader asterix formatTop"> Enter your Email Address  </div>
-
-            <div class="inputEMail emialFOrmat">
-              <input
-                  :class="{invalid: !emailValid}"
-                  name="payCardDigit"
-                  class=" paymentFormBodyCardAmountInputField inputEMail placeholder "
-                  v-model.trim="emailInput"
-                  placeholder="username@email.com"
-                  id="alightText"
-              />
-
-            </div>
-          <div v-if="!emailValid" class="validationAlert topFormFOrmat emailAlert " > Please enter valid email address
           </div>
-
-
-
-
+          <div v-if="!emailValid" class="validationAlert topFormFOrmat emailAlert "> Please enter valid email address
+          </div>
 
 
           <div class="paymentFormBodyHeader asterix formatTop"> How much would you like to donate
 
 
           </div>
-            <div class="paymentFormBodyCardAmount">
+          <div class="paymentFormBodyCardAmount">
           <span class="paymentFormBodyCardAmountInput "
-                :class="{invalid: !amountDonationValValid}"
+                :class="{invalid: !amountDonationValid}"
           >
             <span class="paymentFormBodyHeaderCurrencySelect">
               <select class="minimal" id="currency" v-model="currency">
@@ -102,76 +104,72 @@
                 </option>
               </select>
 
- <DebouncedCurrencyInput
-     :options="{
-      currency: 'Ngn',
-      currencyDisplay: 'hidden',
+
+                <DebouncedCurrencyInput
+                    v-model="amountDonationInput"
+                    id="amountDonation"
+                    class="paymentFormBodyCardAmountInputField inputValue numBoxFormat"
+                    :placeholder="placeholder"
+                    autocomplete="off"
+
+                    :options="{
+      currency: 'NGN',
       hideCurrencySymbolOnFocus: false,
+        currencyDisplay: 'hidden',
       hideGroupingSeparatorOnFocus: false,
+      hideNegligibleDecimalDigitsOnFocus: false,
+    }"
+                />
 
 
-                }"
 
-     id="amountDonation"
-     name="amountDonation"
-     class="paymentFormBodyCardAmountInputField inputValue numBoxFormat"
-     v-model="donationValue"
-     :placeholder="placeholder"
-     @input="donationValue = $event.target.value"
-     autocomplete="off"
- />
             </span>
 
           </span>
-              <p v-if="leastAmountDonationValValid" class="validationAlert" :style="{ 'color':minAmountAlert  }">Minimum contribution {{ watchSelectedCurrency }}</p>
-
-<!--              <div>-->
-<!--                <stripe-element-payment-->
-<!--                    ref="paymentRef"-->
-<!--                    :pk="pk"-->
-<!--                    :elements-options="elementsOptions"-->
-<!--                    :confirm-params="confirmParams"-->
-<!--                />-->
-<!--                <button @click="pay">Pay Now</button>-->
-<!--              </div>-->
+            <p v-if="leastAmountDonationValValid" class="validationAlert" :style="{ 'color':minAmountAlert  }">Minimum
+              contribution {{ watchSelectedCurrency }}</p>
 
 
+          </div>
 
-            </div>
+          <div class="paymentFormBodyCardAmount">
+            <div class="paymentFormBodyHeader donationFormat ">
+              <label class="toggle">
+                  <span class="toggle-label">Make donation
 
-            <div class="paymentFormBodyCardAmount">
-              <div class="paymentFormBodyHeader donationFormat ">
-                <label class="toggle">
-                  <span class="toggle-label">Make donation anonymous
+
+
+
+                    anonymous
 
 
                   </span>
-                  <input class="toggle-checkbox" type="checkbox">
-                  <div class="toggle-switch"></div>
-                </label>
-              </div>
+                <input class="toggle-checkbox" type="checkbox">
+                <div class="toggle-switch"></div>
+              </label>
             </div>
           </div>
         </div>
+      </div>
 
 
       <div class="webButtonContainer">
-        <div   v-show="showNGN">
-<!--          <flutterwave-modal-->
-<!--              :isProduction="isProduction"-->
-<!--              :email="customer.email"-->
-<!--              :amount="this.donationValue"-->
-<!--              :reference="reference"-->
-<!--              :flw-key="flwKey"-->
-<!--              :callback="callback"-->
-<!--              :close="close"-->
-<!--              :currency="NGN"-->
-<!--              :country="country"-->
-<!--              :custom_title="customizations.title"-->
-<!--              :custom_logo="customizations.logo"-->
-<!--              :payment_method="paymentMethod"-->
-<!--          >-->
-<!--          </flutterwave-modal>-->
+        <div v-show="showNGN">
+          <!--          <flutterwave-modal-->
+          <!--              :isProduction="isProduction"-->
+          <!--              :email="customer.email"-->
+          <!--              :amount="this.donationValue"-->
+          <!--              :reference="reference"-->
+          <!--              :flw-key="flwKey"-->
+          <!--              :callback="callback"-->
+          <!--              :close="close"-->
+          <!--              :currency="NGN"-->
+          <!--              :country="country"-->
+          <!--              :custom_title="customizations.title"-->
+          <!--              :custom_logo="customizations.logo"-->
+          <!--              :payment_method="paymentMethod"-->
+          <!--          >-->
+          <!--          </flutterwave-modal>-->
 
           <flutterwave-modal>
           </flutterwave-modal>
@@ -180,54 +178,36 @@
         </div>
 
 
-
-        <a  class="nav__link donateButton webVersion" @click="submit"
-            v-show="!showNGN"
-        >
+        <a class="nav__link donateButton webVersion" v-show="!showNGN" @click="pay">
           <img class="submitIconFormat" :src="continueToForm">
+
         </a>
 
 
       </div>
 
 
-
-
-
     </div>
 
 
-  <nav class="nav">
+    <nav class="nav">
 
-<!--/// mobile button -->
-    <a
-        class="nav__link donateButton webVersion" @click="methodBeginForm">
-      <img class="submitIconFormat" :src="continueToForm">
-    </a>
-
-
+      <!--/// mobile button -->
+      <a
+          class="nav__link donateButton webVersion" @click="methodBeginForm">
+        <img class="submitIconFormat" :src="continueToForm">
+      </a>
 
 
+    </nav>
 
 
-
-  </nav>
-
-<!--  <div>-->
-<!--    <stripe-element-payment-->
-<!--        ref="paymentRef"-->
-<!--        :pk="pk"-->
-<!--        :elements-options="elementsOptions"-->
-<!--        :confirm-params="confirmParams"-->
-<!--    />-->
-<!--    <button @click="pay">Pay Now</button>-->
-<!--  </div>-->
-
-</div>
+  </div>
 </template>
 
 
 <script>
+import {StripeElementPayment} from '@vue-stripe/vue-stripe';
 
 import {mapFields} from "vuex-map-fields";
 // import {mapMutations} from "vuex";
@@ -238,22 +218,25 @@ import DebouncedCurrencyInput from "@/components/layout/DebouncedCurrencyInput.v
 import FlutterwaveModal from "@/components/paymentFlow/FlutterwaveModal.vue";
 // import { StripeCheckout } from '@vue-stripe/vue-stripe';
 import {mapState} from "vuex";
-// import { StripeElementPayment } from '@vue-stripe/vue-stripe';
 
 
-export default   ({
-  name: "PaymentFlowOne",
-  props: {
-    // amountPicked: this.amountDonation,
-    // currencyPicked: this.currency,
-  },
-  components: {
-    FlutterwaveModal,
-    DebouncedCurrencyInput,
-    // StripeCheckout,
-    // StripeElementPayment,
-  },
-  data: () => ({
+export default ({
+      name: "PaymentFlowOne",
+      props: {
+        // amountPicked: this.amountDonation,
+        // currencyPicked: this.currency,
+      },
+      components: {
+        FlutterwaveModal,
+        DebouncedCurrencyInput,
+
+        StripeElementPayment,
+      },
+      data: () => ({
+
+        enterStripCheckout: false,
+
+
         value: 12343434343,
         isNextPage: true,
         continueToForm: continueButoon,
@@ -280,17 +263,17 @@ export default   ({
         // callback: (response) => {
         //   console.log(response);
 
-          // var txref = response.tx.tx_ref
-          // console.log("%c data from flutterwave", "color: #00ff00 ; font-size: 200px", response);
-          // if(      response.tx.chargeResponseCode == "00" ||
-          //     response.tx.chargeResponseCode == "0"){
-          //   // redirect to a success page
-          //   alert("Transaction was successful" + response.tx.tx_ref +  txref);
-          // }
-          // else{
-          //   // redirect to a failure page.
-          //   alert("Transaction was not successful, kindly retry" + response.tx.tx_ref + txref);
-          // }
+        // var txref = response.tx.tx_ref
+        // console.log("%c data from flutterwave", "color: #00ff00 ; font-size: 200px", response);
+        // if(      response.tx.chargeResponseCode == "00" ||
+        //     response.tx.chargeResponseCode == "0"){
+        //   // redirect to a success page
+        //   alert("Transaction was successful" + response.tx.tx_ref +  txref);
+        // }
+        // else{
+        //   // redirect to a failure page.
+        //   alert("Transaction was not successful, kindly retry" + response.tx.tx_ref + txref);
+        // }
 
 
         // },
@@ -304,491 +287,660 @@ export default   ({
           logo: "http://dp76jxyzopnbo.cloudfront.net/kada/images/kada3x.png",
         },
         paymentMethod: "",
-    formIsValid: true,
-
-    
-  }),
+        formIsValid: true,
 
 
-  setup () {
+      }),
 
 
-    return {
+      setup() {
 
-      pk: 'pk_test_51J9qFaDUqvtd3qvsd5okYctfoVezKe8p3PYTDzbPCG8oNPPlGfvmU2tyb3OS3epgcHMobM7vuXAhz2B5CRczJpvA00eSzPLKZ3',
-      elementsOptions: {
-        appearance: {}, // appearance options
+
+        return {
+
+          pk: 'pk_test_51J9qFaDUqvtd3qvsd5okYctfoVezKe8p3PYTDzbPCG8oNPPlGfvmU2tyb3OS3epgcHMobM7vuXAhz2B5CRczJpvA00eSzPLKZ3',
+
+          // pk: this.initStripeDataPublicKy,
+
+
+          elementsOptions: {
+            appearance: {
+              // theme: 'flat'         ,     // variables: {
+              //   colorPrimary: '#f1c609',       // color wen u hover on the element input
+              //   colorBackground: '#ffffff',   // <--- works for iput backgrud
+              //   colorText: '#464fb7',     // <--- as it shows
+                colorDanger: '#df1b1b',  // <--- works for error make
+              //   fontFamily: 'Ideal Sans, system-ui, sans-serif',
+              //   // spacingUnit: '2px',
+              //   // borderRadius: '4px',
+              //   // See all possible variables below
+              // },
+
+        }
+          },
+          confirmParams: {
+
+            return_url: 'https://google.com',  // return url is required for stripe checkout session
+            // redirect: 'if_required',   // redirect is required for stripe checkout session
+
+          },
+          layout: {
+            type: 'accordion',
+            defaultCollapsed: false,
+            radios: true,
+            spacedAccordionItems: false
+          }
+
+        }
       },
-      confirmParams: {
-        return_url: 'https://google.com', // success url
+
+
+
+
+
+
+
+      watch: {
+
+        showStripeElement: function (val) {
+
+          val = this.$store.state.showStripeCheckout
+          return val
+        },
+
+        amountDonationInput: function (val) {
+          if (val.length > 0) {
+            this.$store.commit("SET_MIN_AMOUNT_ALERT", '#003b88')
+
+            this.$store.commit("SET_AMOUNT_DONATION_VALID", true);
+          } else {
+            this.$store.commit("SET_AMOUNT_DONATION_VALID", true);
+            this.$store.commit("SET_MIN_AMOUNT_ALERT", '#003b88')
+          }
+        },
+
+
+// just check we u typing text in the input field
+
+        emailInput: function (val) {
+          if (val.length > 0) {
+
+            this.$store.commit("SET_EMAIL_VALID", true);
+          } else {
+            // this.$store.commit("SET_EMAIL_VALID", true);
+          }
+        },
+
+        // just check we u typing text in the input field
+
+
+        lastName: function (val) {
+          if (val.length > 0) {
+
+
+            this.$store.commit("SET_LAST_NAME_VALID", true);
+          } else {
+            this.$store.commit("SET_LAST_NAME_VALID", true);
+          }
+        },
+
+        // just check we u typing text in the input field
+
+
+        firstName: function (val) {
+
+          if (val.length > 0) {
+
+
+            this.$store.commit("SET_FIRST_NAME_VALID", true)
+
+          } else {
+            // this.$store.commit("SET_FIRST_NAME_VALID", false)
+          }
+
+        },
+
+
+        amountDonation: function (val) {
+
+          alert("greater than beep booping " + val + " " + newDonationValue)
+
+
+          const newDonationValue = this.watchSelectedCurrency.replace(/,/g, '').replace(/₦/g, '').replace(/\$/g, '')
+
+          console.log(newDonationValue)
+
+          // console.log("%c Watch this currency change here ",
+          //     "background: #222; color: pink ; font-size: 10px; font-weight: bold; padding: 5px; border-radius: 5px;"
+          //     , this.watchSelectedCurrency, newDonationValue, this.donationValue)
+
+          // alert("beep boop plus amout trackig  " + newDonationValue)
+
+
+          this.$store.commit('amountDonation.donationValue', this.donationValue)   //
+          // if (val >= newDonationValue) {
+          if (val.length > 0) {
+            alert("greater than beep booping " + val + " " + newDonationValue)
+
+            // this.amountDonationValValid = true
+            this.$store.commit("SET_AMOUNT", true);
+            this.$store.commit("SET_MIN_AMOUNT_ALERT", "#003b88")
+            this.$store.commit("SET_AMOUNT_DONATION_VALID", true)
+
+            return
+
+            // }else if (val < newDonationValue) {
+          } else {
+
+            this.$store.commit("SET_MIN_AMOUNT_ALERT", "#003b88")
+            this.$store.commit("SET_AMOUNT_DONATION_VALID", true)
+
+            // alert("less than beep boop " + val + " " + newDonationValue)
+
+
+            // this.amountDonationValValid = false
+            // this.$store.commit("SET_MIN_AMOUNT_ALERT", 'pink')
+
+            return
+          }
+        },
+
+        // firstName: function (val) {
+        //   this.$store.commit('firstName', this.firstName)
+        //   if (val.length >= 3) {
+        //     this.firstNameValid = true
+        //     return
+        //   }else if (val.length < 3) {
+        //     this.firstNameValid = false
+        //     return
+        //   }
+        // },
+
+
       },
-    };
-  },
+      computed: {
+        ...mapFields(["emailInput", "firstName", "firstName.isValid", "email", "amountDonation.donationValue",
+          "causeId",
+          // ,"amountDonation.donationValue",
+          "amountDonation.options", "currency", "minimumDonation", "dollarMinimumDonation", "minimumAMountNaira", "currencyXData"])
+        ,
+
+        ...mapState({}),
+
+        initStripeDataSecretKey: function () {
+          return this.$store.getters.initStripeData.gatewaySecretKey
+        },
+
+        initStripePublicKey: function () {
+          return this.$store.getters.initStripeData.gatewayPublicKey
+
+        },
+
+        stripeDataINfo: function () {
+          return this.$store.getters.initStripeData
+        },
 
 
-  watch: {
-    emailInput: function (val) {
-      if (val.length > 0) {
-        this.$store.commit("SET_EMAIL_VALID", true);      }
-      else {
-        this.$store.commit("SET_EMAIL_VALID", true);
+        flutterPaymentResponse: {
+
+          get() {
+
+            const raw = this.flutterPaymentResponse;
+
+            console.log("raw", raw);
+            return raw;
+
+          },
+        }
+        ,
+        flutterwaveData: {
+          get() {
+            return this.$store.state.initFlutterData;
+          }
+        },
+        showStripeCheckout: {
+          get() {
+            return this.$store.state.showStripeCheckout
+          },
+          set(value) {
+            this.$store.commit('SET_SHOW_STRIPE_CHECKOUT', value);
+          }
+
+
+        },
+
+        amountDonationInput: {
+          get() {
+            return this.$store.state.amountDonation.donationValue;
+          },
+          set(value) {
+            this.$store.commit('SET_AMOUNT', value);
+          }
+        },
+
+        minimumAMountDollar: {
+          get() {
+            return this.getCurrencyInfo.currencyList[1].minimumDonationAmount
+          },
+        },
+
+
+        amountDonationValid: {
+          get() {
+
+            return this.$store.state.amountDonation.isValid
+
+          },
+          set(value) {
+            this.$store.commit("SET_AMOUNT_DONATION_VALID", value);
+          }
+        },
+
+
+        emailInput: {
+          get() {
+            return this.$store.state.email.value;
+          },
+          set(value) {
+            this.$store.commit("SET_EMAIL", value);
+          },
+        },
+
+        emailValid: {
+          get() {
+            return this.$store.state.email.isValid;
+          },
+          set(value) {
+            this.$store.commit("SET_EMAIL_VALID", value);
+          },
+        },
+
+
+        firstName: {
+
+
+          get() {
+
+            return this.$store.state.firstName.value
+          },
+          set(value) {
+            this.$store.commit("SET_FIRST_NAME", value);
+          }
+        },
+
+        firstNameValid: {
+          get() {
+            return this.$store.state.firstName.isValid
+          },
+          set(value) {
+            this.$store.commit("SET_FIRST_NAME_VALID", value);
+          }
+        },
+
+        lastName: {
+          get() {
+            return this.$store.state.lastName.value
+          },
+          set(value) {
+
+            // alert("beep boop")
+            this.$store.commit("SET_LAST_NAME", value);
+          }
+        },
+        lastNameValid: {
+          get() {
+
+            return this.$store.state.lastName.isValid
+          },
+          set(value) {
+            this.$store.commit("SET_LAST_NAME_VALID", value);
+          }
+        },
+
+        donatedAmountString() {
+          const indoData = this.$store.state.amountDonation.donationValue
+          const indoDataString = indoData.toString()
+
+          return indoDataString
+        },
+
+
+        showNGN() {
+          return this.$store.state.currency === "₦";
+        },
+
+        amountDonationValValid() {
+          return this.$store.state.amountDonationValValid
+        },
+
+        minAmountAlert: function () {
+          return this.$store.state.minAmountAlert
+        },
+
+        reference() {
+          let text = "";
+          let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+          for (let i = 0; i < 10; i++)
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+          return text;
+        },
+
+
+        causeDetailInfo() {
+          const indoData = this.$store.state.causeXData
+          // check if dataresponse is not 200 return null
+          if (indoData.responseCode !== 200) {
+            return "No data"
+          }
+          return indoData.responseContent
+        }
+
+        ,
+
+        getCurrencyInfo() {
+          const indoData = this.$store.state.currencyXData
+
+          if (indoData.responseCode !== 200) {
+            return "No data"
+          }
+          return indoData.responseContent
+        },
+
+        watchSelectedCurrency() {
+          if (this.currency == "₦") {
+            console.log("%c this shows wen u select Naira , the val of min naira is --->"
+                ,
+                "color: #003b88; font-size: 16px; font-weight: bold; background-color: #fff; padding: 5px; border-radius: 5px; border: 1px solid #003b88;"
+                , this.causeDetailInfo.minimumAmountAllowed)
+
+            // remove the comma and currency symbol from the minimum donation amount
+
+
+            return this.causeDetailInfo.minimumAmountAllowed
+          } else {
+            const buzz = this.getCurrencyInfo.currencyList[1].unicode + this.getCurrencyInfo.currencyList[1].minimumDonationAmount
+
+            console.log("%c this shows wen u select DOllar , the val of min naira is --->"
+                ,
+                "color: #003b88; font-size: 16px; font-weight: bold; background-color: #fff; padding: 5px; border-radius: 5px; border: 1px solid #003b88;"
+                , buzz)
+            return buzz
+          }
+        },
+        getNairaINfo() {
+          // get the first value of the array
+          const buzz = this.getCurrencyInfo[1].currencyList.currencySymbol;
+          return buzz
+        }
+        ,
+        accAmt() {
+          const ytt = this.currencyAmt;
+          // convert to number removing the currency symbol and comma
+          const ytt2 = ytt.replace(/[^0-9.-]+/g, ""); // this line is to
+          // convert to number
+          const ytt3 = Number(ytt2);
+          console.log(ytt3);
+          return ytt3;
+        },
+
+
+        placeholder() {
+          let selected = this.options.find(o => o.currencySymbol === this.currency)
+          return selected.placeholder
+        },
+
+        currencySymbol() {
+          const selected = this.options.find(o => o.value === this.currency)
+          const formatDonationValue = this.donationValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          alert(formatDonationValue + selected.currencySymbol)
+
+
+          return selected.currencySymbol + ' ' + formatDonationValue
+        },
+
+        changeCurrency() {
+          let selected = this.options.find(o => o.value === this.currency)
+          let fo = "ZZR"
+          console.log(selected.value)
+          alert(selected.value)
+          alert(fo)
+          alert(this.currency)
+          alert(selected)
+          return fo
+        },
+
       }
-    },
 
-    lastName: function (val) {
-      if (val.length > 0) {
-        this.$store.commit("SET_LAST_NAME_VALID", true);
-      }
-      else {
-        this.$store.commit("SET_LAST_NAME_VALID", true);
-      }
-    },
-
-    firstName: function (val){
-
-      if (val.length > 0){
-        this.$store.commit("SET_FIRST_NAME_VALID", true)
-
-      }else {
-        // this.$store.commit("SET_FIRST_NAME_VALID", false)
-      }
-
-    },
+      ,
+      methods: {
+        // apiCallToGeneratePaymentIntent
 
 
-donationValue: function (val) {
+        async generatePaymentIntent() {
 
 
-alert("beep boop ")
+          // const paymentIntent = await apiCallToGeneratePaymentIntent(); // this is just a dummy, create your own API call
+          // this.elementsOptions.clientSecret = "pi_3MKdIxDUqvtd3qvs2cVi9ZjA_secret_yarMeTe5RmhzkIZEoBbg1dD5j"
+          this.elementsOptions.clientSecret = this.initStripeDataSecretKey
 
-
-      const newDonationValue = this.watchSelectedCurrency.replace(/,/g, '').replace(/₦/g, '').replace(/\$/g, '')
-
-      console.log("%c Watch this currency change here ",
-          "background: #222; color: pink ; font-size: 10px; font-weight: bold; padding: 5px; border-radius: 5px;"
-          , this.watchSelectedCurrency, newDonationValue, this.donationValue)
-
-
-      this.$store.commit('amountDonation.donationValue', this.donationValue)   //
-      if (val >= newDonationValue) {
-        // this.amountDonationValValid = true
-        this.$store.commit("SET_MIN_AMOUNT_ALERT", "#003b88")
-        this.$store.commit("SET_AMOUNT_DONATION_VALID", true)
-
-        return
-
-      }else if (val < newDonationValue) {
-        // this.amountDonationValValid = false
-        // this.$store.commit("SET_MIN_AMOUNT_ALERT", 'pink')
-
-        return
-      }
-    },
-
-    // firstName: function (val) {
-    //   this.$store.commit('firstName', this.firstName)
-    //   if (val.length >= 3) {
-    //     this.firstNameValid = true
-    //     return
-    //   }else if (val.length < 3) {
-    //     this.firstNameValid = false
-    //     return
-    //   }
-    // },
+          // make paymet callback to the server
 
 
 
-  },
-  computed: {
-    ...mapFields(["emailInput","firstName","firstName.isValid", "lastName","email"
-      ,"amountDonation.donationValue",
-      "amountDonation.options", "currency", "minimumDonation", "dollarMinimumDonation", "nairaMinimumDonation", "currencyXData"])
-    ,
-
-    ...mapState({
-
-    }),
+        },
 
 
-    flutterPaymentResponse: {
+        validateForm() {
 
-      get() {
+          this.$store.commit("SET_FIRST_NAME_VALID", true);
+          this.$store.commit("SET_EMAIL_VALID", true);
+          this.$store.commit("SET_LAST_NAME_VALID", true);
+          this.$store.commit("SET_AMOUNT_DONATION_VALID", true);
+          this.$store.commit("SET_MIN_AMOUNT_ALERT", "#003b88")
 
-        const raw  = this.flutterPaymentResponse;
+          this.formIsValid = true;
 
-        console.log("raw", raw);
-        return raw;
+          // alert("here --> " + this.minimumAMountDollar)
 
+
+          if (this.firstName === null || this.firstName.length < 1) {
+            // alert("Please enter a valid first name");
+            this.formIsValid = false;
+            this.$store.commit("SET_FIRST_NAME_VALID", false);
+          }
+
+          if (this.lastName === null || this.lastName.length < 1) {
+            // alert("Please enter a valid last name");
+            this.formIsValid = false;
+            this.$store.commit("SET_LAST_NAME_VALID", false);
+          }
+
+          // validate email address using regex
+          const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+          if (!emailRegex.test(this.emailInput)) {
+            this.formIsValid = false;
+
+
+            this.$store.commit("SET_EMAIL_VALID", false);
+          }
+
+          if (this.amountDonationInput === null || this.amountDonationInput < this.minimumAMountDollar || this.amountDonationInput.length < 1) {
+
+            this.$store.commit("SET_AMOUNT_DONATION_VALID", false);
+            this.formIsValid = false;
+            this.$store.commit("SET_MIN_AMOUNT_ALERT", 'red')
+
+
+            // alert("try check am na  called " + this.minimumAMountNaira)
+
+
+          }
+
+
+          // alert("this meas amout dey ")
+
+
+        },
+
+        pay() {
+
+
+          this.validateForm()
+
+
+          if (this.formIsValid) {
+
+            // initializeStripePayment
+            this.$store.dispatch("initializeStripePayment", this.causeId)
+            // this.$store.commit("SET_SHOW_STRIPE_CHECKOUT", true);
+            this.enterStripCheckout = true
+            this.$refs.paymentRef.submit();
+
+
+
+          } else {
+            // alert("to check valiation " + this.formIsValid )
+
+          }
+
+
+          // check if stripe payment is successful
+
+
+
+        },
+
+
+        submit() {
+
+
+          alert("Hi hi Captain")
+
+          this.validateForm()
+
+
+//       if (this.donatedAmount === null || this.donatedAmount === undefined || this.donatedAmount < this.minimumAMountNaira) {
+//
+// alert("Please enter a valid amount" + this.minimumAMountNaira + " " + this.donatedAmount)
+//         return  this.$store.commit("SET_MIN_AMOUNT_ALERT", 'red')  ,
+//             this.$store.commit("SET_AMOUNT_DONATION_VALID", false)
+
+//       }else if (this.donatedAmount >= this.minimumAMountNaira ||
+//
+          if (this.formIsValid) {
+
+            alert("hi")
+
+            this.$refs.checkoutRef.redirectToCheckout();
+
+          }
+        }
+        ,
+
+        makePaymentCallback(response) {
+          alert("Payment callback", response)
+
+        },
+
+        async getNairaMin() {
+
+          const buzz = this.getCurrencyInfo.currencyList[0];
+          console.log("%c 🍎 buzz: ", "font-size:20px;background-color: #FCA650;color:#fff;", buzz)
+          return buzz;
+
+
+        },
+
+
+        //
+        runfirst() {
+          const ytt = this.currencyAmt;
+
+          const ytty = this.accAmt
+
+
+          console.log("%c so here we started from " + ytt + " and we are now " + ytty + " ",
+              "background: #222; color: red ; font-size: 50px; font-weight: bold; padding: 5px; border-radius: 5px;"
+              , ytt, ytty)
+
+        },
+
+
+        formatPrice(value) {
+          return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        },
+
+
+        methodBeginForm() {
+
+          alert("Hi")
+
+
+          alert("methodBeginForm")
+          console.log("methodBeginForm called")
+          console.log("%c methodBeginForm called, formIsValid is  -->" + this.currency, 'color: black ; font-size: 20px');
+
+          // this.validateForm();
+          // if amount is empty, don't go to next page
+
+
+          console.log('filled input ' + this.amountDonation + ' currency ' + this.currency + ' minimum ' + this.minimumDonation);
+          // this.isNextPage = false;
+          // alert("methodAlert called")
+          window.location.href = '/causecontribution/success'
+          // the push without coming back
+          // this.$router.push('home/payment');  // replace is used to prevent the user from going back to the previous page
+
+
+          console.log("clicked continue to payment 2 page");
+
+          // log the prop value
+        }
+
+        ,
+        methodBeginFormWeb() {
+
+          console.log("methodBeginForm called")
+          console.log("%c methodBeginForm called, formIsValid is  -->" + this.currency, 'color: black ; font-size: 20px');
+          this.$router.push('/causecontribution/paymentsuccess');
+          // this.isNextPage = true;
+          // this.validateForm();
+          // if amount is empty, don't go to next page
+          // if (!this.formIsValid) {
+          //   console.log('unfilled input');
+          //   this.isNextPage = true;
+          //   // this.amountDonationValValid = false;
+          //   return;
+          // }
+          // {
+          //   console.log('filled input ' + this.amountDonation + ' currency ' + this.currency + ' minimum ' + this.minimumDonation);
+          //   this.isNextPage = true;
+          //   this.$router.push('/causecontribution/payment');
+          //   // the push without coming back
+          // }
+          // console.log("clicked continue to payment 2 page");
+          // log the prop value
+        },
       },
-    }
-    ,
-    flutterwaveData: {
-      get() {
-        return this.$store.state.initFlutterData;
-      }
-    },
 
-    emailInput:{
-      get() {
-        return this.$store.state.email.value;
-      },
-      set(value) {
-        this.$store.commit("SET_EMAIL", value);
-      },
-    },
 
-    emailValid: {
-      get() {
-        return this.$store.state.email.isValid;
-      },
-      set(value) {
-        this.$store.commit("SET_EMAIL_VALID", value);
-      },
-    },
-
-
-
-    firstName: {
-      get() {
-        return this.$store.state.firstName.value
-      },
-      set(value) {
-        this.$store.commit("SET_FIRST_NAME", value);
-      }
-    },
-
-    firstNameValid: {
-      get() {
-        return this.$store.state.firstName.isValid
-      },
-      set(value) {
-        this.$store.commit("SET_FIRST_NAME_VALID", value);
-      }
-    },
-
-    lastName: {
-      get() {
-        return this.$store.state.lastName.value
-      },
-      set(value) {
-        this.$store.commit("SET_LAST_NAME", value);
-      }
-    },
-    lastNameValid: {
-      get() {
-        return this.$store.state.lastName.isValid
-      },
-      set(value) {
-        this.$store.commit("SET_LAST_NAME_VALID", value);
-      }
-    },
-
-    donatedAmountString(){
-      const indoData = this.$store.state.amountDonation.donationValue
-// convert to string
-      const indoDataString = indoData.toString()
-
-      return indoDataString
-    },
-
-    donatedAmount(){
-
-      const indoData = this.$store.state.amountDonation.donationValue
-      return indoData
-
-    },
-    showNGN() {
-      return this.$store.state.currency === "₦";
-    },
-
-    amountDonationValValid() {
-      return this.$store.state.amountDonationValValid
-    },
-
-    minAmountAlert: function () {
-      return this.$store.state.minAmountAlert
-    },
-
-    reference() {
-      let text = "";
-      let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-      for (let i = 0; i < 10; i++)
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-      return text;
-    },
-
-
-    causeDetailInfo() {
-      const indoData = this.$store.state.causeXData
-      // check if dataresponse is not 200 return null
-      if (indoData.responseCode !== 200) {
-        return  "No data"
-      }
-      return indoData.responseContent
-    }
-
-    ,
-
-    getCurrencyInfo() {
-      const indoData = this.$store.state.currencyXData
-
-      if (indoData.responseCode !== 200) {
-        return  "No data"
-      }
-      return indoData.responseContent
-    },
-
-    watchSelectedCurrency() {
-      if (this.currency == "₦") {
-        console.log("%c this shows wen u select Naira , the val of min naira is --->"
-            ,
-            "color: #003b88; font-size: 16px; font-weight: bold; background-color: #fff; padding: 5px; border-radius: 5px; border: 1px solid #003b88;"
-            ,this.causeDetailInfo.minimumAmountAllowed)
-
-        // remove the comma and currency symbol from the minimum donation amount
-
-
-        return this.causeDetailInfo.minimumAmountAllowed
-      } else {
-        const buzz =  this.getCurrencyInfo.currencyList[1].unicode + this.getCurrencyInfo.currencyList[1].minimumDonationAmount
-
-        console.log("%c this shows wen u select DOllar , the val of min naira is --->"
-            ,
-            "color: #003b88; font-size: 16px; font-weight: bold; background-color: #fff; padding: 5px; border-radius: 5px; border: 1px solid #003b88;"
-            ,buzz)
-      return  buzz
-      }
-    },
-    getNairaINfo() {
-      // get the first value of the array
-      const buzz =  this.getCurrencyInfo[1].currencyList.currencySymbol;
-      return buzz
-    }
-    ,
-    accAmt() {
-      const ytt = this.currencyAmt;
-      // convert to number removing the currency symbol and comma
-      const ytt2 = ytt.replace(/[^0-9.-]+/g, ""); // this line is to
-      // convert to number
-      const ytt3 = Number(ytt2);
-      console.log(ytt3);
-      return ytt3;
-    },
-
-
-    placeholder() {
-      let selected = this.options.find(o => o.currencySymbol === this.currency)
-      return selected.placeholder
-    },
-
-    currencySymbol() {
-      const selected = this.options.find(o => o.value === this.currency)
-      const formatDonationValue = this.donationValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      alert(formatDonationValue + selected.currencySymbol)
-
-
-      return selected.currencySymbol + ' ' + formatDonationValue
-    },
-
-    changeCurrency() {
-      let selected = this.options.find(o => o.value === this.currency)
-      let fo = "ZZR"
-      console.log(selected.value)
-      alert(selected.value)
-      alert(fo)
-      alert(this.currency)
-      alert(selected)
-      return fo
-    },
-
-  }
-
-  ,
-  methods: {
-
-    generatePaymentIntent () {
-      // const paymentIntent = await apiCallToGeneratePaymentIntent(); // this is just a dummy, create your own API call
-      this.elementsOptions.clientSecret = "pi_3MIWimDUqvtd3qvs0SJC5BTx_secret_XEglzksf49ZsvGt1uOMaBWT8o"
-    },
-    pay () {
-      this.$refs.paymentRef.submit();
-    },
-
-
-
-
-    validateForm() {
-
-      this.$store.commit("SET_FIRST_NAME_VALID", true);
-      this.$store.commit("SET_EMAIL_VALID", true);
-      this.$store.commit("SET_LAST_NAME_VALID", true);
-
-      this.formIsValid = true;
-
-
-
-
-      if (this.firstName === null || this.firstName.length < 1 ||  !this.firstName) {
-        // alert("Please enter a valid first name");
-        this.formIsValid = false;
-        this.$store.commit("SET_FIRST_NAME_VALID", false);
-      }
-
-      if (this.lastName === null || this.lastName.length < 1 ||  !this.lastName) {
-        // alert("Please enter a valid last name");
-        this.formIsValid = false;
-        this.$store.commit("SET_LAST_NAME_VALID", false);
-      }
-
-      // validate email address using regex
-      const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-      if (!emailRegex.test(this.emailInput)) {
-        // alert("Please enter a valid email address");
-        this.formIsValid = false;
-        this.$store.commit("SET_EMAIL_VALID", false);
-      }
-
-
-    },
-
-
-    submit(){
-
-
-      alert("Hi hi Captain")
-
-      this.validateForm()
-
-
-      if (this.donatedAmount === null || this.donatedAmount === undefined || this.donatedAmount < this.minimumAMountNaira) {
-
-
-alert("Please enter a valid amount" + this.minimumAMountNaira + " " + this.donatedAmount)
-        return  this.$store.commit("SET_MIN_AMOUNT_ALERT", 'red')  ,
-            this.$store.commit("SET_AMOUNT_DONATION_VALID", false)
-
-
-
-
-
-      }else if (this.donatedAmount >= this.minimumAMountNaira || this.formIsValid ){
-
-        alert("hi")
-
-        // this.$refs.checkoutRef.redirectToCheckout();
-        // this.$store.commit("SET_FIRST_NAME", null);
-        // this.$store.commit("SET_LAST_NAME", null);
-        // this.$store.commit("SET_AMOUNT", null);
-        // this.$store.commit("SET_EMAIL", null);
-        
-      }
-    }
-,
-
-    makePaymentCallback(response){
-      alert("Payment callback", response)
-
-    },
-
-  async  getNairaMin() {
-
-const buzz = this.getCurrencyInfo.currencyList[0];
-    console.log("%c 🍎 buzz: ", "font-size:20px;background-color: #FCA650;color:#fff;", buzz)
-return buzz;
-
-
-    },
-
-
-    //
-    runfirst() {
-      const ytt = this.currencyAmt;
-
-      const ytty = this.accAmt
-
-
-      console.log("%c so here we started from " + ytt + " and we are now " + ytty + " ",
-          "background: #222; color: red ; font-size: 50px; font-weight: bold; padding: 5px; border-radius: 5px;"
-          , ytt, ytty)
-
-    },
-
-
-    formatPrice(value) {
-      return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    },
-
-
-    methodBeginForm() {
-
-      alert("Hi")
-
-
-      alert("methodBeginForm")
-      console.log("methodBeginForm called")
-      console.log("%c methodBeginForm called, formIsValid is  -->" + this.currency, 'color: black ; font-size: 20px');
-
-      // this.validateForm();
-      // if amount is empty, don't go to next page
-
-
-        console.log('filled input ' + this.amountDonation + ' currency ' + this.currency + ' minimum ' + this.minimumDonation);
-        // this.isNextPage = false;
-      // alert("methodAlert called")
-      window.location.href = '/causecontribution/success'
-        // the push without coming back
-        // this.$router.push('home/payment');  // replace is used to prevent the user from going back to the previous page
-
-
-      console.log("clicked continue to payment 2 page");
-
-      // log the prop value
-    }
-
-    ,
-    methodBeginFormWeb() {
-
-      console.log("methodBeginForm called")
-      console.log("%c methodBeginForm called, formIsValid is  -->" + this.currency, 'color: black ; font-size: 20px');
-      this.$router.push('/causecontribution/paymentsuccess');
-      // this.isNextPage = true;
-      // this.validateForm();
-      // if amount is empty, don't go to next page
-      // if (!this.formIsValid) {
-      //   console.log('unfilled input');
-      //   this.isNextPage = true;
-      //   // this.amountDonationValValid = false;
-      //   return;
-      // }
-      // {
-      //   console.log('filled input ' + this.amountDonation + ' currency ' + this.currency + ' minimum ' + this.minimumDonation);
-      //   this.isNextPage = true;
-      //   this.$router.push('/causecontribution/payment');
-      //   // the push without coming back
-      // }
-      // console.log("clicked continue to payment 2 page");
-      // log the prop value
-    },
-  },
-
-
-      mounted () {
+      mounted() {
         this.generatePaymentIntent();
+
       },
 
-  created() {
+      created() {
 
 
-    this.runfirst();
-    console.log("created here");
+        this.runfirst();
+        console.log("created here");
 
 
+      }
+      ,
 
-  }
-  ,
 
-
-}
+    }
 )
 
 </script>
@@ -798,6 +950,7 @@ return buzz;
 option.minimal {
   text-align: justify;
 }
+
 .nav {
   position: fixed;
   bottom: 0;
@@ -1003,7 +1156,8 @@ input.paymentFormBodyCardAmountInputField {
   margin: 0;
   box-sizing: border-box;
   -webkit-appearance: none;
-  text-align: left;}
+  text-align: left;
+}
 
 input.paymentFormBodyCardAmountInputField [type=text]:focus {
   border: 3px solid #555;
@@ -1227,9 +1381,7 @@ span.paymentFormBodyCardAmount {
 }
 
 .invalid input,
-.invalid textarea
-
-{
+.invalid textarea {
   border: 1px solid red;
 }
 
@@ -1372,13 +1524,10 @@ input::-webkit-inner-spin-button {
   }
 
   p.validationAlert.topFormFOrmat.leftFormat[data-v-4506583d][data-v-4506583d][data-v-4506583d] {
-    left: 10.5rem;  }
+    left: 10.5rem;
+  }
 
 }
-
-
-
-
 
 
 @media screen and (min-width: 1039px) {
@@ -1431,10 +1580,11 @@ span.formatSPace {
 
   /*height: 17px;*/
   opacity: 0.5;
-  color: rgba(1,13,28,0.8);
+  color: rgba(1, 13, 28, 0.8);
 
   margin-top: 3rem;
 }
+
 span.paymentFormBodyCardAmountInput {
   display: flex;
   margin-left: 1.5rem;
@@ -1476,6 +1626,16 @@ p.validationAlert.topFormFOrmat.sideleftFormat {
 
 .validationAlert.topFormFOrmat.emailAlert {
   position: absolute;
+}
+
+
+.formatStripe {
+  position: relative;
+  margin-left: 1.4rem;
+  width: 80%;
+  height: 16.5rem;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
 }
 
 

@@ -642,8 +642,8 @@ span.formatDayText {
     left: 0;
     bottom: 0;
     right: 0;
-    padding-top: 8rem;
-    padding-bottom: 3rem;
+    padding-top: 3rem;
+    padding-bottom: 5rem;
   }
 
   .cell{

@@ -527,7 +527,7 @@ span.formatDayText {
   /* background-color: #F8F8F8; */
   /* padding-top: 1rem; */
   padding-bottom: 1rem;
-  padding-top: 0.5rem;
+  padding-top: 5rem;
 
 }
 
@@ -612,8 +612,8 @@ span.formatDayText {
     left: 0;
     bottom: 0;
     right: 0;
-    padding-top: 8rem;
-    padding-bottom: 3rem;
+    padding-top: 3rem;
+    padding-bottom: 5rem;
   }
 
   .cell{

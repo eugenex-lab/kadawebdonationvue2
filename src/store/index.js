@@ -12,11 +12,13 @@ export default new Vuex.Store(
     {
       plugins: [createPersistedState()],
       state: {
+          showStripeCheckout: false,
         causeContributions: "Construction of Senate Building",
         formIsValid: true,
         initFlutterData:'',
         amountDonation: {
-          donationValue: 100,
+          donationValue: '',
+            isValid: true,
 
           options: [
             {text: 'Naira', value: 'Naira', placeholder: '₦ 0.00', currencySymbol: '₦', iso: 'NGN'},
@@ -36,8 +38,10 @@ export default new Vuex.Store(
           value: null,
           isValid: true,
         },
+
+
         minAmountAlert: "#003b88",
-        amountDonationValValid: true,
+        // amountDonationValValid: true,
         currency: "₦",
 
         minimumDonation: 40000,
@@ -64,12 +68,16 @@ export default new Vuex.Store(
         clientId: 1,
         errorPage: false,
         flutterPaymentResponse: '',
+          causeId: '',
+          initStripeData: '',
 
 
 
 
       },
       getters: {
+          showStripeCheckout: state => state.showStripeCheckout,
+          initStripeData: state => state.initStripeData,
         flutterPaymentResponse: state => state.flutterPaymentResponse,
         initFlutterData: state => state.initFlutterData ,
 
@@ -101,20 +109,23 @@ export default new Vuex.Store(
       },
       mutations: {
 
-        causeInfoId(state, payload) {
+          SET_SHOW_STRIPE_CHECKOUT(state, payload) {
+                state.showStripeCheckout = payload;
+          }
+,
+        SET_CAUSE_ID(state, payload) {
           const routeParams = useRoute();
           payload = routeParams.params.id;
           state.causeId = payload;
         },
+          SET_INIT_STRIPE_PAYMENT_DATA(state, payload) {
+                state.initStripeData = payload;
+          },
 
         SET_FLUTTERWAVE_RESPONSE(state, payload) {
           state.flutterPaymentResponse = payload;
-
-
         }
         ,
-
-
         SET_INIT_FLUTTERWAVE_PAYMENT(state, payload) {
           state.initFlutterData = payload;
         },
@@ -150,7 +161,7 @@ export default new Vuex.Store(
 
         SET_AMOUNT_DONATION_VALID(state, payload) {
 
-          state.amountDonationValValid = payload;
+          state.amountDonation.isValid = payload;
 
         },
 
@@ -247,15 +258,15 @@ export default new Vuex.Store(
             "deviceOS": "string",
             "osVersion": "string",
             "donationAmount": state.amountDonation.donationValue,
-            "paymentChannel": "Flutterwave",
-            "currency": "NGN",
+            "paymentChannel": "Stripe",
+            "currency": "USD",
             "paymentType": "CAUSE",
             "paymentTypeId": 1,
-            "schoolClassId": 24,
+            "schoolClassId": state.causeId,
             "firstName": state.firstName.value,
             "lastName": state.lastName.value,
             "emailAddress": state.email.value,
-            "payAsAnonymous": false,
+            "payAsAnonymous": false,  // Todo switch from input
             "paymentFrequency": "NONE",
             "paymentModeType": "ONE_OFF"
           })
@@ -270,7 +281,7 @@ export default new Vuex.Store(
                     "; padding: 5px 10px 5px 10px", response.data.responseCode);
 
                 if (response.data.responseCode === 200) {
-                  commit('SET_INIT_FLUTTERWAVE_PAYMENT', response.data.responseContent);
+                  commit('SET_INIT_STRIPE_PAYMENT_DATA', response.data.responseContent);
                   commit('SET_STATUS', false);
                   commit('SET_ERROR_PAGE', false);
                   console.log("%c response.data", "color: #00ff00 " +
@@ -293,7 +304,6 @@ export default new Vuex.Store(
 
         initializeFlutterwavePayment({commit , state} , payload) {
 
-
           axios.post('https://kada.identity.stage.wealthtech.ng/transaction/donation/public/collection/initialization', {
 
 
@@ -306,7 +316,7 @@ export default new Vuex.Store(
             "currency": "NGN",
             "paymentType": "CAUSE",
             "paymentTypeId": 1,
-            "schoolClassId": 24,
+            "schoolClassId": state.causeId,
             "firstName": state.firstName.value,
             "lastName": state.lastName.value,
             "emailAddress": state.email.value,

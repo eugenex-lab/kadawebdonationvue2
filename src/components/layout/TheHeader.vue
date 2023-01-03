@@ -140,8 +140,8 @@ header {
     background-color: hsl(212deg 100% 97%);
     /* position: relative; */
     top: 0px;
-    position: fixed;
-    width: 100%;
+    position: relative;
+    width: auto;
   }
 
   .mobileHeaderText[data-v-9778edae] {
@@ -186,6 +186,10 @@ header {
 
 @media  screen and  (max-width: 899px) {
 
+  body{}
+
+
+
   .mobileHeader[data-v-9778edae] {
     color: #461212;
     text-align: center;
@@ -200,7 +204,9 @@ header {
     display: flex;
     justify-content: space-around;
     align-content: flex-start;
-    position: relative;
+    position: absolute;
+    margin: 0;
+
   }
 
 

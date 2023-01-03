@@ -178,7 +178,7 @@ export default {
 .theFooter{
   position: relative;
   bottom: 0;
-  width: 100%;
+  width: auto;
   box-shadow: 0 0 3px rgb(0 0 0 / 20%);
   /* background-color: #ff0000; */
   display: flex;
@@ -314,7 +314,7 @@ display: none;
   .theFooter[data-v-d9ddb592] {
     position: relative;
     bottom: 0;
-    width: 100%;
+    width: auto;
     box-shadow: 0 0 3px rgb(0 0 0 / 20%);
     /* background-color: #ff0000; */
     display: flex;

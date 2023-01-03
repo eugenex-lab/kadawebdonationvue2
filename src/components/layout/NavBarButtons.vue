@@ -77,6 +77,8 @@ export default {
   },
   methods: {
     methodBeginForm() {
+      // alert("methodBeginForm")
+
       // return  window.location.href = '/causecontribution/form'  //
       // return this.$router.push({path : '/causecontribution/form' });
 

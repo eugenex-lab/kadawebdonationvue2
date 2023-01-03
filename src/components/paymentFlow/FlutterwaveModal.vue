@@ -117,6 +117,10 @@ export default {
       }
       const amount = this.causeXData.responseContent.minimumAmountAllowed.replace(/,/g, "").replace("₦", "")
       // alert("%c amount", "color: #00ff00 ; font-size: 200px", amount)
+
+
+
+
       return amount
     },
     ...mapFields(["causeXData"]),
@@ -133,28 +137,20 @@ export default {
 
 
   methods: {
-    validateFormvalidateForm() {
 
-      this.formIsValid = true;
-
-      if (this.firstName.value === "" || this.firstName.length < 3 || this.firstName.length === null || this.firstName.value === null || this.firstName.value === undefined) {
-        this.formIsValid = false;
-        alert("Please enter a valid first name");
-      }
-      if (this.lastName.value === "" || this.lastName.length < 3 || this.lastName.length === null || this.lastName.value === null || this.lastName.value === undefined) {
-        this.formIsValid = false;
-        alert("Please enter a valid last name");
-      }
-
-
-    },
 
 
     validateForm() {
 
+      // alert("validate form"  + this.donatedAmount  + " " + this.minimumAMountNaira)
+
       this.$store.commit("SET_FIRST_NAME_VALID", true);
       this.$store.commit("SET_EMAIL_VALID", true);
       this.$store.commit("SET_LAST_NAME_VALID", true);
+      this.$store.commit("SET_AMOUNT_DONATION_VALID", true);
+      this.$store.commit("SET_MIN_AMOUNT_ALERT", "#003b88")
+
+
 
       this.formIsValid = true;
 
@@ -178,7 +174,19 @@ export default {
         this.$store.commit("SET_EMAIL_VALID", false);
       }
 
+      if (this.donatedAmount === null || this.donatedAmount < this.minimumAMountNaira ) {
+// alert("Please enter a valid amount u entered " + this.donatedAmount + " and the minimum amount is " + this.minimumAMountNaira)
+        this.$store.commit("SET_AMOUNT_DONATION_VALID", false);
+        this.formIsValid = false;
+        this.$store.commit("SET_MIN_AMOUNT_ALERT", 'red')
 
+      }
+
+      this.$store.commit("SET_FIRST_NAME_VALID", true);
+      this.$store.commit("SET_EMAIL_VALID", true);
+      this.$store.commit("SET_LAST_NAME_VALID", true);
+      this.$store.commit("SET_AMOUNT_DONATION_VALID", true);
+      this.$store.commit("SET_MIN_AMOUNT_ALERT", "#003b88")
 
 
 
@@ -188,19 +196,12 @@ export default {
     makePayment() {
 
 // alert("initial click  ---->>>>  "  + this.donatedAmount   )
+      // this.$store.commit("SET_MIN_AMOUNT_ALERT", "#003b88")
 
       this.validateForm();
 
 
-      // ckeck if amount is not null or undefined
-      if (this.donatedAmount === null || this.donatedAmount === undefined || this.donatedAmount < this.minimumAMountNaira) {
-        // alert("Please enter a valid amount" + this.minimumAMountNaira + " " + this.donatedAmount);
-
-
-        return this.$store.commit("SET_MIN_AMOUNT_ALERT", 'red')  , this.$store.commit("SET_AMOUNT_DONATION_VALID", false) ,
-            this.$store.commit("SET_AMOUNT_DONATION_VALID", false)
-
-      } else if (this.donatedAmount >= this.minimumAMountNaira && this.formIsValid) {
+      if (this.formIsValid) {
 
         //run an action in the store to make api call to get the payment link
 

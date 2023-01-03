@@ -155,13 +155,15 @@ return indoData.responseContent
     //  generate id from url  and set it to id
     const id = route.params.id
 
+
+
     // push to vuex store to get data
     this.$store.dispatch('getSingleCause', id)
 
     console.log("c% &&$$$$ ZZZZZZZZZZ id is " + id, "color: pink; font-size: 200px;");
     this.$store.dispatch("getCauseXdata" , id );
 
-    this.$store.commit("causeInfoId", id);
+    this.$store.commit("SET_CAUSE_ID", id);
 
     this.$store.dispatch("getCurrencyXdata" , id );
 
