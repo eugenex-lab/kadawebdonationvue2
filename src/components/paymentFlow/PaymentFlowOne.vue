@@ -1,5 +1,11 @@
 <template>
+
+
+
   <div>
+
+    <the-header></the-header>
+
 <!--{{this.stripeDataINfo}}-->
     <div class="smallWidthContainer" v-cloak>
       <div>
@@ -178,9 +184,11 @@
         </div>
 
 
+<!--        <a class="nav__link donateButton webVersion" v-show="!showNGN" @click="pay">-->
+<!--          <img class="submitIconFormat" :src="continueToForm">-->
+<!--        </a>-->
         <a class="nav__link donateButton webVersion" v-show="!showNGN" @click="pay">
           <img class="submitIconFormat" :src="continueToForm">
-
         </a>
 
 
@@ -218,6 +226,8 @@ import DebouncedCurrencyInput from "@/components/layout/DebouncedCurrencyInput.v
 import FlutterwaveModal from "@/components/paymentFlow/FlutterwaveModal.vue";
 // import { StripeCheckout } from '@vue-stripe/vue-stripe';
 import {mapState} from "vuex";
+import TheHeader from "@/components/layout/TheHeader";
+
 
 
 export default ({
@@ -229,6 +239,8 @@ export default ({
       components: {
         FlutterwaveModal,
         DebouncedCurrencyInput,
+        TheHeader,
+
 
         StripeElementPayment,
       },
@@ -320,7 +332,7 @@ export default ({
           },
           confirmParams: {
 
-            return_url: 'https://google.com',  // return url is required for stripe checkout session
+            return_url:  'http://localhost:8080/causecontribution/:id/paymentsuccess',
             // redirect: 'if_required',   // redirect is required for stripe checkout session
 
           },
@@ -795,8 +807,6 @@ export default ({
             // this.$store.commit("SET_SHOW_STRIPE_CHECKOUT", true);
             this.enterStripCheckout = true
             this.$refs.paymentRef.submit();
-
-
 
           } else {
             // alert("to check valiation " + this.formIsValid )
@@ -1466,9 +1476,14 @@ input::-webkit-inner-spin-button {
 
 }
 
+
+
+
 @media screen and (min-width: 899px) {
 
-
+  header.mobileHeader {
+    display: none;
+  }
   .nav[data-v-4506583d] {
 
     display: none;
@@ -1515,6 +1530,10 @@ input::-webkit-inner-spin-button {
 
 
 @media screen and (max-width: 900px) {
+
+
+
+
   input.paymentFormBodyCardAmountInputField.inputEMail.inputFirstName[data-v-4506583d] {
     width: 9.9rem;
   }
@@ -1637,6 +1656,17 @@ p.validationAlert.topFormFOrmat.sideleftFormat {
   padding-top: 1rem;
   padding-bottom: 2rem;
 }
+
+
+@media screen and (max-width: 900px) {
+.smallWidthContainer{
+  padding-top: 7rem;
+
+}
+
+
+}
+
 
 
 </style>

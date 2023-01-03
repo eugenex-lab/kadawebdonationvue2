@@ -1,6 +1,7 @@
 
 <template>
   <div>
+    <the-header></the-header>
     <div>
 
 
@@ -104,7 +105,7 @@
       </div>
       <!--    </div>-->
     </div>
-
+    <the-footer></the-footer>
     </div>
 </template>
 
@@ -123,6 +124,8 @@ import ErrorPage from "@/pages/ErrorPage.vue";
 import FormRightHeader from "@/components/layout/FormRightHeader";
 import PaymentFail from "@/components/paymentFlow/PaymentFail.vue";
 // import LandingPage from "@/pages/LandingPage.vue";
+import TheFooter from "@/components/layout/TheFooter";
+import TheHeader from "@/components/layout/TheHeader";
 
 export default {
   name: "PaymentFailPage",
@@ -135,6 +138,8 @@ export default {
 
     PaymentFail, FormRightHeader,
     // LandingPage
+    TheHeader,
+    TheFooter
 
   },
 

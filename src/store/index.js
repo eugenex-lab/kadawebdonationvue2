@@ -3,14 +3,14 @@ import Vuex from 'vuex'
 import { getField,updateField} from "vuex-map-fields";
 import axios from "axios";
 import { useRoute } from 'vue2-helpers/vue-router';
-import createPersistedState from 'vuex-persistedstate';
+// import createPersistedState from 'vuex-persistedstate';
 
 
 Vue.use(Vuex)
 
 export default new Vuex.Store(
     {
-      plugins: [createPersistedState()],
+      // plugins: [createPersistedState()],
       state: {
           showStripeCheckout: false,
         causeContributions: "Construction of Senate Building",

@@ -80,7 +80,7 @@ export default {
       // alert("methodBeginForm")
 
       // return  window.location.href = '/causecontribution/form'  //
-      // return this.$router.push({path : '/causecontribution/form' });
+      return this.$router.push({path : '/causecontribution/:id/form' });
 
     },
 

@@ -6,7 +6,7 @@
         v-if = "loading"
     ></LoadingScreen>
 
-    <the-header></the-header>
+
 
     <!--  <router-view v-slot="{ Component }">-->
     <!--    <transition name="fade" mode="out-in">-->
@@ -16,15 +16,14 @@
 
     <router-view></router-view>
 
-    <the-footer></the-footer>
+
   </div>
 </template>
 
 
 <script>
 // import logo from './assets/logo.png'
-import TheHeader from "@/components/layout/TheHeader";
-import TheFooter from "@/components/layout/TheFooter";
+// import TheHeader from "@/components/layout/TheHeader";
 // import LoadingScreen from "@/components/layout/LoadingScreen.vue";
 // import {useRoute} from "vue-router";
 
@@ -33,7 +32,9 @@ export default {
   name: 'App',
   components: {
     // LoadingScreen,
-    TheHeader,TheFooter
+    // TheHeader
+    // ,
+
   },
   data() {
     return {
@@ -86,5 +87,17 @@ nav {
 body{
   margin: 0;
 }
+
+/// minimum of 900px width
+@media screen and (max-width: 900px) {
+
+  the-footer{
+    display: none;
+  }
+
+
+}
+
+
 
 </style>

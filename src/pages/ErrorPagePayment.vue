@@ -1,4 +1,7 @@
 <template>
+<div>
+
+  <the-header></the-header>
 
     <div class="errorPage">
       <div class="errorIMageFormat">
@@ -17,13 +20,23 @@
       </div>
     </div>
 
+  <the-footer></the-footer>
+
+</div>
+
 </template>
 
 <script>
+import TheFooter from "@/components/layout/TheFooter";
+import TheHeader from "@/components/layout/TheHeader";
 
 import image from "../assets/errorIMage.svg";
 export default {
   name: "ErrorPagePayment",
+  components: {
+    TheFooter,
+    TheHeader
+  },
 
 
 

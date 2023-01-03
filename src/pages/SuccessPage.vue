@@ -1,5 +1,8 @@
 <template>
 <div>
+  <the-header></the-header>
+
+
   <div>
     <form class="formFOrmat" >
       <div class="bigCardBoard">
@@ -87,9 +90,13 @@
 
     </div>
   </div>
+  <the-footer></the-footer>
+
 </div>
 </template>
 <script>
+import TheFooter from "@/components/layout/TheFooter";
+import TheHeader from "@/components/layout/TheHeader";
 
 import causeImage from "@/assets/projectIMage.png";
 //
@@ -112,7 +119,9 @@ export default {
    components:{
      SchoolInfoSection,
      PaymentSuccess, FormRightHeader,
-     FormInfoPage
+     FormInfoPage,
+     TheHeader,
+     TheFooter
    },
   data() {
     return {
