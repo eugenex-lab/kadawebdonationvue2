@@ -86,6 +86,8 @@ nav {
 
 body{
   margin: 0;
+
+  background-color: hsl(212deg 100% 97%);
 }
 
 /// minimum of 900px width

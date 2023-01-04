@@ -1,27 +1,30 @@
 <!DOCTYPE html>
-<html lang="">
-  <head>
+
+<html>
+<head>
       <script src="https://js.stripe.com/v3"></script>
 <!--      <script async src="https://js.stripe.com/v3/"></script>-->
       <script src="https://checkout.flutterwave.com/v3.js"></script>
-
+.
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
+      <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+      <link rel="shortcut icon" type="image/ico" href="favicon.ico"/>
 
-      <link rel="icon" href="https://dp76jxyzopnbo.cloudfront.net/kada/images/favicon.svg">
+      <link rel="icon" src="https://dp76jxyzopnbo.cloudfront.net/kada/images/favicon.svg">
+
       <link
               href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"
               rel="stylesheet"/>
 
-<!--    <link rel="icon" href="<%= BASE_URL %>favicon.ico">-->
-    <title><%= htmlWebpackPlugin.options.title %></title>
+<!--    <title><%= htmlWebpackPlugin.options.title %></title>-->
+      <title>Kada Web Donation</title>
   </head>
   <body>
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
     <div id="app"></div>
-    <!-- built files will be auto injected -->
   </body>
 </html>

@@ -15,13 +15,13 @@ import VueRouter   from "vue-router";
 Vue.config.productionTip = false
 
 
-store.subscribe((mutation, state) => {
-  // The code inside the curly brackets fires any time a mutation occurs.
-  // When a mutation occurs, we'll stringify our entire state object - which
-  // contains our todo list. We'll put it in the users localStorage, so that
-  // their data will persist even if they refresh the page.
-  localStorage.setItem('store', JSON.stringify(state));
-})
+// store.subscribe((mutation, state) => {
+//   // The code inside the curly brackets fires any time a mutation occurs.
+//   // When a mutation occurs, we'll stringify our entire state object - which
+//   // contains our todo list. We'll put it in the users localStorage, so that
+//   // their data will persist even if they refresh the page.
+//   localStorage.setItem('store', JSON.stringify(state));
+// })
 
 
 Vue.use(VueAxios, axios)

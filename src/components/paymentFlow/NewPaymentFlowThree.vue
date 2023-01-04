@@ -274,7 +274,7 @@ console.log("name me dey here")
 
 
 .donateButton {
-  /*height: 4.5rem;*/
+  height: 4.5rem;
   position: relative;
   /*margin-left: 1.5rem;*/
 }

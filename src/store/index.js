@@ -3,14 +3,14 @@ import Vuex from 'vuex'
 import { getField,updateField} from "vuex-map-fields";
 import axios from "axios";
 import { useRoute } from 'vue2-helpers/vue-router';
-// import createPersistedState from 'vuex-persistedstate';
+import createPersistedState from 'vuex-persistedstate';
 
 
 Vue.use(Vuex)
 
 export default new Vuex.Store(
     {
-      // plugins: [createPersistedState()],
+      plugins: [createPersistedState()],
       state: {
           showStripeCheckout: false,
         causeContributions: "Construction of Senate Building",
@@ -19,7 +19,6 @@ export default new Vuex.Store(
         amountDonation: {
           donationValue: '',
             isValid: true,
-
           options: [
             {text: 'Naira', value: 'Naira', placeholder: '₦ 0.00', currencySymbol: '₦', iso: 'NGN'},
             {text: 'Dollar', value: 'Dollar', placeholder: '$ 0.00', currencySymbol: '$', iso: 'USD'},
@@ -120,6 +119,8 @@ export default new Vuex.Store(
         },
           SET_INIT_STRIPE_PAYMENT_DATA(state, payload) {
                 state.initStripeData = payload;
+
+                // localStorage.setItem('initStripeData', payload); // set the data in local storage
           },
 
         SET_FLUTTERWAVE_RESPONSE(state, payload) {

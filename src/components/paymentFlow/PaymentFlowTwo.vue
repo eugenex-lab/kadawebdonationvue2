@@ -511,6 +511,8 @@ input.paymentFormBodyCardAmountInputField:focus {
   display: flex;
   margin-left: -2.5rem;
   overflow-x: auto;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .nav__link {
@@ -585,6 +587,8 @@ img.submitIconFormat {
     display: flex;
     margin-left: 0.1rem;
     /*overflow-x: auto;*/
+    justify-content: space-around;
+    align-items: center;
   }
 
   .donateButton {

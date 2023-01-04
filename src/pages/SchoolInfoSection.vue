@@ -474,7 +474,7 @@ span.formatDayText {
   letter-spacing: 0;
   line-height: 17px;
   position: relative;
-  left: 4% !important;
+  left: 10% !important;
 }
 
 span.formatTopGUage {

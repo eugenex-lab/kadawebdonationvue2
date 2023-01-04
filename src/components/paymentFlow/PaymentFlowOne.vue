@@ -883,26 +883,26 @@ export default ({
 
         methodBeginForm() {
 
-          alert("Hi")
-
-
-          alert("methodBeginForm")
-          console.log("methodBeginForm called")
-          console.log("%c methodBeginForm called, formIsValid is  -->" + this.currency, 'color: black ; font-size: 20px');
-
-          // this.validateForm();
-          // if amount is empty, don't go to next page
-
-
-          console.log('filled input ' + this.amountDonation + ' currency ' + this.currency + ' minimum ' + this.minimumDonation);
-          // this.isNextPage = false;
-          // alert("methodAlert called")
-          window.location.href = '/causecontribution/success'
-          // the push without coming back
-          // this.$router.push('home/payment');  // replace is used to prevent the user from going back to the previous page
-
-
-          console.log("clicked continue to payment 2 page");
+          // alert("Hi")
+          //
+          //
+          // alert("methodBeginForm")
+          // console.log("methodBeginForm called")
+          // console.log("%c methodBeginForm called, formIsValid is  -->" + this.currency, 'color: black ; font-size: 20px');
+          //
+          // // this.validateForm();
+          // // if amount is empty, don't go to next page
+          //
+          //
+          // console.log('filled input ' + this.amountDonation + ' currency ' + this.currency + ' minimum ' + this.minimumDonation);
+          // // this.isNextPage = false;
+          // // alert("methodAlert called")
+          // window.location.href = '/causecontribution/success'
+          // // the push without coming back
+          // // this.$router.push('home/payment');  // replace is used to prevent the user from going back to the previous page
+          //
+          //
+          // console.log("clicked continue to payment 2 page");
 
           // log the prop value
         }
@@ -937,6 +937,17 @@ export default ({
       mounted() {
         this.generatePaymentIntent();
 
+        // if( localStorage.
+
+
+
+        // const query = window.matchMedia("(min-width: 900px)")
+        // if (query.matches) {
+        //   // screen width is at least 600px
+        //   // this.$router.push({ path: '/new-page' })
+        //   alert("Hi")
+        // }
+
       },
 
       created() {
@@ -965,12 +976,14 @@ option.minimal {
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: 71px;
+  height: 11px;
   box-shadow: 0 0 3px rgb(0 0 0 / 20%);
   background-color: #ffffff;
   display: flex;
   /*margin-left: -2.5rem;*/
   overflow-x: auto;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .nav__link {
@@ -1276,7 +1289,7 @@ img.androidIconFormat {
 }
 
 .donateButton {
-  /*height: 4.5rem;*/
+  height: 4.5rem;
   position: relative;
   /*margin-left: 1.5rem;*/
 }
