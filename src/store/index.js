@@ -12,7 +12,7 @@ export default new Vuex.Store(
     {
       plugins: [createPersistedState()],
       state: {
-          showStripeCheckout: false,
+          showPayoutSummary: false,
         causeContributions: "Construction of Senate Building",
         formIsValid: true,
         initFlutterData:'',
@@ -69,13 +69,17 @@ export default new Vuex.Store(
         flutterPaymentResponse: '',
           causeId: '',
           initStripeData: '',
+          minAmountValidation: '',
+
 
 
 
 
       },
       getters: {
-          showStripeCheckout: state => state.showStripeCheckout,
+          minAmountValidation: state => state.minAmountValidation,
+          currency: state => state.currency,
+          showPayoutSummary: state => state.showPayoutSummary,
           initStripeData: state => state.initStripeData,
         flutterPaymentResponse: state => state.flutterPaymentResponse,
         initFlutterData: state => state.initFlutterData ,
@@ -108,8 +112,13 @@ export default new Vuex.Store(
       },
       mutations: {
 
-          SET_SHOW_STRIPE_CHECKOUT(state, payload) {
-                state.showStripeCheckout = payload;
+
+          SET_MIN_AMOUNT_VALIDATION(state, payload) {
+                state.minAmountValidation = payload;
+          },
+
+          SET_SHOW_PAYOUT_SUMMARY(state, payload) {
+                state.showPayoutSummary = payload;
           }
 ,
         SET_CAUSE_ID(state, payload) {
@@ -230,8 +239,11 @@ export default new Vuex.Store(
                 console.log(response.data);
                 console.log(payload);
 
-                commit('SET_FLUTTERWAVE_RESPONSE', response.data);
 
+
+                setTimeout(() => {
+                        commit('SET_FLUTTERWAVE_RESPONSE', response.data);                }
+                , 2000);
 
 
 
@@ -252,7 +264,11 @@ export default new Vuex.Store(
         },
 
 
-        initializeStripePayment: function ({commit, state}, payload) {
+        initializeStripePayment: function ({commit, state}) {
+            console.log("%c response.data" +   state.amountDonation.donationValue +
+                state.causeId + state.firstName.value + state.lastName.value + state.email.value);
+
+
           axios.post('https://kada.identity.stage.wealthtech.ng/transaction/donation/public/collection/initialization', {
             "deviceId": "string",
             "deviceName": "string",
@@ -270,12 +286,13 @@ export default new Vuex.Store(
             "payAsAnonymous": false,  // Todo switch from input
             "paymentFrequency": "NONE",
             "paymentModeType": "ONE_OFF"
+
           })
               .then(response => {
-                console.log("%c response.data", "color: #00ff00 " +
-                    "; font-size: 20px  ; font-weight: bold " +
-                    " ; background-color: #000000 " +
-                    "; padding: 5px 10px 5px 10px", response.data);
+
+
+
+
                 console.log("%c response.data", "color: #00ff00 " +
                     "; font-size: 20px  ; font-weight: bold " +
                     " ; background-color: #000000 " +
@@ -288,9 +305,12 @@ export default new Vuex.Store(
                   console.log("%c response.data", "color: #00ff00 " +
                       "; font-size: 20px  ; font-weight: bold " +
                       " ; background-color: pink " +
-                      "; padding: 5px 10px 5px 10px", response.data.responseContent);
+                      "; padding: 5px 10px 5px 10px", response.data);
                 } else {
                   commit('SET_ERROR_PAGE', true);
+
+
+
 
                 }
               })
@@ -299,7 +319,7 @@ export default new Vuex.Store(
                 alert("error --->  " + error);
                 // implment error handling page here later
               });
-          console.log(state.causeXData + " " + state + " " + payload + " " + commit);
+          console.log(state.causeXData  );
 
         },
 

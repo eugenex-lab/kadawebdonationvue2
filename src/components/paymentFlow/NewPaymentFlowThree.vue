@@ -269,6 +269,7 @@ console.log("name me dey here")
   /*border: 1px solid black;*/
   /* padding: 1px; */
   position: relative;
+  padding-top: 4rem;
 }
 
 

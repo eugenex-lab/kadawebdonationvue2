@@ -11,7 +11,7 @@ import PaymentPageWeb from "@/pages/PaymentCompleteWeb.vue";
 import FormPageThree from "@/pages/FormPageThree.vue";
 import sample from "@/pages/SampleVue.vue";
 import SampleOutput from "@/pages/SampleOutput.vue";
-import PaymentFlowOne from "@/components/paymentFlow/PaymentFlowOne.vue";
+// import PaymentFlowOne from "@/components/paymentFlow/PaymentFlowOne.vue";
 
 export default  [
 
@@ -22,16 +22,6 @@ export default  [
       { path: '/causecontribution/:id/', component: FormPageOneWeb , name : 'home',
         // params: true,
       props: true},
-
-        // // add to be a ble to route to a success page after payment
-        // { path: '/causecontribution/:id/paymentfailure', component: PaymentPageWeb , name : 'PaymentFailure',
-        // // params: true,
-        // props: true},
-        // { path: '/causecontribution/:id/paymentsuccess', component: ErrorPagePayment , name : 'SuccessPage',
-        // // params: true,
-        // props: true},
-
-
 
     ]
   },
@@ -44,7 +34,7 @@ export default  [
     props: true},
 
 
-  { path: '/causecontribution/:id/form', component: PaymentFlowOne , name : 'PaymentFlowOne',
+  { path: '/causecontribution/:id/form', component: FormPageTwo , name : 'PaymentFlowOne',
     // params: true,
     props: true},
 
@@ -69,8 +59,8 @@ export default  [
 
 
   {path: '/paymentinfoweb', component: PaymentPageWeb},
-  {path: '/paymentinfo', component: FormPageTwo},
-  {path: '/paymentcard', component: FormPageThree},
+  {path: '/', component: FormPageTwo},
+  {path: '/xyz', component: FormPageThree},    /// <--- comement xyz route
   { path: '/sample', component: sample },
   {path: '/output', component: SampleOutput},
 

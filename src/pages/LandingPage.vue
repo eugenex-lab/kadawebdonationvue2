@@ -1,6 +1,6 @@
 <template>
   <div>
-    <the-header></the-header>
+<!--    <the-header></the-header>-->
 
 
     <form class="formFOrmat" >
@@ -75,7 +75,7 @@
   </div>
 <!--    </div>-->
 
-    <the-footer></the-footer>
+<!--    <the-footer></the-footer>-->
 
   </div>
 
@@ -83,10 +83,10 @@
 </template>
 
 <script>
-import TheFooter from "@/components/layout/TheFooter";
+// import TheFooter from "@/components/layout/TheFooter";
 
 import causeImage from "@/assets/projectIMage.png";
-import TheHeader from "@/components/layout/TheHeader";
+// import TheHeader from "@/components/layout/TheHeader";
 
 import NavBarButtons from "@/components/layout/NavBarButtons";
 import FormInfoPage from "@/pages/FormInfoPage";
@@ -115,8 +115,8 @@ export default {
     NavBarButtons, SchoolInfoSection
     // ,FormPageOne
     , FormPageOneWeb,
-    TheHeader,
-    TheFooter
+    // TheHeader,
+    // TheFooter
 
   },
   data() {

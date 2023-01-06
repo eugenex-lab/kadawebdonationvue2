@@ -1,6 +1,9 @@
 <template>
     <div class="smallWidthContainer" >
 
+
+
+
       <section class="schoolDetails" >
               <span class="formatLogoSchoolNameSection">
         <img class="schoolLogo" :src="avatarDetailInfo" alt="logo">
@@ -657,6 +660,17 @@ span.formatLogoSchoolNameSection {
     /*display: none;*/
   }
 
+}
+
+@media  screen and  (max-width: 899px) {
+
+  /*.smallWidthContainer {*/
+
+
+  /*  padding-top: 4rem;*/
+
+
+  /*}*/
 }
 
 

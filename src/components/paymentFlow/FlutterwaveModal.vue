@@ -205,7 +205,7 @@ export default {
 
         //run an action in the store to make api call to get the payment link
 
-        this.$store.dispatch("initializeFlutterwavePayment")
+
 
 
         setTimeout(() => {

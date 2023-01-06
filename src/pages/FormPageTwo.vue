@@ -1,8 +1,8 @@
 <template>
-<!--  <div class="container">-->
-    <div>
+  <div class="container">
+
       <schoolInfoSection></schoolInfoSection>
-      <payment-flow-two></payment-flow-two>
+      <PaymentFlowOne></PaymentFlowOne>
 
     </div>
 <!--  </div>-->
@@ -10,10 +10,11 @@
 
 <script>
 import SchoolInfoSection from "@/pages/SchoolInfoSection";
-import PaymentFlowTwo from "@/components/paymentFlow/NewPaymentFlowThree";
+// import PaymentFlowTwo from "@/components/paymentFlow/NewPaymentFlowThree";
+import PaymentFlowOne from "@/components/paymentFlow/PaymentFlowOne";
 export default {
   name: "FormPageTwo",
-  components: {PaymentFlowTwo
+  components: {PaymentFlowOne
     , SchoolInfoSection
   },
 }
@@ -21,8 +22,6 @@ export default {
 
 <style scoped>
 .container {
-  width: 400px;
-  max-width: 600px;
-  margin: 0 auto 0 1.8rem;
+  padding-top: 4rem;
 }
 </style>

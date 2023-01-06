@@ -2,33 +2,33 @@
 
 
 
+
+
   <div>
 
+
     <the-header></the-header>
+<!--    {{this.minAmountValid}}-->
+    <div v-if="enterStrCheckout" class="formatStripe">
 
-<!--{{this.stripeDataINfo}}-->
+    </div>
     <div class="smallWidthContainer" v-cloak>
-      <div>
+      <div   v-show="!showPayoutSummary">
 
 
-        <div v-if="enterStripCheckout">
-          <div class="formatStripe">
-            <stripe-element-payment
-                ref="paymentRef"
-                :pk=this.initStripePublicKey
-                :elements-options="elementsOptions"
-                :confirm-params="confirmParams"
 
 
-            />
-          </div>
-
-
-        </div>
+<!--        </div>-->
 
 
         <div class="paymentFormBody"
-             v-if="!enterStripCheckout">
+             v-if="!enterStripCheckout"   >
+
+
+
+
+          <form @submit.prevent="submit">
+
 
           <div class="paymentFormBodyHeader">
             <div class="paymentFormBodyHeader asterix ">
@@ -155,47 +155,131 @@
               </label>
             </div>
           </div>
+
+          </form>
+
+
+          <div class="webButtonContainer">
+
+
+
+          </div>
+
+
+
+<!--          <a class="nav__link donateButton webVersion " v-show="!showNGN" @click="validateTHIS">-->
+          <a class="nav__link donateButton webVersion " @click="validateTHIS">
+            <img class="submitIconFormat" :src="continueToForm">
+          </a>
+
         </div>
       </div>
 
 
-      <div class="webButtonContainer">
-        <div v-show="showNGN">
-          <!--          <flutterwave-modal-->
-          <!--              :isProduction="isProduction"-->
-          <!--              :email="customer.email"-->
-          <!--              :amount="this.donationValue"-->
-          <!--              :reference="reference"-->
-          <!--              :flw-key="flwKey"-->
-          <!--              :callback="callback"-->
-          <!--              :close="close"-->
-          <!--              :currency="NGN"-->
-          <!--              :country="country"-->
-          <!--              :custom_title="customizations.title"-->
-          <!--              :custom_logo="customizations.logo"-->
-          <!--              :payment_method="paymentMethod"-->
-          <!--          >-->
-          <!--          </flutterwave-modal>-->
-
-          <flutterwave-modal>
-          </flutterwave-modal>
 
 
+
+
+
+        <div class="paymentFormBody"  v-show="showPayoutSummary">
+
+          <div class="paymentFormBody stripeFOmrat"  >
+
+            <stripe-element-payment
+                ref="paymentRef"
+                :pk="pk"
+                :elements-options="elementsOptions"
+                :confirm-params="confirmParams"
+            />
+
+          </div>
+
+<div >
+          <div class="paymentFormBodyHeader">
+            <div class="paymentFormBodyHeader asterix noAfterAsterix ">
+              Your Names
+            </div>
+          </div>
+
+          <div class="inputEMail">
+
+
+
+
+               <div class="grey-box" @click="editPay">
+
+
+                   <div class="grey-box__content__title">
+                     {{firstName}} {{lastName}}
+                   </div>
+
+
+               </div>
+
+          </div>
+          <div class="fixFOrmatError">
+
+
+          </div>
+
+
+          <div class="paymentFormBodyHeader asterix formatTop noAfterAsterix"> Your Email Address</div>
+
+          <div class="inputEMail">
+
+
+
+            <div class="grey-box" @click="editPay">
+
+
+              <div class="grey-box__content__title">
+                {{emailInput}}
+              </div>
+
+
+            </div>
+
+
+
+
+          </div>
+
+
+
+          <div class="paymentFormBodyHeader asterix formatTop noAfterAsterix"> Donation Amount
+            <div class="formatDOnationAMountBox">
+            <div class="grey-box"  @click="editPay">
+
+              <div class="grey-box__content__title">
+                {{ ( this.displayCurrency )}}
+              </div>
+
+
+            </div>
+            </div>
+
+          </div>
+
+          <a class="nav__link donateButton webVersion btnFormat" v-show="!showNGN" @click="pay">
+            <img class="submitIconFormat btn" id="pic" :src="payForm">
+          </a>
+
+          <a class="nav__link donateButton webVersion btnFormat" v-show="showNGN">
+            <img class="submitIconFormat btn" id="pic" :src="payForm">
+            <flutterwave-modal>
+            </flutterwave-modal>
+          </a>
+
+
+
+          <a class="editBtn"   @click="editPay">
+            Edit details
+          </a>
+
+
+</div>
         </div>
 
-
-<!--        <a class="nav__link donateButton webVersion" v-show="!showNGN" @click="pay">-->
-<!--          <img class="submitIconFormat" :src="continueToForm">-->
-<!--        </a>-->
-        <a class="nav__link donateButton webVersion" v-show="!showNGN" @click="pay">
-          <img class="submitIconFormat" :src="continueToForm">
-        </a>
-
-
-      </div>
-
-
-    </div>
 
 
     <nav class="nav">
@@ -211,6 +295,10 @@
 
 
   </div>
+    </div>
+
+
+
 </template>
 
 
@@ -221,12 +309,17 @@ import {mapFields} from "vuex-map-fields";
 // import {mapMutations} from "vuex";
 
 import 'vue-select/dist/vue-select.css';
-import continueButoon from "@/assets/makePayment.svg";
+import continueButoon from "@/assets/Continuebhevron.svg";
+import paymetBtn from "@/assets/makePayment.svg";
+
 import DebouncedCurrencyInput from "@/components/layout/DebouncedCurrencyInput.vue";
-import FlutterwaveModal from "@/components/paymentFlow/FlutterwaveModal.vue";
+// remove check below
+
+// import FlutterwaveModal from "@/components/paymentFlow/FlutterwaveModal.vue";
 // import { StripeCheckout } from '@vue-stripe/vue-stripe';
 import {mapState} from "vuex";
 import TheHeader from "@/components/layout/TheHeader";
+// import axios from "axios";
 
 
 
@@ -237,82 +330,94 @@ export default ({
         // currencyPicked: this.currency,
       },
       components: {
-        FlutterwaveModal,
+        // FlutterwaveModal,
         DebouncedCurrencyInput,
         TheHeader,
 
 
         StripeElementPayment,
       },
-      data: () => ({
-
-        enterStripCheckout: false,
-
-
-        value: 12343434343,
-        isNextPage: true,
-        continueToForm: continueButoon,
-
-
-        leastAmountDonationValValid: true,
-        price: 123.45,
-        // formIsValid: true,
-        currencyAmt: "₦1,000,000",
-        makeTextGreen: false,
-        // minAmountValid: "#003b88",
-        minimumDonationAnyCurrency: 0,
-
-        isProduction: false,
-        flwKey: "FLWPUBK_TEST-9ae5cc9e62a984b04ce8f3666d4e8225-X",  // flutterwave
-        // amount: "amountDonation.donationValue",
-        // currency: "NGN",
-        country: "NG",
-        customer: {
-          name: "Kolapo Opeyemi",
-          email: "kola.egen@gmail.com",
-          price: 1000,
-        },
-        // callback: (response) => {
-        //   console.log(response);
-
-        // var txref = response.tx.tx_ref
-        // console.log("%c data from flutterwave", "color: #00ff00 ; font-size: 200px", response);
-        // if(      response.tx.chargeResponseCode == "00" ||
-        //     response.tx.chargeResponseCode == "0"){
-        //   // redirect to a success page
-        //   alert("Transaction was successful" + response.tx.tx_ref +  txref);
-        // }
-        // else{
-        //   // redirect to a failure page.
-        //   alert("Transaction was not successful, kindly retry" + response.tx.tx_ref + txref);
-        // }
-
-
-        // },
-        // onclose: () => {
-        //   console.log("Payment closed");
-        // },
-
-        customizations: {
-          title: "Sankore Cause Foundation",
-          description: "Payment to rebuild Olumo Rock",
-          logo: "http://dp76jxyzopnbo.cloudfront.net/kada/images/kada3x.png",
-        },
-        paymentMethod: "",
-        formIsValid: true,
-
-
-      }),
-
-
       setup() {
+        return {
+          startStripeSdk:false,   /// un-used
+
+
+          publicKeyStripe: "pk_test_51J9qFaDUqvtd3qvsd5okYctfoVezKe8p3PYTDzbPCG8oNPPlGfvmU2tyb3OS3epgcHMobM7vuXAhz2B5CRczJpvA00eSzPLKZ3",
+          enterStripCheckout: false,
+          value: 12343434343,
+          isNextPage: true,
+          continueToForm: continueButoon,
+          continueToFormDetails: continueButoon,
+          payForm:paymetBtn,
+
+
+          leastAmountDonationValValid: true,
+          price: 123.45,
+          // formIsValid: true,
+          currencyAmt: "₦1,000,000",
+          makeTextGreen: false,
+          // minAmountValid: "#003b88",
+          minimumDonationAnyCurrency: 0,
+
+          isProduction: false,
+          flwKey: "FLWPUBK_TEST-9ae5cc9e62a984b04ce8f3666d4e8225-X",  // flutterwave
+          // amount: "amountDonation.donationValue",
+          // currency: "NGN",
+          country: "NG",
+          customer: {
+            name: "Kolapo Opeyemi",
+            email: "kola.egen@gmail.com",
+            price: 1000,
+          },
+          // callback: (response) => {
+          //   console.log(response);
+
+          // var txref = response.tx.tx_ref
+          // console.log("%c data from flutterwave", "color: #00ff00 ; font-size: 200px", response);
+          // if(      response.tx.chargeResponseCode == "00" ||
+          //     response.tx.chargeResponseCode == "0"){
+          //   // redirect to a success page
+          //   alert("Transaction was successful" + response.tx.tx_ref +  txref);
+          // }
+          // else{
+          //   // redirect to a failure page.
+          //   alert("Transaction was not successful, kindly retry" + response.tx.tx_ref + txref);
+          // }
+
+
+          // },
+          // onclose: () => {
+          //   console.log("Payment closed");
+          // },
+
+          customizations: {
+            title: "Sankore Cause Foundation",
+            description: "Payment to rebuild Olumo Rock",
+            logo: "http://dp76jxyzopnbo.cloudfront.net/kada/images/kada3x.png",
+          },
+          paymentMethod: "",
+          formIsValid: true,
+
+
+        }
+      }
+        ,
+
+
+      data() {
+
+
 
 
         return {
 
-          pk: 'pk_test_51J9qFaDUqvtd3qvsd5okYctfoVezKe8p3PYTDzbPCG8oNPPlGfvmU2tyb3OS3epgcHMobM7vuXAhz2B5CRczJpvA00eSzPLKZ3',
+          pk: this.publicKeyStripe,
 
-          // pk: this.initStripeDataPublicKy,
+          // pk: this.initStripePublicKey,
+
+          // pk : '',
+
+
 
 
           elementsOptions: {
@@ -354,6 +459,8 @@ export default ({
 
       watch: {
 
+
+
         showStripeElement: function (val) {
 
           val = this.$store.state.showStripeCheckout
@@ -361,13 +468,13 @@ export default ({
         },
 
         amountDonationInput: function (val) {
-          if (val.length > 0) {
+          if (!val.length) {
             this.$store.commit("SET_MIN_AMOUNT_ALERT", '#003b88')
 
             this.$store.commit("SET_AMOUNT_DONATION_VALID", true);
           } else {
-            this.$store.commit("SET_AMOUNT_DONATION_VALID", true);
-            this.$store.commit("SET_MIN_AMOUNT_ALERT", '#003b88')
+            // this.$store.commit("SET_AMOUNT_DONATION_VALID", true);
+            // this.$store.commit("SET_MIN_AMOUNT_ALERT", '#003b88')
           }
         },
 
@@ -469,6 +576,8 @@ export default ({
         // },
 
 
+
+
       },
       computed: {
         ...mapFields(["emailInput", "firstName", "firstName.isValid", "email", "amountDonation.donationValue",
@@ -478,6 +587,53 @@ export default ({
         ,
 
         ...mapState({}),
+
+        // publicStripeKeyStore() {
+        //   return  this.watchPk
+        // },
+
+        displayCurrency() {
+
+          const newDonationValue = this.formatNumber(this.amountEditPage)
+
+
+          return this.$store.getters.currency + ' '+ newDonationValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+
+          // add comma to the amount
+          // return this.$store.getters.currency + ' '+ this.amountEditPage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+
+
+        },
+
+        minAmountValid() {
+
+          // remove comma from the amount and naira sign
+         const val = String(this.$store.getters.minAmountValidation).replace(/,/g, "").replace("₦", "") // remove comma from the amount and naira sign
+          // remove comma from the amount
+
+          return val
+
+
+          // remove comma from the amount and naira sign
+
+
+
+        },
+
+
+        amountEditPage: {
+
+          get() {
+            return       this.$store.getters.amountDonation
+          },
+
+        },
+
+
+        showPayoutSummary() {
+          return this.$store.getters.showPayoutSummary
+          // return false
+        },
 
         initStripeDataSecretKey: function () {
           return this.$store.getters.initStripeData.gatewaySecretKey
@@ -665,8 +821,13 @@ export default ({
                 "color: #003b88; font-size: 16px; font-weight: bold; background-color: #fff; padding: 5px; border-radius: 5px; border: 1px solid #003b88;"
                 , this.causeDetailInfo.minimumAmountAllowed)
 
-            // remove the comma and currency symbol from the minimum donation amount
 
+
+
+            // const minAmount = this.causeDetailInfo.minimumAmountAllowed.replace(/,/g, '').replace(/₦/g, '')
+
+            // comment out this line to test the min amount alert
+            this.$store.commit("SET_MIN_AMOUNT_VALIDATION", this.causeDetailInfo.minimumAmountAllowed)
 
             return this.causeDetailInfo.minimumAmountAllowed
           } else {
@@ -676,6 +837,10 @@ export default ({
                 ,
                 "color: #003b88; font-size: 16px; font-weight: bold; background-color: #fff; padding: 5px; border-radius: 5px; border: 1px solid #003b88;"
                 , buzz)
+
+
+            this.$store.commit("SET_MIN_AMOUNT_VALIDATION", this.getCurrencyInfo.currencyList[1].minimumDonationAmount)
+
             return buzz
           }
         },
@@ -725,6 +890,11 @@ export default ({
 
       ,
       methods: {
+
+        formatNumber (num) {
+          return parseFloat(num).toFixed(2)
+        },
+
         // apiCallToGeneratePaymentIntent
 
 
@@ -776,7 +946,7 @@ export default ({
             this.$store.commit("SET_EMAIL_VALID", false);
           }
 
-          if (this.amountDonationInput === null || this.amountDonationInput < this.minimumAMountDollar || this.amountDonationInput.length < 1) {
+          if (this.amountDonationInput === null || this.amountDonationInput < this.minAmountValid || this.amountDonationInput.length < 1) {
 
             this.$store.commit("SET_AMOUNT_DONATION_VALID", false);
             this.formIsValid = false;
@@ -794,27 +964,36 @@ export default ({
 
         },
 
-        pay() {
+        // validateFormButton(){
 
+          validateTHIS(){
+          console.log("Clicked vlaidate button")
 
           this.validateForm()
 
-
           if (this.formIsValid) {
-
-            // initializeStripePayment
-            this.$store.dispatch("initializeStripePayment", this.causeId)
-            // this.$store.commit("SET_SHOW_STRIPE_CHECKOUT", true);
-            this.enterStripCheckout = true
-            this.$refs.paymentRef.submit();
+            this.$store.dispatch("initializeFlutterwavePayment")
+            this.$store.dispatch("initializeStripePayment")
+            this.$store.commit("SET_SHOW_PAYOUT_SUMMARY", true)
 
           } else {
             // alert("to check valiation " + this.formIsValid )
 
           }
 
+        }
+        ,
+        editPay(){
 
-          // check if stripe payment is successful
+          this.$store.commit("SET_SHOW_PAYOUT_SUMMARY", false)
+
+
+        },
+
+        pay() {
+
+
+          this.$refs.paymentRef.submit();
 
 
 
@@ -841,7 +1020,6 @@ export default ({
 
             alert("hi")
 
-            this.$refs.checkoutRef.redirectToCheckout();
 
           }
         }
@@ -937,23 +1115,14 @@ export default ({
       mounted() {
         this.generatePaymentIntent();
 
-        // if( localStorage.
-
-
-
-        // const query = window.matchMedia("(min-width: 900px)")
-        // if (query.matches) {
-        //   // screen width is at least 600px
-        //   // this.$router.push({ path: '/new-page' })
-        //   alert("Hi")
-        // }
+        // alert("remouted")
 
       },
 
       created() {
+        // alert("cretaed ")
 
-
-        this.runfirst();
+        // this.runfirst();
         console.log("created here");
 
 
@@ -1116,6 +1285,10 @@ select {
   font-family: "SF Pro Text";
 }
 
+
+.paymentFormBodyHeader.asterix.noAfterAsterix:after {
+  content: "";
+}
 
 select.minimal {
   /*background-image:*/
@@ -1523,6 +1696,7 @@ input::-webkit-inner-spin-button {
 
     margin-left: -2.1rem;
     padding-top: 0.2rem;
+    cursor: pointer;
   }
 
   img.submitIconFormat[data-v-4506583d] {
@@ -1673,13 +1847,73 @@ p.validationAlert.topFormFOrmat.sideleftFormat {
 
 @media screen and (max-width: 900px) {
 .smallWidthContainer{
-  padding-top: 7rem;
+  padding-top: 2em;
 
 }
 
 
 }
 
+/* Section for details Page */
 
+
+
+.grey-box{
+  height: 45px;
+  width: 307px;
+  background-color: #F9F9F9;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  cursor: grab;
+}
+
+.formatDOnationAMountBox {
+  display: flex;
+  /* padding-left: 0.8rem; */
+  padding-bottom: -0.7em;
+  left: 4rem;
+  /*position: initial;*/
+  padding-top: 0.5rem;
+  margin-left: -0.5em;
+}
+
+.grey-box__content__title{
+  color: rgba(1,13,28,0.8);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.29px;
+  line-height: 17px;
+  padding-left: 1.1rem;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+}
+
+
+img#pic {
+  width: 19rem;
+}
+a.nav__link.donateButton.webVersion.btnFormat {
+  margin-left: -2.7rem;
+}
+
+a.editBtn {
+  opacity: 0.5;
+  color: #010D1C;
+  /* font-family: Inter; */
+  font-size: 14px;
+  letter-spacing: 0;
+  margin-left: -3rem;
+  /* line-height: 20px; */
+  cursor: grab;
+  width: 100%;
+}
+
+.paymentFormBody.stripeFOmrat {
+  padding-top: 2.8rem;
+  width: 21rem;
+}
 
 </style>
