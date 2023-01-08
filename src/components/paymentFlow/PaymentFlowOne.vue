@@ -8,10 +8,9 @@
 
 
     <the-header></the-header>
-<!--    {{this.minAmountValid}}-->
-    <div v-if="enterStrCheckout" class="formatStripe">
+    {{this.initStripeDataSecretKey}}
+    {{this.continueSTripePayment}}
 
-    </div>
     <div class="smallWidthContainer" v-cloak>
       <div   v-show="!showPayoutSummary">
 
@@ -183,18 +182,11 @@
 
         <div class="paymentFormBody"  v-show="showPayoutSummary">
 
-          <div class="paymentFormBody stripeFOmrat"  >
+        
 
-            <stripe-element-payment
-                ref="paymentRef"
-                :pk="pk"
-                :elements-options="elementsOptions"
-                :confirm-params="confirmParams"
-            />
+ <div   v-show="!this.showStripePayment">
 
-          </div>
-
-<div >
+   {{resultStripeSceret}}
           <div class="paymentFormBodyHeader">
             <div class="paymentFormBodyHeader asterix noAfterAsterix ">
               Your Names
@@ -260,6 +252,9 @@
 
           </div>
 
+
+
+
           <a class="nav__link donateButton webVersion btnFormat" v-show="!showNGN" @click="pay">
             <img class="submitIconFormat btn" id="pic" :src="payForm">
           </a>
@@ -278,6 +273,50 @@
 
 
 </div>
+
+<!--repeated flutterwave and payment button and edit button down here  -->
+
+          <div  class="formatStripe showStripe" v-show="this.showStripePayment">
+
+            <div class="stripeREcBox">
+              <stripe-element-payment
+                  ref="paymentRef"
+                  :pk="pk"
+                  :elements-options="elementsOptions"
+                  :confirm-params="confirmParams"
+              />
+
+
+
+            </div>
+
+<div class="formatButtonStripe">
+
+  <a class="nav__link donateButton webVersion btnFormat" v-show="showNGN">
+    <img class="submitIconFormat btn" id="pic" :src="payForm">
+    <flutterwave-modal>
+    </flutterwave-modal>
+  </a>
+
+  <a class="nav__link donateButton webVersion btnFormat" v-show="!showNGN" @click="pay">
+    <img class="submitIconFormat btn" id="pic" :src="payForm">
+  </a>
+
+
+  <a class="editBtn"   @click="editPay">
+    Edit details
+  </a>
+
+</div>
+
+
+
+
+
+          </div>
+
+
+
         </div>
 
 
@@ -319,6 +358,7 @@ import DebouncedCurrencyInput from "@/components/layout/DebouncedCurrencyInput.v
 // import { StripeCheckout } from '@vue-stripe/vue-stripe';
 import {mapState} from "vuex";
 import TheHeader from "@/components/layout/TheHeader";
+import axios from "axios";
 // import axios from "axios";
 
 
@@ -339,6 +379,8 @@ export default ({
       },
       setup() {
         return {
+          resultStripeSceret: '',
+
           startStripeSdk:false,   /// un-used
 
 
@@ -588,9 +630,16 @@ export default ({
 
         ...mapState({}),
 
-        // publicStripeKeyStore() {
-        //   return  this.watchPk
-        // },
+        continueSTripePayment() {
+          return this.$store.getters.continueSTripePayment
+        },
+
+
+        showStripePayment() {
+
+
+          return this.$store.state.showStripePayment
+        },
 
         displayCurrency() {
 
@@ -636,7 +685,8 @@ export default ({
         },
 
         initStripeDataSecretKey: function () {
-          return this.$store.getters.initStripeData.gatewaySecretKey
+          // return this.$store.getters.initStripeData.gatewaySecretKey
+          return this.$store.getters.initSecKey
         },
 
         initStripePublicKey: function () {
@@ -903,6 +953,8 @@ export default ({
 
           // const paymentIntent = await apiCallToGeneratePaymentIntent(); // this is just a dummy, create your own API call
           // this.elementsOptions.clientSecret = "pi_3MKdIxDUqvtd3qvs2cVi9ZjA_secret_yarMeTe5RmhzkIZEoBbg1dD5j"
+
+
           this.elementsOptions.clientSecret = this.initStripeDataSecretKey
 
           // make paymet callback to the server
@@ -964,15 +1016,84 @@ export default ({
 
         },
 
-        // validateFormButton(){
+        initializeStripePayment(){
 
+
+          axios.post('https://kada.identity.stage.wealthtech.ng/transaction/donation/public/collection/initialization', {
+            "deviceId": "string",
+            "deviceName": "string",
+            "deviceOS": "string",
+            "osVersion": "string",
+            "donationAmount": this.$store.getters.amountDonation,
+            "paymentChannel": "Stripe",
+            "currency": "USD",
+            "paymentType": "CAUSE",
+            "paymentTypeId": 1,
+            "schoolClassId": this.$store.getters.causeId,
+            "firstName": this.$store.getters.firstName,
+            "lastName": this.$store.getters.lastName,
+            "emailAddress": this.$store.getters.email,
+            "payAsAnonymous": false,  // Todo switch from input
+            "paymentFrequency": "NONE",
+            "paymentModeType": "ONE_OFF"
+
+          })
+              .then(response => {
+
+
+
+                console.log("%c response.data", "color: #00ff00 " +
+                    "; font-size: 20px  ; font-weight: bold " +
+                    " ; background-color: #000000 " +
+                    "; padding: 5px 10px 5px 10px", response.data.responseCode);
+
+                if (response.data.responseCode === 200) {
+                  this.$store.commit('SET_INIT_STRIPE_PAYMENT_DATA', response.data.responseContent);
+                  this.$store.commit('ET_STATUS', false);
+                  this.$store.commit('SET_ERROR_PAGE', false);
+                  console.log("%c response.data", "color: purple " +
+                      "; font-size: 20px  ; font-weight: bold " +
+                      " ; background-color: pink " +
+                      "; padding: 5px 10px 5px 10px", response.data.responseContent.gatewaySecretKey);
+
+                  // set the secret key to data from the api
+                  this.resultStripeSceret = response.data.responseContent.gatewaySecretKey
+                  // set to data
+
+
+
+
+
+
+
+
+
+
+                } else {
+                  this.$store.commit('SET_ERROR_PAGE', true);
+
+
+
+
+                }
+              })
+              .catch(error => {
+                console.log(error);
+                alert("error --->  " + error);
+                // implment error handling page here later
+              });
+          // console.log(state.causeXData  );
+        },
           validateTHIS(){
           console.log("Clicked vlaidate button")
 
           this.validateForm()
+            this.$store.commit("SET_SHOW_STRIPE_PAYMENT", false)
 
-          if (this.formIsValid) {
+
+            if (this.formIsValid) {
             this.$store.dispatch("initializeFlutterwavePayment")
+
             this.$store.dispatch("initializeStripePayment")
             this.$store.commit("SET_SHOW_PAYOUT_SUMMARY", true)
 
@@ -986,15 +1107,30 @@ export default ({
         editPay(){
 
           this.$store.commit("SET_SHOW_PAYOUT_SUMMARY", false)
+          this.$store.commit("SET_SHOW_STRIPE_PAYMENT", false)
+
 
 
         },
 
-        pay() {
+     async   pay() {
 
 
-          this.$refs.paymentRef.submit();
 
+if(this.initStripeDataSecretKey === null || this.initStripeDataSecretKey.length < 1){
+  // set loading state to true
+  console.log("loading state is true, PLEASE WAIT" ,
+      "color: red; font-size: 20px; font-weight: bold; background-color: red; padding: 5px 10px 5px 10px")
+}else {
+  this.$store.commit("SET_SHOW_STRIPE_PAYMENT", true)
+
+  // time out to set loading state to false
+  setTimeout(() => {
+    this.$refs.paymentRef.submit();
+
+  }, 3000)
+
+}
 
 
         },
@@ -1837,11 +1973,14 @@ p.validationAlert.topFormFOrmat.sideleftFormat {
 
 .formatStripe {
   position: relative;
-  margin-left: 1.4rem;
-  width: 80%;
-  height: 16.5rem;
+  margin-left: -1.6rem;
+  width: auto;
+  height: 24.5rem;
   padding-top: 1rem;
   padding-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 
@@ -1893,10 +2032,10 @@ p.validationAlert.topFormFOrmat.sideleftFormat {
 
 
 img#pic {
-  width: 19rem;
+  width: 19.5rem;
 }
 a.nav__link.donateButton.webVersion.btnFormat {
-  margin-left: -2.7rem;
+  margin-left: -3.3rem;
 }
 
 a.editBtn {
@@ -1914,6 +2053,19 @@ a.editBtn {
 .paymentFormBody.stripeFOmrat {
   padding-top: 2.8rem;
   width: 21rem;
+}
+
+/* Stripe format  */
+
+
+.stripeREcBox {
+  display: block;
+  height: 20rem;
+  width: 19.5rem;
+}
+
+.formatButtonStripe {
+  padding-left: 3rem;
 }
 
 </style>
