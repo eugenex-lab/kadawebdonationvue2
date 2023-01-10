@@ -64,53 +64,6 @@ export default new Vuex.Store(
                 }
             )
 
-
-            // reducer(state) {
-            //     return {
-            //         initStripeData: state.initStripeData,
-            //         showPayoutSummary: state.showPayoutSummary,
-            //         formIsValid: state.formIsValid,
-            //         initFlutterData: state.initFlutterData,
-            //         amountDonation: state.amountDonation,
-            //         firstName: state.firstName,
-            //         lastName: state.lastName,
-            //         email: state.email,
-            //
-            //
-            //         amountDonationValValid: true,
-            //
-            //
-            //         causeDetails: state.causeDetails,
-            //
-            //
-            //         loadingStatus: state.loadingStatus,
-            //         idCause: state.idCause,
-            //
-            //
-            //         idd: state.idd,
-            //         causeDetailInfo: [],
-            //         causeDetail: state.causeDetail,
-            //         causeXData: state.causeXData,
-            //         currencyXData: state.currencyXData,
-            //         clientId: state.clientId,
-            //         errorPage: state.errorPage,
-            //         flutterPaymentResponse: state.flutterPaymentResponse,
-            //
-            //
-            //         causeId: state.causeId,
-            //         initSecKey: state.initSecKey,
-            //
-            //
-            //         minAmountValidation: state.minAmountValidation,
-            //         showStripePayment: state.showStripePayment,
-            //
-            //     }
-            //
-            //
-            //
-            //
-            //     }
-
             }
         )],
         state: {
@@ -504,7 +457,7 @@ export default new Vuex.Store(
                         if (response.data.responseCode === 200) {
                             commit('SET_INIT_FLUTTERWAVE_PAYMENT', response.data.responseContent);
                             commit('SET_STATUS', false);
-                            commit('SET_ERROR_PAGE', false);
+                            // commit('SET_ERROR_PAGE', false);
                             console.log("%c response.data", "color: #00ff00 " +
                                 "; font-size: 20px  ; font-weight: bold " +
                                 " ; background-color: pink " +

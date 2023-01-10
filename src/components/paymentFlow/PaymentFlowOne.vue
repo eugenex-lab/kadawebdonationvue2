@@ -185,7 +185,7 @@
 
  <div   v-show="!this.showStripePayment">
 
-   {{resultStripeSceret}}
+
           <div class="paymentFormBodyHeader">
             <div class="paymentFormBodyHeader asterix noAfterAsterix ">
               Your Names
@@ -254,9 +254,9 @@
 
 
 
-          <a class="nav__link donateButton webVersion btnFormat" v-show="!showNGN" @click="pay">
-            <img class="submitIconFormat btn" id="pic" :src="payForm">
-          </a>
+<!--          <a class="nav__link donateButton webVersion btnFormat" v-show="!showNGN" @click="pay">-->
+<!--            <img class="submitIconFormat btn" id="pic" :src="payForm">-->
+<!--          </a>-->
 
           <a class="nav__link donateButton webVersion btnFormat" v-show="showNGN">
             <img class="submitIconFormat btn" id="pic" :src="payForm">
@@ -293,12 +293,6 @@
 
 
 
-              <stripe-element-payment
-                  ref="paymentRef"
-                  :pk="pk"
-                  :elements-options="elementsOptions"
-                  :confirm-params="confirmParams"
-              />
 
 
 
@@ -312,14 +306,14 @@
     </flutterwave-modal>
   </a>
 
-  <a class="nav__link donateButton webVersion btnFormat" v-show="!showNGN" @click="pay">
-    <img class="submitIconFormat btn" id="pic" :src="payForm">
-  </a>
+<!--  <a class="nav__link donateButton webVersion btnFormat" v-show="!showNGN" @click="pay">-->
+<!--    <img class="submitIconFormat btn" id="pic" :src="payForm">-->
+<!--  </a>-->
 
 
-  <a class="editBtn"   @click="cancelPay">
-    Cancel
-  </a>
+<!--  <a class="editBtn"   @click="cancelPay">-->
+<!--    Cancel-->
+<!--  </a>-->
 
 </div>
 
@@ -356,7 +350,7 @@
 
 
 <script>
-import {StripeElementPayment} from '@vue-stripe/vue-stripe';
+// import {StripeElementPayment} from '@vue-stripe/vue-stripe';
 
 import {mapFields} from "vuex-map-fields";
 // import {mapMutations} from "vuex";
@@ -372,7 +366,6 @@ import DebouncedCurrencyInput from "@/components/layout/DebouncedCurrencyInput.v
 // import { StripeCheckout } from '@vue-stripe/vue-stripe';
 import {mapState} from "vuex";
 import TheHeader from "@/components/layout/TheHeader";
-import axios from "axios";
 // import axios from "axios";
 
 
@@ -389,11 +382,10 @@ export default ({
         TheHeader,
 
 
-        StripeElementPayment,
       },
       setup() {
         return {
-          resultStripeSceret: '',
+
 
           startStripeSdk:false,   /// un-used
 
@@ -460,54 +452,7 @@ export default ({
         ,
 
 
-      data() {
 
-
-
-
-        return {
-
-          pk: this.publicKeyStripe,
-
-          // pk: this.initStripePublicKey,
-
-          // pk : '',
-
-
-
-
-          elementsOptions: {
-            appearance: {
-              // theme: 'flat'         ,     // variables: {
-              //   colorPrimary: '#f1c609',       // color wen u hover on the element input
-              //   colorBackground: '#ffffff',   // <--- works for iput backgrud
-              //   colorText: '#464fb7',     // <--- as it shows
-                colorDanger: '#df1b1b',  // <--- works for error make
-              //   fontFamily: 'Ideal Sans, system-ui, sans-serif',
-              //   // spacingUnit: '2px',
-              //   // borderRadius: '4px',
-              //   // See all possible variables below
-              // },
-
-
-
-        }
-          },
-          confirmParams: {
-
-            return_url:  'http://localhost:8080/causecontribution/:id/paymentsuccess',
-            // redirect: 'if_required',   // redirect is required for stripe checkout session
-
-          },
-          layout: {
-            type: 'accordion',
-            defaultCollapsed: false,
-            radios: true,
-            spacedAccordionItems: false
-          }
-
-        }
-      },
 
 
 
@@ -968,20 +913,20 @@ export default ({
         // apiCallToGeneratePaymentIntent
 
 
-        async generatePaymentIntent() {
-
-
-          // const paymentIntent = await apiCallToGeneratePaymentIntent(); // this is just a dummy, create your own API call
-          // this.elementsOptions.clientSecret = "pi_3MKdIxDUqvtd3qvs2cVi9ZjA_secret_yarMeTe5RmhzkIZEoBbg1dD5j"
-
-
-          this.elementsOptions.clientSecret = this.initStripeDataSecretKey
-
-          // make paymet callback to the server
-
-
-
-        },
+        // async generatePaymentIntent() {
+        //
+        //
+        //   // const paymentIntent = await apiCallToGeneratePaymentIntent(); // this is just a dummy, create your own API call
+        //   // this.elementsOptions.clientSecret = "pi_3MKdIxDUqvtd3qvs2cVi9ZjA_secret_yarMeTe5RmhzkIZEoBbg1dD5j"
+        //
+        //
+        //   this.elementsOptions.clientSecret = this.initStripeDataSecretKey
+        //
+        //   // make paymet callback to the server
+        //
+        //
+        //
+        // },
 
 
         validateForm() {
@@ -1036,74 +981,6 @@ export default ({
 
         },
 
-        initializeStripePayment(){
-
-
-          axios.post('https://kada.identity.stage.wealthtech.ng/transaction/donation/public/collection/initialization', {
-            "deviceId": "string",
-            "deviceName": "string",
-            "deviceOS": "string",
-            "osVersion": "string",
-            "donationAmount": this.$store.getters.amountDonation,
-            "paymentChannel": "Stripe",
-            "currency": "USD",
-            "paymentType": "CAUSE",
-            "paymentTypeId": 1,
-            "schoolClassId": this.$store.getters.causeId,
-            "firstName": this.$store.getters.firstName,
-            "lastName": this.$store.getters.lastName,
-            "emailAddress": this.$store.getters.email,
-            "payAsAnonymous": false,  // Todo switch from input
-            "paymentFrequency": "NONE",
-            "paymentModeType": "ONE_OFF"
-
-          })
-              .then(response => {
-
-
-
-                console.log("%c response.data", "color: #00ff00 " +
-                    "; font-size: 20px  ; font-weight: bold " +
-                    " ; background-color: #000000 " +
-                    "; padding: 5px 10px 5px 10px", response.data.responseCode);
-
-                if (response.data.responseCode === 200) {
-                  this.$store.commit('SET_INIT_STRIPE_PAYMENT_DATA', response.data.responseContent);
-                  this.$store.commit('ET_STATUS', false);
-                  this.$store.commit('SET_ERROR_PAGE', false);
-                  console.log("%c response.data", "color: purple " +
-                      "; font-size: 20px  ; font-weight: bold " +
-                      " ; background-color: pink " +
-                      "; padding: 5px 10px 5px 10px", response.data.responseContent.gatewaySecretKey);
-
-                  // set the secret key to data from the api
-                  this.resultStripeSceret = response.data.responseContent.gatewaySecretKey
-                  // set to data
-
-
-
-
-
-
-
-
-
-
-                } else {
-                  this.$store.commit('SET_ERROR_PAGE', true);
-
-
-
-
-                }
-              })
-              .catch(error => {
-                console.log(error);
-                alert("error --->  " + error);
-                // implment error handling page here later
-              });
-          // console.log(state.causeXData  );
-        },
           validateTHIS(){
           console.log("Clicked vlaidate button")
 
@@ -1116,12 +993,15 @@ export default ({
 
             if (this.formIsValid) {
 
-              this.$store.commit("SET_STATUS", true)
+              // this.$store.commit("SET_STATUS", true)
 
-            this.$store.dispatch("initializeFlutterwavePayment")
+            // this.$store.dispatch("initializeFlutterwavePayment")
 
             this.$store.dispatch("initializeStripePayment")
-            this.$store.commit("SET_SHOW_PAYOUT_SUMMARY", true)
+
+            // this.$store.commit("SET_SHOW_PAYOUT_SUMMARY", true)
+
+              this.$router.push({  name: 'stripPayment' })
 
           } else {
             // alert("to check valiation " + this.formIsValid )
@@ -1130,7 +1010,7 @@ export default ({
 
         }
         ,
-        editPay(){
+        editPay(){       // remove this method later
 
           this.$store.commit("SET_SHOW_PAYOUT_SUMMARY", false)
           this.$store.commit("SET_SHOW_STRIPE_PAYMENT", false)
@@ -1141,7 +1021,7 @@ export default ({
         },
 
 
-        cancelPay(){
+        cancelPay(){       // remove this method later
 
           console.log("cancel pay clicked")
 
@@ -1169,26 +1049,7 @@ export default ({
 
         },
 
-     async   pay() {
 
-
-
-if(this.initStripeDataSecretKey === null || this.initStripeDataSecretKey.length < 1){
-  // set loading state to true
-  console.log("loading state is true, PLEASE WAIT" ,
-      "color: red; font-size: 20px; font-weight: bold; background-color: red; padding: 5px 10px 5px 10px")
-}else {
-  this.$store.commit("SET_SHOW_STRIPE_PAYMENT", true)
-
-    this.$refs.paymentRef.submit();
-
-  // log payemnt ref
-
-
-}
-
-
-        },
 
 
         submit() {
@@ -1304,7 +1165,7 @@ if(this.initStripeDataSecretKey === null || this.initStripeDataSecretKey.length 
 
 
       mounted() {
-        this.generatePaymentIntent();
+        // this.generatePaymentIntent();
 
         // alert("remouted")
 
@@ -1314,7 +1175,7 @@ if(this.initStripeDataSecretKey === null || this.initStripeDataSecretKey.length 
         // alert("cretaed ")
 
         // this.runfirst();
-        console.log("created here");
+        // console.log("created here");
 
 
       }
