@@ -4,6 +4,7 @@
     <img class="kadaLogoHomePage" :src="kadaLogo" alt="logo">
     </div>
     <div v-show="!this.$store.getters.errorPage" class="mobileHeaderText">
+
         Let's Build Together
     </div>
 
@@ -48,6 +49,10 @@ export default {
   },
 
   computed: {
+
+    payRef() {
+      return this.$store.getters.initStripeData.paymentTransactionReference
+    },
 
   },
 

@@ -387,7 +387,7 @@ export default new Vuex.Store(
 
                             commit('SET_INIT_STRIPE_PAYMENT_DATA', response.data.responseContent);
                             commit('SET_INITSECTKEY', response.data.responseContent.gatewaySecretKey);
-                            commit('ALLOW_STRIPE_PAYMENT', true);
+                            // commit('ALLOW_STRIPE_PAYMENT', true);
 
 
                             commit('SET_STATUS', false);

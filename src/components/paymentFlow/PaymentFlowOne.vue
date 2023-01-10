@@ -417,26 +417,6 @@ export default ({
             email: "kola.egen@gmail.com",
             price: 1000,
           },
-          // callback: (response) => {
-          //   console.log(response);
-
-          // var txref = response.tx.tx_ref
-          // console.log("%c data from flutterwave", "color: #00ff00 ; font-size: 200px", response);
-          // if(      response.tx.chargeResponseCode == "00" ||
-          //     response.tx.chargeResponseCode == "0"){
-          //   // redirect to a success page
-          //   alert("Transaction was successful" + response.tx.tx_ref +  txref);
-          // }
-          // else{
-          //   // redirect to a failure page.
-          //   alert("Transaction was not successful, kindly retry" + response.tx.tx_ref + txref);
-          // }
-
-
-          // },
-          // onclose: () => {
-          //   console.log("Payment closed");
-          // },
 
           customizations: {
             title: "Sankore Cause Foundation",
@@ -445,24 +425,11 @@ export default ({
           },
           paymentMethod: "",
           formIsValid: true,
-
-
         }
       }
         ,
 
-
-
-
-
-
-
-
-
-
       watch: {
-
-
 
         showStripeElement: function (val) {
 
@@ -1158,6 +1125,7 @@ export default ({
           //   this.$router.push('/causecontribution/payment');
           //   // the push without coming back
           // }
+
           // console.log("clicked continue to payment 2 page");
           // log the prop value
         },
@@ -1168,6 +1136,17 @@ export default ({
         // this.generatePaymentIntent();
 
         // alert("remouted")
+
+        this.$store.commit("SET_SHOW_PAYOUT_SUMMARY", false)
+        this.$store.commit("SET_SHOW_STRIPE_PAYMENT", false)
+
+        this.$store.commit("SET_FIRST_NAME", null)
+        this.$store.commit("SET_LAST_NAME", null)
+        this.$store.commit("SET_EMAIL", null)
+        this.$store.commit("SET_AMOUNT", null)
+
+
+        this.$store.commit("SET_CURRENCY", "₦");
 
       },
 

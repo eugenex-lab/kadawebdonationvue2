@@ -42,6 +42,9 @@ export default {
   mounted() {
     this.updateScreenWidth();
     this.onScreenResize();
+
+
+
   },
   methods: {
     onScreenResize() {

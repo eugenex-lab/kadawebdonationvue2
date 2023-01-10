@@ -21,8 +21,8 @@
           </div>
 
         </div>
-        <nav-bar-buttons>
-        </nav-bar-buttons>
+<!--        <nav-bar-buttons>-->
+<!--        </nav-bar-buttons>-->
       </form>
 
 
@@ -84,7 +84,7 @@
             <StripePayment></StripePayment>
 
 
-            <payment-flow-one></payment-flow-one>
+<!--            <payment-flow-one></payment-flow-one>-->
           </div>
         </div>
 
@@ -103,8 +103,6 @@ import causeImage from "@/assets/projectIMage.png";
 // import NavBarButtons from "@/components/layout/NavBarButtons";
 import FormInfoPage from "@/pages/FormInfoPage";
 import SchoolInfoSection from "@/pages/SchoolInfoSection";
-// import FormPageOneWeb from "@/pages/FormPageOneWeb";
-import { mapState,mapGetters ,mapActions} from 'vuex';
 // import ErrorPage from "@/pages/ErrorPage.vue";
 
 
@@ -136,15 +134,10 @@ export default {
     };
   },
   computed: {
+    payRef() {
+      return this.$store.getters.initStripeData.paymentTransactionReference
+    },
 
-    ...mapState(["causeDetails","causeId","causeInfo","loadingStatus","causeDetailInfo"]),
-    // ...mapFields(["responseCode"]),
-    ...mapGetters({
-      causeInfo: "causeInfo",
-      causeDet: "causeDetails",
-      showErrorPage: "errorPage",
-    })
-    ,
 
     // title: function () {
     //   console.log("%c we in here ", "color: pink; font-size: 20px");
@@ -208,9 +201,7 @@ export default {
     //
     // },
 
-    ...mapActions({
-      getDataToStore: "getApiData",
-    }),
+
   },
 
   beforeMount() {

@@ -5,89 +5,8 @@
 
     <div class="stripeREcBox">
 
+<!--{{"here i am " + initStripeDataSecretKey}}  -->
 
-      <div v-show="this.showStripePayment">
-
-        <div class="paymentFormBodyHeader">
-          <div class="paymentFormBodyHeader asterix noAfterAsterix ">
-            Your Names
-          </div>
-        </div>
-
-        <div class="inputEMail">
-
-
-          <div class="grey-box" @click="editPay">
-
-
-            <div class="grey-box__content__title">
-              {{ firstName }} {{ lastName }}
-            </div>
-
-
-          </div>
-
-        </div>
-        <div class="fixFOrmatError">
-
-
-        </div>
-
-
-        <div class="paymentFormBodyHeader asterix formatTop noAfterAsterix"> Your Email Address</div>
-
-        <div class="inputEMail">
-
-
-          <div class="grey-box" @click="editPay">
-
-
-            <div class="grey-box__content__title">
-              {{ emailInput }}
-            </div>
-
-
-          </div>
-
-
-        </div>
-
-        <div class="paymentFormBodyHeader asterix formatTop noAfterAsterix"> Donation Amount</div>
-
-        <div class="inputEMail">
-
-
-          <div class="grey-box" @click="editPay">
-
-
-            <div class="grey-box__content__title">
-              {{ this.displayCurrency }}
-            </div>
-
-
-          </div>
-
-
-        </div>
-
-
-        <div class="payBtn">
-
-
-          <a class="nav__link donateButton webVersion btnFormat" @click="pay">
-            <img class="submitIconFormat btn" id="pic" :src="payForm">
-          </a>
-
-
-          <a class="editBtn" @click="editPay">
-            Edit details
-          </a>
-
-
-        </div>
-
-
-      </div>
 
       <!--repeated flutterwave and payment button and edit button down here  -->
 
@@ -321,15 +240,7 @@ export default {
 
     async generatePaymentIntent() {
 
-
-      // const paymentIntent = await apiCallToGeneratePaymentIntent(); // this is just a dummy, create your own API call
-      // this.elementsOptions.clientSecret = "pi_3MKdIxDUqvtd3qvs2cVi9ZjA_secret_yarMeTe5RmhzkIZEoBbg1dD5j"
-
-
       this.elementsOptions.clientSecret = this.initStripeDataSecretKey
-
-      // make paymet callback to the server
-
 
     },
 
@@ -361,6 +272,9 @@ export default {
       this.$store.commit("SET_CURRENCY", "₦");
 
 
+      // go back one page
+
+      this.$router.push({path: '/causecontribution/:id'})
       // this.$mount();
 
 
@@ -368,10 +282,10 @@ export default {
 
     async pay() {
 
-      alert("pay clicked")
+      // alert("pay clicked")
 
 
-      this.$store.commit("SET_SHOW_STRIPE_PAYMENT", true)
+      // this.$store.commit("SET_SHOW_STRIPE_PAYMENT", true)
 
       this.$refs.paymentRef.submit();
 
@@ -631,7 +545,7 @@ img.imageSuccessformat {
 
 
 img#pic {
-  width: 19.1rem;
+  width: 18.1rem;
 }
 
 a.nav__link.donateButton.webVersion.btnFormat {
@@ -660,7 +574,7 @@ a.editBtn {
 
 .stripeREcBox {
   height: 25rem;
-  width: 19.5rem;
+  width: 18.5rem;
   align-items: center;
   padding-left: 3.4rem;
   display: flex;

@@ -42,9 +42,9 @@ export default {
     }
   },
   computed: {
-    loading() {
-      return this.$store.getters.loadingStatus;
-    }
+    // loading() {
+    //   return this.$store.getters.loadingStatus;
+    // }
   },
   mounted() {
     // console.log("mounted");

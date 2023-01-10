@@ -19,17 +19,18 @@ import StripePage from "@/pages/StripePage.vue";
 export default  [
 
 
-  { path: '/causecontribution/:id/' , component: LandingPage,    /// <--- WEB HOME PAGE
+  { path: '/causecontribution/:id/' , component: LandingPage, name : 'home' ,   /// <--- WEB HOME PAGE
 
     children: [
-      { path: '/causecontribution/:id/', component: FormPageOneWeb , name : 'home',
+      { path: '/causecontribution/:id/', component: FormPageOneWeb ,
         // params: true,
       props: true},
 
     ]
   },
 
-    { path: '/causecontribution/:id/payment', component: PaymentFailure
+    { path: '/causecontribution/:id/paymentrestart', component: PaymentFailure ,
+      name : 'paymentrestart',
 
   },
 

@@ -192,18 +192,46 @@ export default {
       console.log("$$$$$$ %c donation value is not null" + this.donationVal, "color: gold; font-size: 20px");
 
     },
+
+    checkCurrency(){
+
+      if(this.currency === "$"){
+
+
+
+
+
+
+        return "$";
+
+      }
+      else{
+        alert("currency is not $");
+      }
+
+    }
   },
 
   created() {
     // alert("created success page");
     // alert("%c we outtta " + this.donationValue + " " + this.currency, 'color: purple');
-    this.checkDonationUnit();
+    // this.checkDonationUnit();
+
+    this.checkCurrency();
+
+    // alert("created success page" + this.currency);
+
+
+
   },
   afterMount() {
     console.log("PaymentFlowTwo mounted");
     this.checkDonationUnit();
   }
   ,
+
+
+
 }
 </script>
 

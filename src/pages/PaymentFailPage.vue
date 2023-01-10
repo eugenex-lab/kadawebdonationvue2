@@ -76,7 +76,8 @@
 
 
               <template v-slot:header>
-                {{ causeContributions }}  </template>
+<!--                {{ causeContributions }}-->
+              </template>
 
               <template v-slot:subHeader>
                 Join to fulfill this cause </template>
@@ -164,15 +165,15 @@ export default {
     })
     ,
 
-    title: function () {
-      console.log("%c we in here ", "color: pink; font-size: 20px");
-      if (this.causeDetailInfo.responseCode === 200) {
-        return this.causeDetailInfo.responseContent.name;
-      } else {
-        alert("error");
-        return "Loading";
-      }
-    },
+    // title: function () {
+    //   console.log("%c we in here ", "color: pink; font-size: 20px");
+    //   if (this.causeDetailInfo.responseCode === 200) {
+    //     return this.causeDetailInfo.responseContent.name;
+    //   } else {
+    //     alert("error");
+    //     return "Loading";
+    //   }
+    // },
 
   },
 
