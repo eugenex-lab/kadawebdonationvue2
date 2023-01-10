@@ -11,6 +11,7 @@ import PaymentPageWeb from "@/pages/PaymentCompleteWeb.vue";
 import FormPageThree from "@/pages/FormPageThree.vue";
 import sample from "@/pages/SampleVue.vue";
 import SampleOutput from "@/pages/SampleOutput.vue";
+import LoadingScreen from "@/components/layout/LoadingScreen.vue";
 // import PaymentFlowOne from "@/components/paymentFlow/PaymentFlowOne.vue";
 
 export default  [
@@ -26,6 +27,10 @@ export default  [
     ]
   },
 
+    { path: '/causecontribution/:id/payment', component: PaymentFailure
+
+  }
+,
   { path: '/causecontribution/:id/paymentfailure', component: PaymentFailure , name : 'PaymentFailure',  /// <--- WEB FAILURE Page
     // params: true,
     props: true},
@@ -59,7 +64,7 @@ export default  [
 
 
   {path: '/paymentinfoweb', component: PaymentPageWeb},
-  {path: '/', component: FormPageTwo},
+  {path: '/', component: LoadingScreen},
   {path: '/xyz', component: FormPageThree},    /// <--- comement xyz route
   { path: '/sample', component: sample },
   {path: '/output', component: SampleOutput},

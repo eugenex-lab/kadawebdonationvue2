@@ -1,5 +1,9 @@
 <template>
   <div>
+
+    <loading-screen  v-show="loading"></loading-screen>
+
+
     <the-header></the-header>
 
 
@@ -33,7 +37,7 @@
 
 
 <!--        <div id="first"    v-if="!showErrorPage">-->
-        <div id="first" >
+        <div id="first"  v-if="!showErrorPage">
           <div class="containLayout">
 
             <div id="top">
@@ -99,6 +103,7 @@ import FormPageOneWeb from "@/pages/FormPageOneWeb";
 // import {useRoute} from "vue-router";
 import { mapState,mapGetters ,mapActions} from 'vuex';
 import ErrorPage from "@/pages/ErrorPage.vue";
+import LoadingScreen from "@/components/layout/LoadingScreen.vue";
 // import {createHelpers} from "vuex-map-fields";
 
 // const { mapFields } = createHelpers({
@@ -110,6 +115,7 @@ export default {
   name: "LandingPage",
 
   components: {
+    LoadingScreen,
     ErrorPage,
     FormInfoPage,
     NavBarButtons, SchoolInfoSection
@@ -124,12 +130,16 @@ export default {
       causeImage: causeImage,
       causeData : null,
       idCause: null,
-      loading: false,
+      // loading: true,
       sudoExample: null,
       // showErrorPage : false,
     };
   },
   computed: {
+
+    loading() {
+      return this.$store.state.loadingStatus;
+    },
 
       ...mapState(["causeDetails","causeId","causeInfo","loadingStatus","causeDetailInfo"]),
       // ...mapFields(["responseCode"]),

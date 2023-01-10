@@ -8,8 +8,8 @@
 
 
     <the-header></the-header>
-    {{this.initStripeDataSecretKey}}
-    {{this.continueSTripePayment}}
+<!--    {{this.payRef}}  -->
+<!--    {{this.continueSTripePayment}}-->
 
     <div class="smallWidthContainer" v-cloak>
       <div   v-show="!showPayoutSummary">
@@ -26,7 +26,7 @@
 
 
 
-          <form @submit.prevent="submit">
+
 
 
           <div class="paymentFormBodyHeader">
@@ -155,7 +155,6 @@
             </div>
           </div>
 
-          </form>
 
 
           <div class="webButtonContainer">
@@ -243,7 +242,7 @@
             <div class="grey-box"  @click="editPay">
 
               <div class="grey-box__content__title">
-                {{ ( this.displayCurrency )}}
+                {{ this.displayCurrency }}
               </div>
 
 
@@ -279,6 +278,21 @@
           <div  class="formatStripe showStripe" v-show="this.showStripePayment">
 
             <div class="stripeREcBox">
+
+              <div class="stripeREcBoxHeader">
+
+                <div class="summaryFormat">
+                  SUMMARY
+                </div>
+
+                <div class="totalAmountFormat">
+                  {{this.displayCurrency }}
+                </div>
+
+              </div>
+
+
+
               <stripe-element-payment
                   ref="paymentRef"
                   :pk="pk"
@@ -303,8 +317,8 @@
   </a>
 
 
-  <a class="editBtn"   @click="editPay">
-    Edit details
+  <a class="editBtn"   @click="cancelPay">
+    Cancel
   </a>
 
 </div>
@@ -475,6 +489,8 @@ export default ({
               //   // See all possible variables below
               // },
 
+
+
         }
           },
           confirmParams: {
@@ -588,7 +604,7 @@ export default ({
             this.$store.commit("SET_MIN_AMOUNT_ALERT", "#003b88")
             this.$store.commit("SET_AMOUNT_DONATION_VALID", true)
 
-            return
+            // return
 
             // }else if (val < newDonationValue) {
           } else {
@@ -602,7 +618,7 @@ export default ({
             // this.amountDonationValValid = false
             // this.$store.commit("SET_MIN_AMOUNT_ALERT", 'pink')
 
-            return
+            // return
           }
         },
 
@@ -632,6 +648,10 @@ export default ({
 
         continueSTripePayment() {
           return this.$store.getters.continueSTripePayment
+        },
+
+        payRef() {
+          return this.$store.getters.initStripeData.paymentTransactionReference
         },
 
 
@@ -685,8 +705,8 @@ export default ({
         },
 
         initStripeDataSecretKey: function () {
-          // return this.$store.getters.initStripeData.gatewaySecretKey
-          return this.$store.getters.initSecKey
+          return this.$store.getters.initStripeData.gatewaySecretKey
+          // return this.$store.getters.initSecKey
         },
 
         initStripePublicKey: function () {
@@ -1088,10 +1108,16 @@ export default ({
           console.log("Clicked vlaidate button")
 
           this.validateForm()
+
+
+
             this.$store.commit("SET_SHOW_STRIPE_PAYMENT", false)
 
 
             if (this.formIsValid) {
+
+              this.$store.commit("SET_STATUS", true)
+
             this.$store.dispatch("initializeFlutterwavePayment")
 
             this.$store.dispatch("initializeStripePayment")
@@ -1110,6 +1136,36 @@ export default ({
           this.$store.commit("SET_SHOW_STRIPE_PAYMENT", false)
 
 
+          // this.$refs.paymentRef.clear() ;
+
+        },
+
+
+        cancelPay(){
+
+          console.log("cancel pay clicked")
+
+          this.$store.commit("SET_SHOW_PAYOUT_SUMMARY", false)
+          this.$store.commit("SET_SHOW_STRIPE_PAYMENT", false)
+
+          this.$store.commit("SET_FIRST_NAME", null)
+          this.$store.commit("SET_LAST_NAME", null)
+          this.$store.commit("SET_EMAIL", null)
+          this.$store.commit("SET_AMOUNT", null)
+
+
+          this.$store.commit("SET_CURRENCY", "₦");
+
+
+
+
+
+
+
+
+          // this.$mount();
+
+
 
         },
 
@@ -1124,11 +1180,10 @@ if(this.initStripeDataSecretKey === null || this.initStripeDataSecretKey.length 
 }else {
   this.$store.commit("SET_SHOW_STRIPE_PAYMENT", true)
 
-  // time out to set loading state to false
-  setTimeout(() => {
     this.$refs.paymentRef.submit();
 
-  }, 3000)
+  // log payemnt ref
+
 
 }
 
@@ -2066,6 +2121,47 @@ a.editBtn {
 
 .formatButtonStripe {
   padding-left: 3rem;
+  padding-top: 1.2rem;
 }
+
+.summaryFormat{
+  opacity: 0.5;
+  color: #010D1C;
+  font-family: Inter;
+  font-size: 14px;
+  letter-spacing: 0;
+  line-height: 17px;
+}
+
+.totalAmountFormat{
+  color: #010D1C;
+  font-family: Inter;
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 36px;
+  margin-top: -0.7rem;
+}
+
+.stripeREcBox[data-v-4506583d] {
+  display: block;
+  height: 20rem;
+  width: 19.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+
+.stripeREcBoxHeader {
+  display: flex;
+   width: 100%;
+  justify-content: space-between;
+  padding-bottom: 1em;
+
+}
+
+
+
 
 </style>

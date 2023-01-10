@@ -1,15 +1,14 @@
 <template>
-<div class="loadingScreen">
+  <div class="loadingScreen">
 
- <img :src="video" alt="loading" muted="muted"> class="loadingGif" />
+    <img :src="video" alt="loading" muted="muted" autoplay="autoplay" loop="loop" class="loadingScreen__video"/>
 
 
-
-</div>
+  </div>
 </template>
 
 <script>
-import  hallo from "@/assets/loadingSCreen4.gif";
+import hallo from "@/assets/loadingSCreen4.gif";
 
 export default {
   name: "LoadingScreen",
@@ -23,7 +22,7 @@ export default {
 
 <style scoped>
 
-.loadingScreen{
+.loadingScreen {
   background-color: white;
   height: 100vh;
   width: 100vw;
@@ -43,10 +42,14 @@ export default {
 }
 
 
-.loadingGif{
+.loadingGif {
   width: 300px;
   height: 300px;
 }
 
+img.loadingScreen__video {
+  width: 300px;
+  height: 300px;
+}
 
 </style>

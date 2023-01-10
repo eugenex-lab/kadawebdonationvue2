@@ -8,17 +8,108 @@ import createPersistedState from 'vuex-persistedstate';
 
 Vue.use(Vuex)
 
-let initSecKey =  window.localStorage.getItem('initSecKey') ;
 
 export default new Vuex.Store(
     {
         plugins: [createPersistedState({
 
-            key: 'initSecKey',
-paths: ['initSecKey'],
+            reducer: state => ({
+                    showPayoutSummary: state.showPayoutSummary,
+                    // causeContributions: state.causeContributions,
+                    formIsValid: state.formIsValid,
+                    // initFlutterData: state.initFlutterData,
+                    amountDonation: state.amountDonation,
+                    firstName: state.firstName,
+
+                    lastName: state.lastName,
+                    email: state.email,
+
+
+                    // minAmountAlert: state.minAmountAlert,
+                    // amountDonationValValid: true,
+                    currency: state.currency,
+
+                    minimumDonation: state.minimumDonation,
+                    nairaMithisnimumDonation: state.nairaMithisnimumDonation,
+                    dollarMinimumDonation: state.dollarMinimumDonation,
+                    // securityCode: state.securityCode,
+
+                    // causeDetails: state.causeDetails,
+                    // loadingStatus: state.loadingStatus,
+                    // idCause: state.idCause,
+                    // idd: state.idd,
+                    // causeDetailInfo: [],
+
+
+                    causeDetail: state.causeDetail,
+                    causeXData:     state.causeXData,
+                    currencyXData: state.currencyXData,
+                    // clientId: state.clientId,
+                    // errorPage: state.errorPage,
+                    // flutterPaymentResponse: state.flutterPaymentResponse,
+
+
+                    causeId: state.causeId,
+                    initStripeData: state.initStripeData,
+                    // initSecKey: initSecKey ? JSON.parse(initSecKey) : '',
+                    initSecKey: state.initSecKey,
+
+
+                    minAmountValidation: state.minAmountValidation,
+                    showStripePayment: state.showStripePayment,
 
 
 
+
+                }
+            )
+
+
+            // reducer(state) {
+            //     return {
+            //         initStripeData: state.initStripeData,
+            //         showPayoutSummary: state.showPayoutSummary,
+            //         formIsValid: state.formIsValid,
+            //         initFlutterData: state.initFlutterData,
+            //         amountDonation: state.amountDonation,
+            //         firstName: state.firstName,
+            //         lastName: state.lastName,
+            //         email: state.email,
+            //
+            //
+            //         amountDonationValValid: true,
+            //
+            //
+            //         causeDetails: state.causeDetails,
+            //
+            //
+            //         loadingStatus: state.loadingStatus,
+            //         idCause: state.idCause,
+            //
+            //
+            //         idd: state.idd,
+            //         causeDetailInfo: [],
+            //         causeDetail: state.causeDetail,
+            //         causeXData: state.causeXData,
+            //         currencyXData: state.currencyXData,
+            //         clientId: state.clientId,
+            //         errorPage: state.errorPage,
+            //         flutterPaymentResponse: state.flutterPaymentResponse,
+            //
+            //
+            //         causeId: state.causeId,
+            //         initSecKey: state.initSecKey,
+            //
+            //
+            //         minAmountValidation: state.minAmountValidation,
+            //         showStripePayment: state.showStripePayment,
+            //
+            //     }
+            //
+            //
+            //
+            //
+            //     }
 
             }
         )],
@@ -80,8 +171,8 @@ paths: ['initSecKey'],
             flutterPaymentResponse: '',
             causeId: '',
             initStripeData: '',
-            initSecKey: initSecKey ? JSON.parse(initSecKey) : '',
-            // initSecKey: '',
+            // initSecKey: initSecKey ? JSON.parse(initSecKey) : '',
+            initSecKey: '',
 
 
             minAmountValidation: '',
@@ -134,9 +225,18 @@ paths: ['initSecKey'],
         mutations: {
 
 
+            SET_CURRENCY(state, payload) {
+                state.currency = payload;
+            },
 
-            saveSecKey(state) {
-                window.localStorage.setItem('initSecKey', JSON.stringify(state.initSecKey));
+            SET_INIT_STRIPE_KEY(state, payload) {
+                state.initStripeData = payload;
+            }
+            ,
+
+            saveSecKey(state, payload) {
+                state.initSecKey = payload;
+                // window.localStorage.setItem('initSecKey', JSON.stringify(state.initSecKey));
             }
             ,
             SET_INITSECTKEY(state, payload) {
@@ -446,7 +546,7 @@ paths: ['initSecKey'],
                             console.log("%c Errror STATUS @ 200----> ", "color: green ; background-color :  white ; font-size : 30px ", this.loadingStatus);
                         } else {
                             // commit('SET_STATUS', false);
-                            commit('SET_ERROR_PAGE', false);
+                            commit('SET_ERROR_PAGE', true);
                             console.log("%c Errror STATUS @ not 200----> ", "color: orange ; background-color :  white ; font-size : 30px ", this.loadingStatus);
 
 
