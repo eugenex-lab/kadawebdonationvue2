@@ -12,11 +12,10 @@
         </div>
         <div class="priceDisplay">
              <span class="clientCurrency">
-              {{ currencySymbol }}
+              {{ this.displayCurrency }}
             </span>
-          <span class="donactedCurrency">
-            {{ donationValueFormat(donationVal) }}
-          </span></div>
+
+        </div>
       </div>
 
       <div class="topRightSection" @click="shareButton">
@@ -91,7 +90,18 @@ export default {
     };
   },
   computed: {
+    amountEditPage: {
 
+      get() {
+        return this.$store.getters.amountDonation
+      },
+
+    },
+
+    displayCurrency() {
+      const newDonationValue = this.formatNumber(this.amountEditPage)
+      return this.$store.getters.currency + ' '+ newDonationValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    },
     idCause() {
       return this.$store.state.idCause;
     },
@@ -120,6 +130,10 @@ export default {
 
   },
   methods: {
+
+    formatNumber (num) {
+      return parseFloat(num).toFixed(2)
+    },
     restartPayment() {
 
 
@@ -405,7 +419,7 @@ successTextFormat {
 }
 
 .subHeading.widthFormat[data-v-7ff64289] {
-  width: 26rem;
+  width: 20rem;
   padding-bottom: 1.5rem;
   text-align: center;
   /* display: flex; */

@@ -41,9 +41,7 @@ export default  [
   { path: '/causecontribution/:id/paymentfailure', component: PaymentFailure , name : 'PaymentFailure',  /// <--- WEB FAILURE Page
     // params: true,
     props: true},
-  { path: '/causecontribution/:id/paymentsuccess', component: SuccessPage , name : 'SuccessPage',   /// <--- WEB Success Page
-    // params: true,
-    props: true},
+  { path: '/paymentsuccess', component: SuccessPage , name : 'SuccessPage'},
 
 
   { path: '/causecontribution/:id/form', component: FormPageTwo , name : 'PaymentFlowOne',
@@ -60,18 +58,20 @@ export default  [
   {path: '/causecontribution/form', component: FormPageOne,
     name: 'mobileform'
     , props: true
-  },
+  }
+  // ,
 
-  {
-    path: '/causecontribution/success', component: FormPageTwo,
-    name: 'mobilesucess'
-    , props: true
-
-  },
+  // {
+  //   path: '/causecontribution/success', component: FormPageTwo,
+  //   name: 'mobilesucess'
+  //   , props: true
+  //
+  // }
+  ,
 
 
   {path: '/paymentinfoweb', component: PaymentPageWeb},
-  {path: '/', component: StripePage},
+  // {path: '/', component: StripePage},
   {path: '/xyz', component: FormPageThree},    /// <--- comement xyz route
   { path: '/sample', component: sample },
   {path: '/output', component: SampleOutput},

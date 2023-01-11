@@ -949,7 +949,7 @@ export default ({
         },
 
           validateTHIS(){
-          console.log("Clicked vlaidate button")
+          // alert("Clicked vlaidate button")
 
           this.validateForm()
 
@@ -960,15 +960,14 @@ export default ({
 
             if (this.formIsValid) {
 
-              // this.$store.commit("SET_STATUS", true)
 
-            // this.$store.dispatch("initializeFlutterwavePayment")
 
             this.$store.dispatch("initializeStripePayment")
 
-            // this.$store.commit("SET_SHOW_PAYOUT_SUMMARY", true)
-
               this.$router.push({  name: 'stripPayment' })
+
+
+
 
           } else {
             // alert("to check valiation " + this.formIsValid )

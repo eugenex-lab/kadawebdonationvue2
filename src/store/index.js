@@ -508,6 +508,7 @@ export default new Vuex.Store(
 
                     .catch(error => {
                             console.log(error);
+                        // commit('SET_ERROR_PAGE', true);
                         }
                     )
                     .finally(() => {
@@ -540,6 +541,7 @@ export default new Vuex.Store(
                         }
                     )
                     .catch(error => {
+                        // commit('SET_ERROR_PAGE', true);
                             console.log("%c here is the ---> url ", "color: green", error);
                             console.log("%c Axios red alert in vuex here is the ---> url ", "color: red", error.response);
 

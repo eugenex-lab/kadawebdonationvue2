@@ -64,6 +64,7 @@
 <script>
 import {StripeElementPayment} from '@vue-stripe/vue-stripe';
 import paymetBtn from "@/assets/makePayment.svg";
+// import router from "@/router";
 
 
 export default {
@@ -110,7 +111,9 @@ export default {
       },
       confirmParams: {
 
-        return_url: 'http://localhost:8080/causecontribution/:id/paymentsuccess',
+        return_url: 'http://localhost:8080/paymentsuccess',
+         // return_url:
+        // return_url:   ro
         // redirect: 'if_required',   // redirect is required for stripe checkout session
 
       },
@@ -273,8 +276,12 @@ export default {
 
 
       // go back one page
+      this.$router.go(-1)
 
-      this.$router.push({path: '/causecontribution/:id'})
+
+      // this.$store.commit("SET_STATUS", true)
+
+
       // this.$mount();
 
 

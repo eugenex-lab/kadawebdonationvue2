@@ -58,7 +58,7 @@ export default {
       if (this.screenWidth > 899) {
         console.log("higer ");
 
-        return  this.$router.push('/');
+        return  this.$router.push('/');      //<---  need this method
 
 
       }else{

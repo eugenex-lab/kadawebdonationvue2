@@ -10,11 +10,13 @@
         </div>
         <div class="priceDisplay">
              <span class="clientCurrency">
-              {{ currencySymbol }}
+
+              {{ this.displayCurrency  }}
             </span>
-          <span class="donactedCurrency">
-            {{ donationValueFormat(donationVal) }}
-          </span></div>
+<!--          <span class="donactedCurrency">-->
+<!--            {{ donationValueFormat(donationVal) }}-->
+<!--          </span></div>-->
+      </div>
       </div>
 
       <div class="topRightSection" @click="shareButton">
@@ -84,7 +86,7 @@
 
 <script>
 import shareIcon from "@/assets/shareWeb.png";
-import {mapFields} from "vuex-map-fields";
+// import {mapFields} from "vuex-map-fields";
 import appleLinkStore from '@/assets/lotticeWhiteApple.gif';
 import andriodLinkStore from "@/assets/lotticeAndriodWHite.gif";
 
@@ -102,7 +104,25 @@ export default {
 
     };
   },
+  watch: {
+
+
+
+  },
   computed: {
+    displayCurrency() {
+      const newDonationValue = this.formatNumber(this.amountEditPage)
+      return this.$store.getters.currency + ' '+ newDonationValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    },
+
+
+    amountEditPage: {
+
+      get() {
+        return this.$store.getters.amountDonation
+      },
+
+    },
     // if currency is equal to Naira return ₦ else return $
     currencySymbol() {
       if (this.currency === "₦") {
@@ -111,35 +131,50 @@ export default {
         return "$";
       }
     },
-    donationVal() {
-      if (this.donationValue === null || this.donationValue === undefined || this.donationValue === "") {
+    // donationVal() {
+    //   if (this.donationValue === null || this.donationValue === undefined || this.donationValue === "") {
+    //
+    //     console.log("%c donation value is null", "color: gold; font-size: 20px");
+    //
+    //
+    //     return 10;
+    //   }
+    //   const val = this.donationValue
+    //   return val;
+    // },
 
-        console.log("%c donation value is null", "color: gold; font-size: 20px");
-
-
-        return 10;
-      }
-      const val = this.donationValue
-      return val;
-    },
-
-    ...mapFields(["amountDonation.donationValue", "currency"]),
+    // ...mapFields(["amountDonation.donationValue", "currency"]),
 
   },
   methods: {
+
+    checkingAmount() {
+      if(this.amountEditPage){
+        alert("Please enter amount" + this.amountDonation.donationValue)
+      }
+      else {
+      alert("Please " )
+        return this.amountDonation.donationValue
+
+      }
+    },
+    formatNumber (num) {
+      return parseFloat(num).toFixed(2)
+    },
+
     shareButton() {
       console.log("share button clicked");
     },
-    donationValueFormat(amount) {
-      if (amount === null) {
-        alert("amount is null")
-
-        // return this.$router.push("/paymentinfo" );
-        return 10;
-      }
-
-      return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    },
+    // donationValueFormat(amount) {
+    //   if (amount === null) {
+    //     alert("amount is null")
+    //
+    //     // return this.$router.push("/paymentinfo" );
+    //     return 10;
+    //   }
+    //
+    //   return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    // },
     methodBeginForm() {
       console.log("%c we are here", "color: green; font-size: 20px");
 
@@ -194,23 +229,16 @@ export default {
     },
 
     checkCurrency(){
-
       if(this.currency === "$"){
-
-
-
-
-
-
         return "$";
-
       }
       else{
-        alert("currency is not $");
+        // alert("currency is not $");
       }
 
     }
   },
+
 
   created() {
     // alert("created success page");
@@ -221,12 +249,10 @@ export default {
 
     // alert("created success page" + this.currency);
 
-
-
   },
   afterMount() {
     console.log("PaymentFlowTwo mounted");
-    this.checkDonationUnit();
+    // this.checkDonationUnit();
   }
   ,
 

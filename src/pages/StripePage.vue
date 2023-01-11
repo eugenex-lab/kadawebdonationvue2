@@ -781,7 +781,7 @@ span.formatDayText {
 
   .headerFormatForm[data-v-7f294970] {
     border-bottom: 1.5px solid #E5E5E5;
-    width: 87%;
+    /*width: 87%;*/
     height: 5.5rem;
     display: flex;
     padding-left: 3.4rem;
@@ -791,6 +791,47 @@ span.formatDayText {
 
 
 
+
+  .ref{
+    display: inline-block;
+    /* border: 8px solid black; */
+    width: 69rem;
+    height: 36.5rem;
+    border-radius: 5px 5px 5px 5px;
+    background-color: #ffffff;
+    /* border-radius: 0px 10px 10px 0; */
+    box-shadow: 0px 0 10px 1px rgb(0 0 0 / 3%);
+  }
+
+  #first{
+    width: 35.6%;
+    height: 100%;
+    /* background-color: #e53535; */
+    border-radius: 0.5rem 0 0 0.5rem;
+    float: left;
+    border-radius: 10px 0 0 10px;
+    box-shadow: 3px 0px 20px 0px rgb(4 9 8 / 5%);
+    z-index: 1;
+  }
+  #second{
+    width: 64.4%;
+    height: 100%;
+    /* background-color: #d13e3e; */
+    /* border-radius: 0 0.5rem 0.5rem 0; */
+    float: right;
+    z-index: 1;
+    border-radius: 0px 10px 10px 0;
+  }
+
+  .headerFormatForm {
+    border-bottom: 1.5px solid #E5E5E5;
+    /*width: 87%;*/
+    height: 5.5rem;
+    display: flex;
+    padding-left: 3.4rem;
+    align-items: self-start;
+    flex-direction: column;
+  }
 
 
 
