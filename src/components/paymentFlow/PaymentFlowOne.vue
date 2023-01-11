@@ -960,11 +960,25 @@ export default ({
 
             if (this.formIsValid) {
 
+              if(this.$store.getters.currency == "₦") {
+
+                alert("naira")
 
 
-            this.$store.dispatch("initializeStripePayment")
+              } else {
 
-              this.$router.push({  name: 'stripPayment' })
+                this.$store.dispatch("initializeStripePayment")
+                //
+                this.$router.push({  name: 'stripPayment' })
+
+
+                // alert("dollar")
+                this.$refs.paymentRef.submit();
+
+
+              }
+
+
 
 
 

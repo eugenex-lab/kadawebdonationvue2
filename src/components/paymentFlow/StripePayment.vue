@@ -294,7 +294,9 @@ export default {
 
       // this.$store.commit("SET_SHOW_STRIPE_PAYMENT", true)
 
-      this.$refs.paymentRef.submit();
+      // check the currency
+
+
 
 
     },
