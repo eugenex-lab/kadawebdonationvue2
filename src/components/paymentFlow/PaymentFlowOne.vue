@@ -6,6 +6,9 @@
 
   <div>
 
+    <!--    {{this.showNGN}}-->
+    <!--    {{this.minAmountValid}}-->
+
 
     <the-header></the-header>
 <!--    {{this.payRef}}  -->
@@ -142,11 +145,7 @@
               <label class="toggle">
                   <span class="toggle-label">Make donation
 
-
-
-
                     anonymous
-
 
                   </span>
                 <input class="toggle-checkbox" type="checkbox">
@@ -156,17 +155,15 @@
           </div>
 
 
-
           <div class="webButtonContainer">
 
 
+            <flutterwave-modal v-show="showNGN">
+            </flutterwave-modal>
 
           </div>
-
-
-
 <!--          <a class="nav__link donateButton webVersion " v-show="!showNGN" @click="validateTHIS">-->
-          <a class="nav__link donateButton webVersion " @click="validateTHIS">
+          <a v-show="!showNGN" class="nav__link donateButton webVersion " @click="validateTHIS">
             <img class="submitIconFormat" :src="continueToForm">
           </a>
 
@@ -354,15 +351,13 @@
 
 import {mapFields} from "vuex-map-fields";
 // import {mapMutations} from "vuex";
-
 import 'vue-select/dist/vue-select.css';
 import continueButoon from "@/assets/Continuebhevron.svg";
 import paymetBtn from "@/assets/makePayment.svg";
 
 import DebouncedCurrencyInput from "@/components/layout/DebouncedCurrencyInput.vue";
 // remove check below
-
-// import FlutterwaveModal from "@/components/paymentFlow/FlutterwaveModal.vue";
+import FlutterwaveModal from "@/components/paymentFlow/FlutterwaveModal.vue";
 // import { StripeCheckout } from '@vue-stripe/vue-stripe';
 import {mapState} from "vuex";
 import TheHeader from "@/components/layout/TheHeader";
@@ -377,7 +372,7 @@ export default ({
         // currencyPicked: this.currency,
       },
       components: {
-        // FlutterwaveModal,
+        FlutterwaveModal,
         DebouncedCurrencyInput,
         TheHeader,
 
@@ -550,6 +545,8 @@ export default ({
 
       },
       computed: {
+
+
         ...mapFields(["emailInput", "firstName", "firstName.isValid", "email", "amountDonation.donationValue",
           "causeId",
           // ,"amountDonation.donationValue",

@@ -1,12 +1,12 @@
 <template>
-  <!--  <div class="flw">-->
+  <div>
+    <!--    {{this.flutterwaveRef}}-->
 
+    <a class="button" @click="makePayment">
+      <img :src="continueToForm" class="submitIconFormat">
+    </a>
 
-  <a class="button" @click="makePayment">
-    <img class="submitIconFormat" :src="continueToForm">
-  </a>
-
-  <!--  </div>-->
+  </div>
 
 
 </template>
@@ -15,8 +15,7 @@
 import {mapFields} from "vuex-map-fields";
 import {mapState} from "vuex";
 import continueButoon from "@/assets/makePayment.svg";
- import axios from "axios";
-
+import axios from "axios";
 
 
 export default {
@@ -37,6 +36,21 @@ export default {
 
 
   computed: {
+    minAmountValid() {
+      const val = String(this.$store.getters.minAmountValidation).replace(/,/g, "").replace("₦", "") // remove comma from the amount and naira sign
+      return val
+
+    },
+
+    amountDonationInput: {
+      get() {
+        return this.$store.state.amountDonation.donationValue;
+      },
+      set(value) {
+        this.$store.commit('SET_AMOUNT', value);
+      }
+    },
+
 
     // display the payment response
     responseINI() {
@@ -44,12 +58,16 @@ export default {
     },
 
 
-
     ...mapFields(["causeXData", "lastName", "email", "amountDonation.donationValue", "amountDonation.options", "currency", "minimumDonation", "dollarMinimumDonation", "nairaMinimumDonation", "currencyXData"])
     ,
     flutterwaveData: {
       get() {
         return this.$store.state.initFlutterData;
+      }
+    },
+    flutterwaveRef: {
+      get() {
+        return this.$store.state.initFlutterData.paymentTransactionReference
       }
     },
 
@@ -142,26 +160,26 @@ export default {
 
     validateForm() {
 
-      // alert("validate form"  + this.donatedAmount  + " " + this.minimumAMountNaira)
-
       this.$store.commit("SET_FIRST_NAME_VALID", true);
       this.$store.commit("SET_EMAIL_VALID", true);
       this.$store.commit("SET_LAST_NAME_VALID", true);
       this.$store.commit("SET_AMOUNT_DONATION_VALID", true);
       this.$store.commit("SET_MIN_AMOUNT_ALERT", "#003b88")
 
-
-
       this.formIsValid = true;
 
-      if (this.firstName === null || this.firstName.length < 1 || !this.firstName) {
+
+      if (this.firstName === null || this.firstName.length < 1) {
         // alert("Please enter a valid first name");
+
         this.formIsValid = false;
         this.$store.commit("SET_FIRST_NAME_VALID", false);
       }
 
-      if (this.lastName === null || this.lastName.length < 1 || !this.lastName) {
+      if (this.lastName === null || this.lastName.length < 1) {
         // alert("Please enter a valid last name");
+
+
         this.formIsValid = false;
         this.$store.commit("SET_LAST_NAME_VALID", false);
       }
@@ -169,25 +187,19 @@ export default {
       // validate email address using regex
       const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
       if (!emailRegex.test(this.emailInput)) {
-        // alert("Please enter a valid email address");
         this.formIsValid = false;
         this.$store.commit("SET_EMAIL_VALID", false);
+
       }
 
-      if (this.donatedAmount === null || this.donatedAmount < this.minimumAMountNaira ) {
-// alert("Please enter a valid amount u entered " + this.donatedAmount + " and the minimum amount is " + this.minimumAMountNaira)
+      if (this.amountDonationInput === null || this.amountDonationInput < this.minAmountValid || this.amountDonationInput.length < 1) {
+
         this.$store.commit("SET_AMOUNT_DONATION_VALID", false);
         this.formIsValid = false;
         this.$store.commit("SET_MIN_AMOUNT_ALERT", 'red')
 
+
       }
-
-      this.$store.commit("SET_FIRST_NAME_VALID", true);
-      this.$store.commit("SET_EMAIL_VALID", true);
-      this.$store.commit("SET_LAST_NAME_VALID", true);
-      this.$store.commit("SET_AMOUNT_DONATION_VALID", true);
-      this.$store.commit("SET_MIN_AMOUNT_ALERT", "#003b88")
-
 
 
     }
@@ -195,7 +207,7 @@ export default {
     ,
     makePayment() {
 
-// alert("initial click  ---->>>>  "  + this.donatedAmount   )
+
       // this.$store.commit("SET_MIN_AMOUNT_ALERT", "#003b88")
 
       this.validateForm();
@@ -203,9 +215,8 @@ export default {
 
       if (this.formIsValid) {
 
-        //run an action in the store to make api call to get the payment link
 
-
+        this.$store.dispatch("initializeFlutterwavePayment")
 
 
         setTimeout(() => {
@@ -231,11 +242,20 @@ export default {
               // this.$store.commit("SET_FIRST_NAME", null)
               // this.$store.commit("SET_LAST_NAME", null)
               // this.$store.commit("SET_EMAIL", null)
+
+
+              // this.$router.push({ name: "paymentrestart" });
+
+
             },
-            callback(response){
+            callback(response) {
 
 
               this.paymentResponse = response
+
+              console.log("$$$$$$$$   ", JSON.stringify(this.paymentResponse))
+
+              console.log(response)
 
               // send the response to the server
 
@@ -248,20 +268,19 @@ export default {
                   "deviceOS": "string",
                   "osVersion": "string",
                   "paymentId": response.transaction_id,
-                  // "paymentId": "232322",
-                  "paymentReference": response.flw_ref,
+
+                  "paymentReference": response.tx_ref,
                   "paymentChannel": "Flutterwave",
                 })
                   .then(response => {
-                    console.log("%c axios response ", response.data.responseMessage , "%c color: #00ff00 ; font-size: 200px")
-1
-                    if(response.data.responseMessage === "Payment Completed!")
-                    {
-                      // window.location.href = '/causecontribution/paymentsuccess'
-                      this.$router.push('/causecontribution/paymentsuccess')
-                    }
-                    else
-                    {
+                    console.log("%c axios response ", response.data.responseMessage, "%c color: #00ff00 ; font-size: 200px")
+                    1
+                    if (response.data.responseMessage === "Payment Completed!") {
+
+                      window.location.href = '/paymentsuccess'
+                    } else {
+                      console.log("----------------------------------------------------")
+
                       // window.location.href = '/causecontribution/paymentfailure'
 
                       this.$router.push('/causecontribution/paymentfailure')
@@ -273,11 +292,14 @@ export default {
                     // window.location.href = '/causecontribution/paymentfailure'
                     this.$router.push('/causecontribution/paymentfailure')
 
+                    console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+
                     console.log(error);
                   });
 
               } catch (e) {
-                console.log(e)
+
+                console.log(e + "Catch $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
                 this.$router.push('/causecontribution/paymentfailure')
               }
 
@@ -319,62 +341,62 @@ export default {
   }
       ,
   props: {
-    isProduction: {
-      type: Boolean,
-      required: false,
-      default: false //set to true if you are going live
-    },
-    email: {
-      type: String,
-      required: true
-    },
-    amount: {
-      type: Number,
-      required: true
-    },
-    flwKey: {
-      type: String,
-      required: true
-    },
-    callback: {
-      type: Function,
-      required: true,
-
-      // eslint-disable-next-line
-      default: (response) => {
-
-      }
-    },
-    close: {
-      type: Function,
-      required: true,
-      default: () => {
-      }
-    },
-    currency: {
-      type: String,
-      default: "NGN"
-    },
-    country: {
-      type: String,
-      default: "NG"
-    },
-    custom_title: {
-      type: String,
-      default: ""
-    },
-    custom_logo: {
-      type: String,
-      default: ""
-    },
-    reference: {
-      type: String,
-      default: ""
-    },
-    payment_method: {
-      type: String,
-      default: "card,mobilemoney,ussd"
-    }
+    // isProduction: {
+    //   type: Boolean,
+    //   required: false,
+    //   default: false //set to true if you are going live
+    // },
+    // email: {
+    //   type: String,
+    //   required: true
+    // },
+    // amount: {
+    //   type: Number,
+    //   required: true
+    // },
+    // flwKey: {
+    //   type: String,
+    //   required: true
+    // },
+    // callback: {
+    //   type: Function,
+    //   required: true,
+    //
+    //   // eslint-disable-next-line
+    //   default: (response) => {
+    //
+    //   }
+    // },
+    // close: {
+    //   type: Function,
+    //   required: true,
+    //   default: () => {
+    //   }
+    // },
+    // currency: {
+    //   type: String,
+    //   default: "NGN"
+    // },
+    // country: {
+    //   type: String,
+    //   default: "NG"
+    // },
+    // custom_title: {
+    //   type: String,
+    //   default: ""
+    // },
+    // custom_logo: {
+    //   type: String,
+    //   default: ""
+    // },
+    // reference: {
+    //   type: String,
+    //   default: ""
+    // },
+    // payment_method: {
+    //   type: String,
+    //   default: "card,mobilemoney,ussd"
+    // }
   },
 
 }

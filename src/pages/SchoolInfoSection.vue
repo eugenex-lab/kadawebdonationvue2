@@ -2,8 +2,6 @@
     <div class="smallWidthContainer" >
 
 
-
-
       <section class="schoolDetails" >
               <span class="formatLogoSchoolNameSection">
         <img class="schoolLogo" :src="avatarDetailInfo" alt="logo">
@@ -83,7 +81,7 @@ import schoolLogo from "@/assets/schoolLogo.svg";
 import causeImage from "@/assets/projectIMage.png";
 // import { mapState} from 'vuex';
 // import {useRoute} from "vue-router";
-import { useRoute } from 'vue2-helpers/vue-router';
+import {useRoute} from 'vue2-helpers/vue-router';
 
 export default {
   name: "SchoolInfoSection",
@@ -117,24 +115,19 @@ export default {
   computed: {
     causeDetailInfo() {
       const indoData = this.$store.state.causeXData
-      // check if dataresponse is not 200 return null
       if (indoData.responseCode !== 200) {
         return  "No data"
       }
 return indoData.responseContent
     },
-    avatarDetailInfo(){
+    avatarDetailInfo() {
       const indoData = this.$store.state.causeXData
       // check if dataresponse is not 200 return null
-      if (indoData.responseCode !== 200) {
-        return  this.schoolLogos
-      }else if (indoData.responseContent.avatar === null){
-        return  this.schoolLogos
+      if (indoData.responseContent.schoolAvatar === null || indoData.responseContent.schoolAvatar === undefined
+          || indoData.responseContent.schoolAvatar === "") {
+        return this.schoolLogos
       }
-
-
-      return indoData.responseContent.avatar
-
+      return indoData.responseContent.schoolAvatar
     }
     }
     ,
@@ -159,16 +152,23 @@ return indoData.responseContent
     const id = route.params.id
 
 
+// alert("mounted again" + id)
 
     // push to vuex store to get data
     this.$store.dispatch('getSingleCause', id)
 
     console.log("c% &&$$$$ ZZZZZZZZZZ id is " + id, "color: pink; font-size: 200px;");
-    this.$store.dispatch("getCauseXdata" , id );
+    this.$store.dispatch("getCauseXdata", id);
 
     this.$store.commit("SET_CAUSE_ID", id);
 
-    this.$store.dispatch("getCurrencyXdata" , id );
+    this.$store.dispatch("getCurrencyXdata", id);
+
+    this.$store.commit("SET_FIRST_NAME_VALID", true);
+    this.$store.commit("SET_EMAIL_VALID", true);
+    this.$store.commit("SET_LAST_NAME_VALID", true);
+    this.$store.commit("SET_AMOUNT_DONATION_VALID", true);
+    this.$store.commit("SET_MIN_AMOUNT_ALERT", "#003b88")
 
   }
 

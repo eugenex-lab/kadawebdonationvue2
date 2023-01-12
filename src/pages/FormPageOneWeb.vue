@@ -9,7 +9,9 @@
 
 
       <template v-slot:header>
-        {{ causeContributions }}  </template>
+        {{ causeDetailInfo.name }}
+
+      </template>
 
       <template v-slot:subHeader>
         Join to fulfill this cause </template>
@@ -46,8 +48,17 @@ export default {
   mounted() {
     console.log("FormPageOne.vue mounted");
   },
-  computed:{
+  computed: {
+    causeDetailInfo() {
+      const indoData = this.$store.state.causeXData
+      // check if dataresponse is not 200 return null
+      if (indoData.responseCode !== 200) {
+        return "No data"
+      }
+      return indoData.responseContent
+    },
     ...mapFields(["causeContributions"]),
+
 
   }
 

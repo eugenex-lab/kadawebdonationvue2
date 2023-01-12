@@ -97,11 +97,10 @@ import FormInfoPage from "@/pages/FormInfoPage";
 import SchoolInfoSection from "@/pages/SchoolInfoSection";
 
 // import axios from "axios";
-
 // import FormPageOne from "@/pages/FormPageOne";
 import FormPageOneWeb from "@/pages/FormPageOneWeb";
 // import {useRoute} from "vue-router";
-import { mapState,mapGetters ,mapActions} from 'vuex';
+import {mapActions, mapGetters, mapState} from 'vuex';
 import ErrorPage from "@/pages/ErrorPage.vue";
 import LoadingScreen from "@/components/layout/LoadingScreen.vue";
 // import {createHelpers} from "vuex-map-fields";
@@ -127,8 +126,8 @@ export default {
   },
   data() {
     return {
-      causeImage: causeImage,
-      causeData : null,
+      causeImg: causeImage,
+      causeData: null,
       idCause: null,
       // loading: true,
       sudoExample: null,
@@ -137,15 +136,27 @@ export default {
   },
   computed: {
 
+    causeImage() {
+
+      const val = this.$store.state.causeXData
+
+      if (val.responseContent.avatar === null || val.responseContent.avatar === undefined
+          || val.responseContent.avatar === "") {
+        return this.causeImg
+      }
+
+      return val.responseContent.avatar
+    },
+
     loading() {
       return this.$store.state.loadingStatus;
     },
 
-      ...mapState(["causeDetails","causeId","causeInfo","loadingStatus","causeDetailInfo"]),
-      // ...mapFields(["responseCode"]),
-  ...mapGetters({
-    causeInfo: "causeInfo",
-    causeDet: "causeDetails",
+    ...mapState(["causeDetails", "causeId", "causeInfo", "loadingStatus", "causeDetailInfo"]),
+    // ...mapFields(["responseCode"]),
+    ...mapGetters({
+      causeInfo: "causeInfo",
+      causeDet: "causeDetails",
     showErrorPage: "errorPage",
   })
     ,
@@ -232,6 +243,8 @@ export default {
 
   },
   created() {
+
+    // alert(process.env.VUE_APP_STRIPE_PUBLIC_KEY)
 
     // alert("created");
 

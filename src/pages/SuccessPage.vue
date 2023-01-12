@@ -103,15 +103,12 @@ import causeImage from "@/assets/projectIMage.png";
 import FormInfoPage from "@/pages/FormInfoPage";
 import SchoolInfoSection from "@/pages/SchoolInfoSection";
 // import FormPageOneWeb from "@/pages/FormPageOneWeb";
-import { mapState,mapGetters ,mapActions} from 'vuex';
+import {mapActions, mapGetters, mapState} from 'vuex';
 import ErrorPage from "@/pages/ErrorPage.vue";
-
-
 
 
 import PaymentSuccess from "@/components/paymentFlow/PaymentSuccess";
 import FormRightHeader from "@/components/layout/FormRightHeader";
-// import SchoolInfoSection from "@/pages/SchoolInfoSection.vue";
 
 export default {
   name: "TextView",
@@ -156,7 +153,7 @@ export default {
       if (this.causeDetailInfo.responseCode === 200) {
         return this.causeDetailInfo.responseContent.name;
       } else {
-        alert("error");
+        // alert("error");
         return "Loading";
       }
     },
@@ -166,10 +163,10 @@ export default {
   methods: {
     checkingAmount() {
       if(this.amountEditPage){
-        alert("Please enter amount" + this.amountDonation.donationValue)
+        // alert("Please enter amount" + this.amountDonation.donationValue)
       }
       else {
-        alert("Please " )
+        // alert("Please " )
         return this.amountDonation.donationValue
 
       }
@@ -228,24 +225,18 @@ export default {
   },
   beforeMount() {
 
-    if (this.$store.getters.amountDonation){
+    if (this.$store.getters.amountDonation) {
       return void 0
-    }
-    else {
-
-      // commit the amount to the store
-
+    } else {
       this.$store.commit('SET_ERROR_PAGE', true);
-
-
-
-
     }
-
-
 
   },
-  created() {
+  mounted() {
+
+
+    this.$store.dispatch("getCauseXdata", this.$store.getters.causeXData.responseContent.causeId)
+
     console.log("%c we in here ", "color: pink; font-size: 5" +
         "0px", this.loadingStatus);
     console.log("%c we in here ", "color: pink; font-size: 5px", this.$store.state.loadingStatus);

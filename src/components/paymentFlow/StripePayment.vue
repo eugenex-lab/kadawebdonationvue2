@@ -76,7 +76,7 @@ export default {
     return {
       payForm: paymetBtn,
 
-      publicKeyStripe: "pk_test_51J9qFaDUqvtd3qvsd5okYctfoVezKe8p3PYTDzbPCG8oNPPlGfvmU2tyb3OS3epgcHMobM7vuXAhz2B5CRczJpvA00eSzPLKZ3",
+
 
 
     };
@@ -86,12 +86,7 @@ export default {
 
     return {
 
-      pk: this.publicKeyStripe,
-
-      // pk: this.initStripePublicKey,
-
-      // pk : '',
-
+      pk: process.env.VUE_APP_STRIPE_PUBLIC_KEY,
 
       elementsOptions: {
         appearance: {
@@ -112,9 +107,6 @@ export default {
       confirmParams: {
 
         return_url: 'http://localhost:8080/paymentsuccess',
-         // return_url:
-        // return_url:   ro
-        // redirect: 'if_required',   // redirect is required for stripe checkout session
 
       },
       layout: {
@@ -296,6 +288,7 @@ export default {
 
       // check the currency
 
+      this.$refs.paymentRef.submit();
 
 
 
@@ -605,6 +598,7 @@ a.editBtn {
   font-size: 14px;
   letter-spacing: 0;
   line-height: 17px;
+  padding-bottom: 0.4rem;
 }
 
 .totalAmountFormat {
@@ -630,8 +624,9 @@ a.editBtn {
 .stripeREcBoxHeader {
   display: flex;
   width: 100%;
-  justify-content: space-between;
   padding-bottom: 1em;
+  flex-direction: column;
+  align-items: flex-start;
 
 }
 

@@ -41,7 +41,7 @@ export default new Vuex.Store(
                     // causeDetailInfo: [],
 
 
-                    causeDetail: state.causeDetail,
+                    // causeDetail: state.causeDetail,
                     causeXData:     state.causeXData,
                     currencyXData: state.currencyXData,
                     // clientId: state.clientId,
@@ -311,10 +311,10 @@ export default new Vuex.Store(
                 state.causeId = payload;
             }
         }
+
         ,
 
         actions: {
-
 
             verifyPaymentFlutterWave({commit}, payload) {
 
@@ -332,30 +332,25 @@ export default new Vuex.Store(
                         console.log(response.data);
                         console.log(payload);
 
-
                         setTimeout(() => {
                                 commit('SET_FLUTTERWAVE_RESPONSE', response.data);
                             }
-                            , 2000);
-
+                            , 1000);
 
                     }
                 ).catch(error => {
                         console.log(error);
                         alert(' Error Occurred' + error);
+                        commit('SET_ERROR_PAGE', true);
 
                     }
                 )
 
-
             },
-
 
             initializeStripePayment: function ({commit, state}) {
                 console.log("%c response.data" + state.amountDonation.donationValue +
                     state.causeId + state.firstName.value + state.lastName.value + state.email.value);
-
-
                 axios.post('https://kada.identity.stage.wealthtech.ng/transaction/donation/public/collection/initialization', {
                     "deviceId": "string",
                     "deviceName": "string",
@@ -365,8 +360,8 @@ export default new Vuex.Store(
                     "paymentChannel": "Stripe",
                     "currency": "USD",
                     "paymentType": "CAUSE",
-                    "paymentTypeId": 1,
-                    "schoolClassId": state.causeId,
+                    "paymentTypeId": state.causeXData.responseContent.causeId,
+                    "schoolClassId": state.causeXData.responseContent.schoolClassId,
                     "firstName": state.firstName.value,
                     "lastName": state.lastName.value,
                     "emailAddress": state.email.value,
@@ -396,7 +391,6 @@ export default new Vuex.Store(
                                 "; font-size: 20px  ; font-weight: bold " +
                                 " ; background-color: pink " +
                                 "; padding: 5px 10px 5px 10px", response.data);
-
                             this.commit('saveSecKey');
                         } else {
                             commit('SET_ERROR_PAGE', true);
@@ -406,7 +400,8 @@ export default new Vuex.Store(
                     })
                     .catch(error => {
                         console.log(error);
-                        alert("error --->  " + error);
+                        commit('SET_ERROR_PAGE', true);
+                        // alert("error --->  " + error);
                         // implment error handling page here later
                     });
 
@@ -424,10 +419,10 @@ export default new Vuex.Store(
                     "osVersion": "string",
                     "donationAmount": state.amountDonation.donationValue,
                     "paymentChannel": "Flutterwave",
-                    "currency": "NGN",
+                    "currency": state.causeXData.responseContent.currency,
                     "paymentType": "CAUSE",
-                    "paymentTypeId": 1,
-                    "schoolClassId": state.causeId,
+                    "paymentTypeId": state.causeXData.responseContent.causeId,
+                    "schoolClassId": state.causeXData.responseContent.schoolClassId,   // school class id
                     "firstName": state.firstName.value,
                     "lastName": state.lastName.value,
                     "emailAddress": state.email.value,
@@ -488,15 +483,16 @@ export default new Vuex.Store(
                         // log url 5531886652142950
                         console.log("%c Loading STATUS  ----> ", "color: purple ; background-color :  pink", this.loadingStatus);
                         console.log("%c here is the ---> url ", "color: green", response.config.url);
-                        commit('SET_CAUSE', response.data);
+
 
                         console.log("%c Loading STATUS  ----> ", "color: purple ; background-color :  pink", this.loadingStatus);
 
                         // check if the response is successful and commit the data to the store
                         if (response.data.responseCode === 200) {
+                            commit('SET_CAUSE', response.data);
                             // commit('SET_STATUS', false);
                             commit('SET_ERROR_PAGE', false);
-                            console.log("%c Errror STATUS @ 200----> ", "color: green ; background-color :  white ; font-size : 30px ", this.loadingStatus);
+
                         } else {
                             // commit('SET_STATUS', false);
                             commit('SET_ERROR_PAGE', true);
@@ -514,6 +510,16 @@ export default new Vuex.Store(
                     .finally(() => {
                             console.log("%c finally in the axios store ", "color: green");
                             commit('SET_STATUS', false);
+
+                            // alert("finally in the axios store");
+
+                        if (this.state.causeXData.responseContent.status === "EXPIRED") {
+
+                            commit('SET_ERROR_PAGE', true);
+                        }
+
+
+
 
                             console.log("%c Loading STATUS  ----> ", "color: purple ; background-color :  pink", this.loadingStatus);
                             console.log("%c Errror STATUS @ not 200----> ", "color: orange ; background-color : blue ; font-size : 30px ", this.errorStatus);

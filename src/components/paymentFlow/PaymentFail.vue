@@ -137,7 +137,7 @@ export default {
     restartPayment() {
 
 
-      const causeId = this.$store.state.idCause;
+      // const causeId = this.$store.getters.causeId // get the cause id from the store
 
 
       // set set_first_name to null
@@ -153,12 +153,9 @@ export default {
       this.$store.commit("SET_AMOUNT", null);
 
 
+      // go back to last page
 
-
-
-
-
-      this.$router.push(`/causecontribution/${{causeId}}/`);
+      this.$router.go(-1)
 
 
 

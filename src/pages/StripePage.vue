@@ -36,7 +36,7 @@
 
 
           <!--        <div id="first"    v-if="!showErrorPage">-->
-          <div id="first" >
+          <div v-if="!showErrorPage" id="first">
             <div class="containLayout">
 
               <div id="top">
@@ -103,25 +103,25 @@ import causeImage from "@/assets/projectIMage.png";
 // import NavBarButtons from "@/components/layout/NavBarButtons";
 import FormInfoPage from "@/pages/FormInfoPage";
 import SchoolInfoSection from "@/pages/SchoolInfoSection";
-// import ErrorPage from "@/pages/ErrorPage.vue";
-
-
+import ErrorPage from "@/pages/ErrorPage.vue";
 
 
 import FormRightHeader from "@/components/layout/FormRightHeader";
 import StripePayment from "@/components/paymentFlow/StripePayment.vue";
+import {mapGetters} from "vuex";
 // import SchoolInfoSection from "@/pages/SchoolInfoSection.vue";
 
 export default {
   name: "StripePage",
-  components:{
+  components: {
     StripePayment,
     SchoolInfoSection,
     // PaymentSuccess
     FormRightHeader,
     FormInfoPage,
     TheHeader,
-    TheFooter
+    TheFooter,
+    ErrorPage
   },
   data() {
     return {
@@ -134,6 +134,11 @@ export default {
     };
   },
   computed: {
+
+    ...mapGetters({
+      showErrorPage: "errorPage",
+    }),
+
     payRef() {
       return this.$store.getters.initStripeData.paymentTransactionReference
     },
