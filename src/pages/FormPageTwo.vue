@@ -17,6 +17,38 @@ export default {
   components: {PaymentFlowOne
     , SchoolInfoSection
   },
+
+
+  mounted() {
+    this.updateScreenWidth();
+    this.onScreenResize();
+
+
+
+  },
+  methods: {
+    onScreenResize() {
+      window.addEventListener("resize", () => {
+        this.updateScreenWidth();
+      });
+    },
+    updateScreenWidth() {
+      this.screenWidth = window.innerWidth;
+
+      if (this.screenWidth > 898) {
+
+        this.$router.go(-1);
+
+        // return  this.$router.push('/');      //<---  need this method
+
+
+      }else{
+        console.log("lower ");
+
+      }
+    },
+  },
+
 }
 </script>
 

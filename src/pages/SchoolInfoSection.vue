@@ -1,10 +1,15 @@
 <template>
     <div class="smallWidthContainer" >
 
+        <div >
 
       <section class="schoolDetails" >
-              <span class="formatLogoSchoolNameSection">
-        <img class="schoolLogo" :src="avatarDetailInfo" alt="logo">
+
+
+
+        <span class="formatLogoSchoolNameSection">
+
+                  <img class="schoolLogo" :src="avatarDetailInfo" alt="logo">
 
       </span>
         <span class="alignRight">
@@ -17,9 +22,6 @@
 
         <div class="centerIMage">
           <slot name="schoolInfoCauseIMage">
-<!--                      <img  class="formatCausePicture" :src="causeImage"-->
-<!--                      alt="cause image">-->
-
 
           </slot>
         </div>
@@ -35,6 +37,10 @@
           <span class="causeContentCreatorFormat">{{  causeDetailInfo.createdByUserName }} </span>
         </div>
       </section>
+
+
+    </div>
+
 
       <section class="contributionGauge">
         <span class="formatTopGUage">
@@ -83,7 +89,15 @@ import causeImage from "@/assets/projectIMage.png";
 // import {useRoute} from "vue-router";
 import {useRoute} from 'vue2-helpers/vue-router';
 
+
+
+
+
+
 export default {
+  components: {
+    // Skeletor
+  },
   name: "SchoolInfoSection",
   data() {
     return {
@@ -101,6 +115,7 @@ export default {
       numDaysLeft: 21,
       causeImage: causeImage,
       totalPer: 23,
+      watchItems: true,
 
 
     };
@@ -112,13 +127,14 @@ export default {
     ,
   },
 
+
   computed: {
     causeDetailInfo() {
       const indoData = this.$store.state.causeXData
       if (indoData.responseCode !== 200) {
-        return  "No data"
+        return "No data"
       }
-return indoData.responseContent
+      return indoData.responseContent
     },
     avatarDetailInfo() {
       const indoData = this.$store.state.causeXData
@@ -129,7 +145,7 @@ return indoData.responseContent
       }
       return indoData.responseContent.schoolAvatar
     }
-    }
+
     ,
 
     totalPercentage: function () {
@@ -141,34 +157,71 @@ return indoData.responseContent
       return this.testForIos();
     },
 
-
-
-
+  },
 
   mounted() {
+
+
+    // refresh after 5 seconds
+
+    setInterval(() => {
+
+      /// refresh datan page
+
+      this.$forceUpdate();
+
+
+    }, 1000)
+
+
+},
+
+  created(){
+
+    // alert("we are here")
 
     const route = useRoute()
     //  generate id from url  and set it to id
     const id = route.params.id
 
 
-// alert("mounted again" + id)
 
-    // push to vuex store to get data
-    this.$store.dispatch('getSingleCause', id)
 
-    console.log("c% &&$$$$ ZZZZZZZZZZ id is " + id, "color: pink; font-size: 200px;");
-    this.$store.dispatch("getCauseXdata", id);
 
-    this.$store.commit("SET_CAUSE_ID", id);
 
-    this.$store.dispatch("getCurrencyXdata", id);
+    // // push to vuex store to get data
+    //
+    // console.log("c% &&$$$$ ZZZZZZZZZZ id is " + id, "color: pink; font-size: 200px;");
 
-    this.$store.commit("SET_FIRST_NAME_VALID", true);
-    this.$store.commit("SET_EMAIL_VALID", true);
-    this.$store.commit("SET_LAST_NAME_VALID", true);
-    this.$store.commit("SET_AMOUNT_DONATION_VALID", true);
-    this.$store.commit("SET_MIN_AMOUNT_ALERT", "#003b88")
+
+
+
+    if (this.$store.getters.loadPageCheck === true) {
+
+
+      this.$store.dispatch("getCauseXdata", id);
+
+      this.$store.commit("SET_CAUSE_ID", id);
+      //
+      this.$store.dispatch("getCurrencyXdata", id);
+
+      this.$store.commit("SET_FIRST_NAME_VALID", true);
+      this.$store.commit("SET_EMAIL_VALID", true);
+      this.$store.commit("SET_LAST_NAME_VALID", true);
+      this.$store.commit("SET_AMOUNT_DONATION_VALID", true);
+      this.$store.commit("SET_MIN_AMOUNT_ALERT", "#003b88")
+
+
+
+
+    }
+
+
+    // this.$store.dispatch("getCauseXdata", id);
+
+
+
+    //
 
   }
 
@@ -176,8 +229,7 @@ return indoData.responseContent
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
 
 .smallWidthContainer {
 
@@ -187,6 +239,7 @@ return indoData.responseContent
   /*border: 1px solid black;*/
   /* padding: 1px; */
   position: relative;
+  /*background-color: aqua;*/
 
 
 }

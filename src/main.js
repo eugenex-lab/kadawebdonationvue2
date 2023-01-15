@@ -6,9 +6,10 @@ import store from './store'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueRouter   from "vue-router";
-// import vSelect from 'vue-select';
-// eslint-disable-next-line
-// import styles from './fonts/fonts.css';
+import device from 'vue-device-detector-js'
+import SkeletonCards from 'vue-ultimate-skeleton-cards'
+
+
 
 
 
@@ -26,7 +27,8 @@ Vue.config.productionTip = false
 
 Vue.use(VueAxios, axios)
 Vue.use(VueRouter)
-// Vue.component('v-select', vSelect)
+Vue.use(device)
+Vue.use(SkeletonCards)
 
 
 const router = new VueRouter({

@@ -26,7 +26,7 @@
 
     <a
        class="nav__link donateButton"  @click="methodBeginForm"  >
-      <a  :href="kadaurl"  target="_blank"  >
+      <a  :href="kadaurl"  target="_blank" class="navlink donateBtn"  >
         <img  :src="visitWebBUtton"   v-show="this.$store.getters.errorPage" class="submitIconFormat"  visitWebBUtton>
       </a>
       <img v-show="!this.$store.getters.errorPage" class="submitIconFormat" :src="continueToForm" >
@@ -80,7 +80,13 @@ export default {
       // alert("methodBeginForm")
 
       // return  window.location.href = '/causecontribution/form'  //
-      return this.$router.push({path : '/causecontribution/:id/form' });
+      // return this.$router.push({path : '/causecontribution/:id/form' });
+
+      // pass id tto the url and then get it from the url
+
+      return this.$router.push({path : '/causecontribution/' + this.$store.getters.causeId + '/form' });
+
+      // return this.$router.push({path : '/causecontribution/:id/form' , params: {id: this.id} });
 
     },
 
@@ -182,7 +188,7 @@ a.nav__link.donateButton {
   /* right: -1.3rem; */
   /* position: absolute; */
   /* padding-left: 8rem; */
-  top: 0.2rem;
+  top: 0.4rem;
   /* left: 2.5rem; */
   display: flex;
   display: flex;
@@ -248,6 +254,7 @@ img.androidIconFormat {
 img.submitIconFormat {
   width: 8rem;
   height: 2.5rem;
+  border-radius: 0.25em;
 }
 
 a.iosButton{
@@ -263,7 +270,9 @@ a.iosButton{
 
 
 
-
+a.nav__link.androidButton {
+  padding-top: 0.8rem;
+}
 
 
 

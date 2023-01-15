@@ -281,12 +281,9 @@ export default {
 
     async pay() {
 
-      // alert("pay clicked")
 
 
-      // this.$store.commit("SET_SHOW_STRIPE_PAYMENT", true)
-
-      // check the currency
+this.$forceUpdate()
 
       this.$refs.paymentRef.submit();
 
@@ -303,6 +300,11 @@ export default {
   },
   mounted() {
     this.generatePaymentIntent();
+
+
+    setTimeout(() => {
+      this.$forceUpdate()
+    }, 1000);
 
     // alert("remouted")
 

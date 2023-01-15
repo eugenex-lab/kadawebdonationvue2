@@ -70,6 +70,10 @@ export default {
   color: #2c3e50;
 }
 
+//input[type=text] {
+//  font-family: Inter;
+//}
+
 
 nav {
   padding: 30px;
@@ -86,6 +90,7 @@ nav {
 
 body{
   margin: 0;
+  font-family: Inter;
 
 
 }

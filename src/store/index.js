@@ -15,46 +15,24 @@ export default new Vuex.Store(
 
             reducer: state => ({
                     showPayoutSummary: state.showPayoutSummary,
-                    // causeContributions: state.causeContributions,
                     formIsValid: state.formIsValid,
-                    // initFlutterData: state.initFlutterData,
                     amountDonation: state.amountDonation,
                     firstName: state.firstName,
 
                     lastName: state.lastName,
                     email: state.email,
 
-
-                    // minAmountAlert: state.minAmountAlert,
-                    // amountDonationValValid: true,
                     currency: state.currency,
 
                     minimumDonation: state.minimumDonation,
                     nairaMithisnimumDonation: state.nairaMithisnimumDonation,
                     dollarMinimumDonation: state.dollarMinimumDonation,
-                    // securityCode: state.securityCode,
-
-                    // causeDetails: state.causeDetails,
-                    // loadingStatus: state.loadingStatus,
-                    // idCause: state.idCause,
-                    // idd: state.idd,
-                    // causeDetailInfo: [],
-
-
-                    // causeDetail: state.causeDetail,
                     causeXData:     state.causeXData,
                     currencyXData: state.currencyXData,
-                    // clientId: state.clientId,
-                    // errorPage: state.errorPage,
-                    // flutterPaymentResponse: state.flutterPaymentResponse,
-
 
                     causeId: state.causeId,
                     initStripeData: state.initStripeData,
-                    // initSecKey: initSecKey ? JSON.parse(initSecKey) : '',
                     initSecKey: state.initSecKey,
-
-
                     minAmountValidation: state.minAmountValidation,
                     showStripePayment: state.showStripePayment,
 
@@ -67,6 +45,7 @@ export default new Vuex.Store(
             }
         )],
         state: {
+            loadPageCheck: true,
             showPayoutSummary: false,
             causeContributions: "Construction of Senate Building",
             formIsValid: true,
@@ -134,6 +113,7 @@ export default new Vuex.Store(
 
         },
         getters: {
+            loadPageCheck: state => state.loadPageCheck,
             initSecKey: state => state.initSecKey,
 
             email: state => state.email.value,
@@ -176,6 +156,11 @@ export default new Vuex.Store(
 
         },
         mutations: {
+            // loadPageCheck
+            SET_LOAD_PAGE_CHECK(state, payload) {
+                state.loadPageCheck = payload;
+            },
+
 
 
             SET_CURRENCY(state, payload) {
@@ -432,13 +417,7 @@ export default new Vuex.Store(
 
 
                 })
-                    // , {
-                    // headers: {
-                    //     "Access-Control-Allow-Origin": "*",
-                    // "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-                    // "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization",
-                    // "Content-Type": "application/json",
-                    // }}
+
                     .then(response => {
                         console.log("%c response.data", "color: #00ff00 " +
                             "; font-size: 20px  ; font-weight: bold " +
@@ -473,7 +452,7 @@ export default new Vuex.Store(
             },
 
 
-            getCauseXdata({commit}, causeId) {
+           async getCauseXdata({commit}, causeId) {
 
                 console.log("%c clientId An attempt to get param id from use route ", "color: red", causeId);
                 axios.get(`https://kada.identity.stage.wealthtech.ng/school/cause/public/view/${causeId}/details`)
@@ -515,7 +494,10 @@ export default new Vuex.Store(
 
                         if (this.state.causeXData.responseContent.status === "EXPIRED") {
 
+                            commit('SET_LOAD_PAGE_CHECK', false);
+
                             commit('SET_ERROR_PAGE', true);
+
                         }
 
 

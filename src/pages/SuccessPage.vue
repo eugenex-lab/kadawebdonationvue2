@@ -226,7 +226,9 @@ export default {
   beforeMount() {
 
     if (this.$store.getters.amountDonation) {
-      return void 0
+
+      return this.$store.dispatch("getCauseXdata", this.$store.getters.causeXData.responseContent.causeId)
+
     } else {
       this.$store.commit('SET_ERROR_PAGE', true);
     }
@@ -235,8 +237,7 @@ export default {
   mounted() {
 
 
-    this.$store.dispatch("getCauseXdata", this.$store.getters.causeXData.responseContent.causeId)
-
+    //
     console.log("%c we in here ", "color: pink; font-size: 5" +
         "0px", this.loadingStatus);
     console.log("%c we in here ", "color: pink; font-size: 5px", this.$store.state.loadingStatus);

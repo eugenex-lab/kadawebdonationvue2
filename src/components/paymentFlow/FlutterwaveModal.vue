@@ -283,14 +283,14 @@ export default {
 
                       // window.location.href = '/causecontribution/paymentfailure'
 
-                      this.$router.push('/causecontribution/paymentfailure')
+                      this.$router.push('/paymentfailure')
 
                     }
 
                   })
                   .catch(error => {
                     // window.location.href = '/causecontribution/paymentfailure'
-                    this.$router.push('/causecontribution/paymentfailure')
+                   '/causecontribution/:id/paymentrestart'
 
                     console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
 

@@ -81,10 +81,14 @@
 
           <div class="inputEMail emialFOrmat">
             <input
+
+
+
+
                 :class="{invalid: !emailValid}"
                 name="payCardDigit"
                 class=" paymentFormBodyCardAmountInputField inputEMail placeholder "
-                v-model.trim="emailInput"
+                v-model="emailInput"
                 placeholder="username@email.com"
                 id="alightText"
             />
@@ -1763,11 +1767,11 @@ input::-webkit-inner-spin-button {
 
 
   input.paymentFormBodyCardAmountInputField.inputEMail.inputFirstName[data-v-4506583d] {
-    width: 9.9rem;
+    width: 10.15rem;
   }
 
   input.paymentFormBodyCardAmountInputField[data-v-4506583d] {
-    width: 20.7rem;
+    width: 21.1rem;
   }
 
   p.validationAlert.topFormFOrmat.leftFormat[data-v-4506583d][data-v-4506583d][data-v-4506583d] {
@@ -1891,7 +1895,7 @@ p.validationAlert.topFormFOrmat.sideleftFormat {
 
 @media screen and (max-width: 900px) {
 .smallWidthContainer{
-  padding-top: 2em;
+  padding-top: 1em;
 
 }
 
@@ -2012,6 +2016,17 @@ a.editBtn {
 }
 
 
+/*input[type=text] {*/
+/*  font-family: Inter;*/
+/*  color: #1abc9c;*/
+/*}*/
+
+
+
+/*input#alightText[type=email] {*/
+/*  background-color: blue;*/
+/*  color: red;*/
+/*}*/
 
 
 </style>

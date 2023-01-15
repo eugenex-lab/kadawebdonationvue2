@@ -223,6 +223,10 @@ export default {
 
   },
   created() {
+
+
+
+
     console.log("%c we in here ", "color: pink; font-size: 5" +
         "0px", this.loadingStatus);
     console.log("%c we in here ", "color: pink; font-size: 5px", this.$store.state.loadingStatus);
