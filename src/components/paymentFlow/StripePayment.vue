@@ -2,7 +2,7 @@
   <div class="formatCompletePage">
 <!--        {{"this is the show stripe on second click  ->  " + this.showStripePayment}}-->
 
-
+{{"here --> + " + this.secretKey}}
     <div class="stripeREcBox">
 
 <!--{{"here i am " + initStripeDataSecretKey}}  -->
@@ -28,11 +28,16 @@
 
 
           <stripe-element-payment
+
+
               ref="paymentRef"
               :pk="pk"
               :elements-options="elementsOptions"
               :confirm-params="confirmParams"
+              @loading="loadingState = $event"
+
           />
+
 
 
         </div>
@@ -86,6 +91,7 @@ export default {
 
     return {
 
+
       pk: process.env.VUE_APP_STRIPE_PUBLIC_KEY,
 
       elementsOptions: {
@@ -118,6 +124,30 @@ export default {
 
     }
   },
+
+  watch: {
+    // watch for changes in initStripeDataSecretKey only
+    secretKey: function (val) {
+      this.initStripeDataSecretKey = val
+      // this.$store.commit('SET_STATUS', false)
+
+      if (val !== null) {
+        // this.$store.commit('SET_STATUS', true)
+
+        window.location.reload();
+        return val
+      }
+
+      return this.initStripeDataSecretKey
+
+
+    }
+
+
+  }
+
+
+  ,
 
 
   computed: {
@@ -156,7 +186,7 @@ export default {
     },
 
     initStripeDataSecretKey: function () {
-      return this.$store.getters.initStripeData.gatewaySecretKey
+      return this.$store.state.initStripeData.gatewaySecretKey
       // return this.$store.getters.initSecKey
     },
 
@@ -229,7 +259,27 @@ export default {
 
   },
   methods: {
-    formatNumber (num) {
+
+    getSecret() {
+      // get data from vuex
+
+
+    }
+    ,
+
+
+    checkValidAMount() {
+      if (this.amountEditPage > 0) {
+        alert("Please enter a valid amount")
+
+        return true
+      } else {
+        alert("Please enter a valid amount")
+
+        return false
+      }
+    },
+    formatNumber(num) {
       return parseFloat(num).toFixed(2)
     },
 
@@ -282,34 +332,31 @@ export default {
     async pay() {
 
 
-
-this.$forceUpdate()
-
       this.$refs.paymentRef.submit();
-
 
 
     },
 
-
-  },
-
+  }
+  ,
   created() {
-    console.log("created here");
+    this.generatePaymentIntent()
+
 
   },
   mounted() {
-    this.generatePaymentIntent();
 
 
-    setTimeout(() => {
-      this.$forceUpdate()
-    }, 1000);
+    if (this.amountEditPage > 0) {
+      return null
+    } else {
+      this.cancelPay()
+    }
 
-    // alert("remouted")
 
-  }
-  ,
+  },
+
+
 }
 </script>
 
@@ -626,7 +673,7 @@ a.editBtn {
 .stripeREcBoxHeader {
   display: flex;
   width: 100%;
-  padding-bottom: 1em;
+  padding-bottom: 0.5em;
   flex-direction: column;
   align-items: flex-start;
 
@@ -648,6 +695,11 @@ a.editBtn {
   align-items: center;
   flex-direction: column;
   padding-top: 4rem;
+}
+
+a.nav__link.donateButton.webVersion.btnFormat[data-v-5d5f877e] {
+  cursor: grab;
+  /* margin-left: -3.3rem; */
 }
 
 </style>

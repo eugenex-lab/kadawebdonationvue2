@@ -972,6 +972,7 @@ export default ({
                 //
                 this.$router.push({  name: 'stripPayment' })
 
+               // this.$store.commit('SET_STATUS',true )
 
                 // alert("dollar")
                 this.$refs.paymentRef.submit();

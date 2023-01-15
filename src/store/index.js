@@ -80,15 +80,7 @@ export default new Vuex.Store(
             minimumDonation: 40000,
             nairaMithisnimumDonation: "₦80,000",
             dollarMinimumDonation: "$100",
-            securityCode: {
-                code: 1111,
-                length: 4,
-            },
-            payCardDigit: {
 
-                length: 16,
-                value: 3,
-            },
 
             causeDetails: [],
             loadingStatus: true,

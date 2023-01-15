@@ -132,7 +132,9 @@ export default {
     causeDetailInfo() {
       const indoData = this.$store.state.causeXData
       if (indoData.responseCode !== 200) {
-        return "No data"
+
+        return this.$store.commit('SET_ERROR_PAGE', true)
+
       }
       return indoData.responseContent
     },
@@ -141,7 +143,8 @@ export default {
       // check if dataresponse is not 200 return null
       if (indoData.responseContent.schoolAvatar === null || indoData.responseContent.schoolAvatar === undefined
           || indoData.responseContent.schoolAvatar === "") {
-        return this.schoolLogos
+        return this.$store.commit('SET_ERROR_PAGE', true)
+
       }
       return indoData.responseContent.schoolAvatar
     }

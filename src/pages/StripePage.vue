@@ -1,5 +1,9 @@
 <template>
   <div>
+    <loading-screen  v-show="loading"></loading-screen>
+
+
+
     <the-header></the-header>
 
 
@@ -95,6 +99,8 @@
   </div>
 </template>
 <script>
+import LoadingScreen from "@/components/layout/LoadingScreen.vue";
+
 import TheFooter from "@/components/layout/TheFooter";
 import TheHeader from "@/components/layout/TheHeader";
 
@@ -114,6 +120,8 @@ import {mapGetters} from "vuex";
 export default {
   name: "StripePage",
   components: {
+    LoadingScreen,
+
     StripePayment,
     SchoolInfoSection,
     // PaymentSuccess
@@ -125,19 +133,34 @@ export default {
   },
   data() {
     return {
-      causeImage: causeImage,
+      causeImg: causeImage,
       causeData : null,
       idCause: null,
-      loading: false,
       sudoExample: null,
       // showErrorPage : false,
     };
   },
   computed: {
 
+    causeImage() {
+
+      const val = this.$store.state.causeXData
+
+      if (val.responseContent.avatar === null || val.responseContent.avatar === undefined
+          || val.responseContent.avatar === "") {
+        return this.causeImg
+      }
+
+      return val.responseContent.avatar
+    },
+
     ...mapGetters({
       showErrorPage: "errorPage",
+
     }),
+    loading() {
+      return this.$store.state.loadingStatus;
+    },
 
     payRef() {
       return this.$store.getters.initStripeData.paymentTransactionReference
