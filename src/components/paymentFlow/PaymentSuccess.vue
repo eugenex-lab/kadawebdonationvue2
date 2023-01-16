@@ -1,7 +1,11 @@
 <template>
   <div class="formatCompletePage">
 
+
+
     <div class="formatTopView">
+
+      <schoolInfoSection  id="formatStripeMobile"></schoolInfoSection>
 
 
       <div class="topSection">

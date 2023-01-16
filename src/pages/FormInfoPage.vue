@@ -426,4 +426,13 @@ max-width: 31rem;
 
 }
 
+
+@media  screen and (max-width: 900px) {
+  .smallWidthContainer{     /*   <----  web    */
+    /*display: none;*/
+  }
+
+}
+
+
 </style>

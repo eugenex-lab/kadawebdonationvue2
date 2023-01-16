@@ -27,16 +27,20 @@
           </div>
 
 
-          <stripe-element-payment
+          <div  class="formatStripeMobile">
+            <stripe-element-payment
 
 
-              ref="paymentRef"
-              :pk="pk"
-              :elements-options="elementsOptions"
-              :confirm-params="confirmParams"
-              @loading="loadingState = $event"
+                ref="paymentRef"
+                :pk="pk"
+                :elements-options="elementsOptions"
+                :confirm-params="confirmParams"
+                @loading="loadingState = $event"
 
-          />
+            />
+          </div>
+
+
 
 
 
@@ -60,6 +64,22 @@
       </div>
     </div>
 
+
+
+        <nav class="nav">
+
+
+          <a
+              class="nav__link donateButton mobileVersion"  @click="pay" >
+            <img class="submitIconFormatMobile"  :src="continueToForm">
+          </a>
+
+
+        </nav>
+
+
+
+
   </div>
 
 
@@ -67,8 +87,10 @@
 
 
 <script>
+
 import {StripeElementPayment} from '@vue-stripe/vue-stripe';
 import paymetBtn from "@/assets/makePayment.svg";
+import continueButoon from "@/assets/makePayment.svg";
 // import router from "@/router";
 
 
@@ -80,6 +102,8 @@ export default {
   setup() {
     return {
       payForm: paymetBtn,
+      continueToForm: continueButoon,
+
 
 
 
@@ -362,6 +386,10 @@ export default {
 
 <style scoped>
 
+.nav {
+  display: none;
+}
+
 .subHeading {
 
   opacity: 0.5;
@@ -522,6 +550,9 @@ img.imageSuccessformat {
   justify-content: center;
   column-gap: 0.5rem;
 }
+
+
+
 
 @media screen and (min-width: 1399px) {
 
@@ -700,6 +731,78 @@ a.editBtn {
 a.nav__link.donateButton.webVersion.btnFormat[data-v-5d5f877e] {
   cursor: grab;
   /* margin-left: -3.3rem; */
+}
+
+
+@media screen and (max-width: 900px) {
+
+  .stripeREcBox{
+    height: 25rem;
+    width: 21rem;
+    align-items: center;
+    padding-left: 0.9rem;
+    padding-top: 0.1rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .formatStripeMobile {
+    width: 100%;
+  }
+
+  .formatButtonStripe{
+    display: none;
+  }
+
+
+
+
+  .nav{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 71px;
+    box-shadow: 0 0 3px rgb(0 0 0 / 20%);
+    background-color: #ffffff;
+    display: flex;
+    margin-left: -0.9rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    z-index: 100;
+    padding: 0 0.9rem;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transform: translate3d(0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    /* top: 50%; */
+    /* left: 50%; */
+    /* transform: translate(-50%,-50%); */
+    align-items: center;
+    justify-content: center;
+
+  }
+
+  .nav {
+    display: flex;
+  }
+
+  .formatCompletePage {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+
+
 }
 
 </style>

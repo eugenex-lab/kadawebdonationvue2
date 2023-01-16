@@ -5,23 +5,10 @@
 
   <div>
     <form class="formFOrmat" >
-      <div class="bigCardBoard">
-        <div class="vertical"></div>
-        <div class="pageFormat">
-          <div class="addLayoutCard">
 
-            <schoolInfoSection v-if="!showErrorPage" >
-              <template v-slot:schoolInfoCauseIMage>
-                <img class="formatCausePicture" :src="causeImage">
-              </template>
-            </schoolInfoSection>
-            <form-info-page  v-if="!showErrorPage"></form-info-page>
-          </div>
-        </div>
 
-      </div>
-      <nav-bar-buttons>
-      </nav-bar-buttons>
+      <PaymentSuccess></PaymentSuccess>
+
     </form>
 
 
@@ -80,14 +67,14 @@
         Your contribution to this cause was successful      </template>
 
     </FormRightHeader>
-    <PaymentSuccess></PaymentSuccess>
+          <PaymentSuccess></PaymentSuccess>
 
 
-          <payment-flow-one></payment-flow-one>
+
         </div>
       </div>
-
     </div>
+
   </div>
   <the-footer></the-footer>
 
@@ -207,6 +194,10 @@ export default {
 
 <style scoped>
 
+
+.formFOrmat{
+  display: block;
+}
 
 .webView{
   display: none;
@@ -715,7 +706,9 @@ span.formatDayText {
     transition: 0.3s ease-out;
   }
 
-
+  .formFOrmat{
+    display: none;
+  }
 
 
 }

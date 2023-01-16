@@ -40,8 +40,6 @@ export default {
         this.$router.go(-1);
 
         // return  this.$router.push('/');      //<---  need this method
-
-
       }else{
         console.log("lower ");
 

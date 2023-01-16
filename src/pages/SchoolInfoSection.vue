@@ -90,10 +90,6 @@ import causeImage from "@/assets/projectIMage.png";
 import {useRoute} from 'vue2-helpers/vue-router';
 
 
-
-
-
-
 export default {
   components: {
     // Skeletor
@@ -710,21 +706,26 @@ span.formatLogoSchoolNameSection {
 
 }
 
-@media  screen and  (min-width: 899px) {
-
-  .smallWidthContainer{
-    /*display: none;*/
-  }
-
-
-}
 
 @media  screen and  (max-width: 899px) {
+
+
+  //.smallWidthContainer {
+  //  padding-top: 4.5rem;
+  //}
 
   section.schoolDetails {
 
     padding-top: 0rem;
   }
+
+  //.centerIMage{
+  //  display: none;
+  //}
+
+
+
+
 }
 
 

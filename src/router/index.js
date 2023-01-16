@@ -44,7 +44,7 @@ export default  [
   { path: '/paymentsuccess', component: SuccessPage , name : 'SuccessPage'},
 
 
-  { path: '/causecontribution/:id/form', component: FormPageTwo , name : 'PaymentFlowOne',
+  { path: '/causecontribution/:id/form', component: FormPageTwo , name : 'FormPageTwo',
     // params: true,
     props: true},
 

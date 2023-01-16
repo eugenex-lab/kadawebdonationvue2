@@ -910,7 +910,7 @@ export default ({
         // },
 
 
-        validateForm() {
+        validateForm() {    /// duplicated mthod one is playment flow andther in stripe Page
 
           this.$store.commit("SET_FIRST_NAME_VALID", true);
           this.$store.commit("SET_EMAIL_VALID", true);
@@ -962,7 +962,7 @@ export default ({
 
         },
 
-          validateTHIS(){
+          validateTHIS(){   /// duplicated mthod one is playment flow andther in stripe Page
           // alert("Clicked vlaidate button")
 
           this.validateForm()
@@ -1851,7 +1851,7 @@ px
 
 
 input.paymentFormBodyCardAmountInputField.inputEMail.inputFirstName {
-  width: 9.1rem;
+  width: 9.2rem;
 }
 
 span.formatSPace {

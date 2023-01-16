@@ -8,6 +8,7 @@
 
 
     <div>
+
       <form class="formFOrmat" >
         <div class="bigCardBoard">
           <error-page v-if="showErrorPage">    </error-page>
@@ -58,6 +59,7 @@
 
             </div>
 
+            <schoolInfoSection  id="formatStripeMobile"></schoolInfoSection>
 
 
           </div>
@@ -88,12 +90,26 @@
             <StripePayment></StripePayment>
 
 
+
+
 <!--            <payment-flow-one></payment-flow-one>-->
           </div>
         </div>
 
       </div>
     </div>
+
+<!--    <nav class="nav">-->
+
+
+<!--      <a-->
+<!--          class="nav__link donateButton mobileVersion"  @click="pay" >-->
+<!--        <img class="submitIconFormatMobile"  :src="continueToForm">-->
+<!--      </a>-->
+
+
+<!--    </nav>-->
+
     <the-footer></the-footer>
 
   </div>
@@ -115,6 +131,7 @@ import ErrorPage from "@/pages/ErrorPage.vue";
 import FormRightHeader from "@/components/layout/FormRightHeader";
 import StripePayment from "@/components/paymentFlow/StripePayment.vue";
 import {mapGetters} from "vuex";
+import continueButoon from "@/assets/makePayment.svg";
 // import SchoolInfoSection from "@/pages/SchoolInfoSection.vue";
 
 export default {
@@ -133,6 +150,7 @@ export default {
   },
   data() {
     return {
+      continueToForm: continueButoon,
       causeImg: causeImage,
       causeData : null,
       idCause: null,
@@ -166,82 +184,18 @@ export default {
       return this.$store.getters.initStripeData.paymentTransactionReference
     },
 
-
-    // title: function () {
-    //   console.log("%c we in here ", "color: pink; font-size: 20px");
-    //   if (this.causeDetailInfo.responseCode === 200) {
-    //     return this.causeDetailInfo.responseContent.name;
-    //   } else {
-    //     alert("error");
-    //     return "Loading";
-    //   }
-    // },
-
   },
+methods: {
 
-  methods: {
-
-    // causeInfoApiCall() {
-    //
-    //
-    //   alert("causeInfoApiCall wherre u disabbled useRoute");
-    //   this.loadingStatus = true;
-    //
-    //   const route = useRoute()
-    //   // console.log("%c Dynamic Id rendering" , "color: yellow; font-size: 40px" , route.params.id)
-    //   this.idCause = route.params.id
-    //   // send the id to the store
-    //
-    //
-    //   this.$store.dispatch("causeInfo", this.idCause);//  //
-    //
-    //
-    //
-    //
-    //
-    //
-    //   // console.log("%c Dynamic Id rendering" , "color: yellow; font-size: 40px" , this.idCause)
-    //
-    //   const url = `https://kada.identity.stage.wealthtech.ng/school/cause/public/view/${this.idCause}/details`
-    //   // console.log(url)
-    //   axios.get(url)
-    //       .then(response => {
-    //         // console.log(response.data)
-    //
-    //         // save the data to the store using mapState
-    //
-    //         this.sudoExample = response.data.responseCode;
-    //
-    //         // set loading to false in the store
-    //         this.$store.commit("loadingStatus", true);
-    //         // this.getDataToStore(response.data)
-    //
-    //
-    //       })
-    //       .catch(error => {
-    //         console.log(error)
-    //         this.$store.commit("loadingStatus", false);
-    //       })
-    //       .finally(() => {
-    //         // console.log("finally")
-    //         this.$store.commit("loadingStatus", false);          })
-    //
-    //
-    // },
+  // pay() {
+  //   this.$refs.paymentRef.submit();
+  // }
 
 
-  },
 
+
+},
   beforeMount() {
-
-
-
-
-    // this.causeInfoApiCall();
-
-    // run action in vuex to get the data from the api
-    //  this.getDataToStore();
-
 
 
   },
@@ -267,7 +221,17 @@ export default {
 <style scoped>
 
 
+#formatStripeMobile
+{
+  display: none;
+}
+
 .webView{
+  display: none;
+}
+
+
+.nav {
   display: none;
 }
 
@@ -580,6 +544,71 @@ span.formatDayText {
   }
 
 }
+@media screen and (max-width: 900px) {
+  .formFOrmat {
+    display: none;
+  }
+  .webView{
+    display: block;
+  }
+
+  .containLayout{
+    display: none;
+  }
+
+  #formatStripeMobile
+  {
+    padding-top: 5rem;
+    display: block;
+  }
+
+  div#second {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nav{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 71px;
+    box-shadow: 0 0 3px rgb(0 0 0 / 20%);
+    background-color: #ffffff;
+    display: flex;
+    margin-left: -0.9rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    z-index: 100;
+    padding: 0 0.9rem;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transform: translate3d(0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    /* top: 50%; */
+    /* left: 50%; */
+    /* transform: translate(-50%,-50%); */
+    align-items: center;
+    justify-content: center;
+
+  }
+
+  .nav {
+    display: flex;
+  }
+
+
+
+
+}
 
 @media screen and (min-width: 899px) {
   .formFOrmat {
@@ -872,5 +901,10 @@ span.formatDayText {
 
 
 
+
+
+form-info-page{
+  display: none;
+}
 
 </style>
