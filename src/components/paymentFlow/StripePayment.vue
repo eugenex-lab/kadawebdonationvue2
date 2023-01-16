@@ -2,7 +2,7 @@
   <div class="formatCompletePage">
 <!--        {{"this is the show stripe on second click  ->  " + this.showStripePayment}}-->
 
-{{"here --> + " + this.secretKey}}
+<!--{{"here &ndash;&gt; + " + this.secretKey}}-->
     <div class="stripeREcBox">
 
 <!--{{"here i am " + initStripeDataSecretKey}}  -->

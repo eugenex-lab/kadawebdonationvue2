@@ -171,53 +171,6 @@ export default {
 
       }
     },
-    // causeInfoApiCall() {
-    //
-    //
-    //   alert("causeInfoApiCall wherre u disabbled useRoute");
-    //   this.loadingStatus = true;
-    //
-    //   const route = useRoute()
-    //   // console.log("%c Dynamic Id rendering" , "color: yellow; font-size: 40px" , route.params.id)
-    //   this.idCause = route.params.id
-    //   // send the id to the store
-    //
-    //
-    //   this.$store.dispatch("causeInfo", this.idCause);//  //
-    //
-    //
-    //
-    //
-    //
-    //
-    //   // console.log("%c Dynamic Id rendering" , "color: yellow; font-size: 40px" , this.idCause)
-    //
-    //   const url = `https://kada.identity.stage.wealthtech.ng/school/cause/public/view/${this.idCause}/details`
-    //   // console.log(url)
-    //   axios.get(url)
-    //       .then(response => {
-    //         // console.log(response.data)
-    //
-    //         // save the data to the store using mapState
-    //
-    //         this.sudoExample = response.data.responseCode;
-    //
-    //         // set loading to false in the store
-    //         this.$store.commit("loadingStatus", true);
-    //         // this.getDataToStore(response.data)
-    //
-    //
-    //       })
-    //       .catch(error => {
-    //         console.log(error)
-    //         this.$store.commit("loadingStatus", false);
-    //       })
-    //       .finally(() => {
-    //         // console.log("finally")
-    //         this.$store.commit("loadingStatus", false);          })
-    //
-    //
-    // },
 
     ...mapActions({
       getDataToStore: "getApiData",

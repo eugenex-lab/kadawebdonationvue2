@@ -422,6 +422,8 @@ img.submitIconFormat[data-v-4506583d] {
 
 }
 
+
+
 img.submitIconFormat {
   width: 19.3rem;
 }
@@ -431,5 +433,26 @@ a.button {
   padding-left: 1.3rem;
   padding-top: 1.4rem;
 }
+
+@media screen and (max-width: 900px) {
+
+  a.button[data-v-26c494ba] {
+    display: flex;
+    padding-left: 1.3rem;
+    padding-top: 0rem;
+  }
+
+  img.submitIconFormat[data-v-4506583d] {
+    width: 20.5rem;
+    height: 3.4rem;
+  }
+
+  img.submitIconFormat[data-v-26c494ba] {
+    width: 20.5rem;
+    height: 3.4rem;
+  }
+
+}
+
 
 </style>

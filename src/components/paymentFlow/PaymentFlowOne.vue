@@ -4,7 +4,7 @@
 
 
 
-  <div>
+  <div class="bodyFormat">
 
     <!--    {{this.showNGN}}-->
     <!--    {{this.minAmountValid}}-->
@@ -260,10 +260,13 @@
 <!--          </a>-->
 
           <a class="nav__link donateButton webVersion btnFormat" v-show="showNGN">
-            <img class="submitIconFormat btn" id="pic" :src="payForm">
-            <flutterwave-modal>
+            <flutterwave-modal >
             </flutterwave-modal>
           </a>
+
+   <a class="nav__link donateButton webVersion btnFormat" v-show="!showNGN">
+     <img class="submitIconFormat btn" id="pic" :src="payForm">
+   </a>
 
 
 
@@ -330,19 +333,29 @@
 
 
 
+
+
+
+  </div>
+
     <nav class="nav">
 
       <!--/// mobile button -->
       <a
-          class="nav__link donateButton webVersion" @click="methodBeginForm">
-        <img class="submitIconFormat" :src="continueToForm">
+          class="nav__link donateButton mobileVersion"  v-show="showNGN">
+        <flutterwave-modal  class="submitIconFormat"  >
+        </flutterwave-modal>
+      </a>
+
+      <a
+          class="nav__link donateButton mobileVersion" v-show="!showNGN"  @click="validateTHIS" >
+        <img class="submitIconFormatMobile"  :src="continueToForm">
       </a>
 
 
     </nav>
 
 
-  </div>
     </div>
 
 
@@ -1191,15 +1204,16 @@ option.minimal {
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: 11px;
+  height: 17px;
   box-shadow: 0 0 3px rgb(0 0 0 / 20%);
   background-color: #ffffff;
   display: flex;
-  /*margin-left: -2.5rem;*/
-  overflow-x: auto;
-  justify-content: space-around;
+  /* margin-left: -2.5rem; */
+  overflow-x: hidden;
+  display: flex;
   align-items: center;
 }
+
 
 .nav__link {
   display: flex;
@@ -1508,9 +1522,10 @@ img.androidIconFormat {
 }
 
 .donateButton {
-  height: 4.5rem;
+  height: auto;
   position: relative;
-  /*margin-left: 1.5rem;*/
+  overflow-x: hidden;
+  margin-left: -4rem;
 }
 
 
@@ -1759,6 +1774,9 @@ input::-webkit-inner-spin-button {
     font-family: "SF Pro Text";
     text-align: left;
   }
+
+
+
 }
 
 
@@ -1778,6 +1796,22 @@ input::-webkit-inner-spin-button {
   p.validationAlert.topFormFOrmat.leftFormat[data-v-4506583d][data-v-4506583d][data-v-4506583d] {
     left: 10.5rem;
   }
+
+
+  .bodyFormat{
+    overflow-x: hidden;
+    display: block;
+  }
+
+  a.nav__link.donateButton.mobileVersion {
+    display: flex;
+  }
+
+
+  .submitIconFormat {
+    margin-left: -0.7rem;
+  }
+
 
 }
 
@@ -1896,9 +1930,22 @@ p.validationAlert.topFormFOrmat.sideleftFormat {
 
 @media screen and (max-width: 900px) {
 .smallWidthContainer{
-  padding-top: 1em;
+  padding-top: 0.5em;
+  display: flex;
+  flex-direction: column;
+  display: block;
 
 }
+
+  .donateButton[data-v-4506583d] {
+    display: none;
+  }
+
+  select#currency[data-v-4506583d] {
+    color: black;
+    /* font-size: larger; */
+
+  }
 
 
 }

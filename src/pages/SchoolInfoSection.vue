@@ -301,7 +301,7 @@ span.left {
 
 .container .schoolDetails{
   display: flex;
-  padding-top: 1rem;
+  padding-top: 0rem;
   height: 5rem;
   /*margin-left: 2.5rem;*/
 }
@@ -716,17 +716,15 @@ span.formatLogoSchoolNameSection {
     /*display: none;*/
   }
 
+
 }
 
 @media  screen and  (max-width: 899px) {
 
-  /*.smallWidthContainer {*/
+  section.schoolDetails {
 
-
-  /*  padding-top: 4rem;*/
-
-
-  /*}*/
+    padding-top: 0rem;
+  }
 }
 
 
