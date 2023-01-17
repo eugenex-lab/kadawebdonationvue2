@@ -6,7 +6,7 @@
 
   <div class="bodyFormat">
 
-    <!--    {{this.showNGN}}-->
+<!--        {{this.anonymousDonation}}-->
     <!--    {{this.minAmountValid}}-->
 
 
@@ -152,7 +152,7 @@
                     anonymous
 
                   </span>
-                <input class="toggle-checkbox" type="checkbox">
+                <input class="toggle-checkbox" type="checkbox" v-model="anonymousDonation" />
                 <div class="toggle-switch"></div>
               </label>
             </div>
@@ -673,6 +673,14 @@ export default ({
 
         },
 
+        anonymousDonation: {
+          get() {
+            return this.$store.state.anonymousDonation
+          },
+          set(value) {
+            this.$store.commit('SET_ANONYMOUS_DONATION', value);
+          }
+        },
         amountDonationInput: {
           get() {
             return this.$store.state.amountDonation.donationValue;
@@ -976,35 +984,26 @@ export default ({
 
               if(this.$store.getters.currency == "₦") {
 
-                alert("naira")
+                // alert("naira")
 
 
               } else {
 
                 this.$store.dispatch("initializeStripePayment")
-                //
-                this.$router.push({  name: 'stripPayment' })
-
-               // this.$store.commit('SET_STATUS',true )
-
-                // alert("dollar")
-                this.$refs.paymentRef.submit();
-
-
-              }
+               this.$store.commit('SET_STATUS',true )
 
 
 
+                setTimeout(() => {
+                  this.$router.push({  name: 'stripPayment' })
+                  this.$refs.paymentRef.submit();
 
-
-
-          } else {
-            // alert("to check valiation " + this.formIsValid )
-
+                }, 1000)
           }
 
-        }
-        ,
+          }
+        },
+
         editPay(){       // remove this method later
 
           this.$store.commit("SET_SHOW_PAYOUT_SUMMARY", false)

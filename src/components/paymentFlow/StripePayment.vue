@@ -5,7 +5,6 @@
 <!--{{"here &ndash;&gt; + " + this.secretKey}}-->
     <div class="stripeREcBox">
 
-<!--{{"here i am " + initStripeDataSecretKey}}  -->
 
 
       <!--repeated flutterwave and payment button and edit button down here  -->
@@ -136,7 +135,9 @@ export default {
       },
       confirmParams: {
 
-        return_url: 'http://localhost:8080/paymentsuccess',
+        return_url: window.location.origin + '/paymentsuccess',
+        // window.location.href = '/causecontribution/:id/paymentrestart'
+
 
       },
       layout: {
@@ -150,22 +151,20 @@ export default {
   },
 
   watch: {
-    // watch for changes in initStripeDataSecretKey only
-    secretKey: function (val) {
-      this.initStripeDataSecretKey = val
-      // this.$store.commit('SET_STATUS', false)
 
-      if (val !== null) {
-        // this.$store.commit('SET_STATUS', true)
+    initStripeDataSecretKey( newValue, oldValue ) {  //  newValue, oldValue
 
-        window.location.reload();
-        return val
+      if (oldValue === null || oldValue === undefined) {
+
+        return window.location.reload();
+
       }
 
-      return this.initStripeDataSecretKey
+
 
 
     }
+
 
 
   }
@@ -210,8 +209,8 @@ export default {
     },
 
     initStripeDataSecretKey: function () {
-      return this.$store.state.initStripeData.gatewaySecretKey
-      // return this.$store.getters.initSecKey
+      // return this.$store.state.initStripeData.gatewaySecretKey
+      return this.$store.getters.initSecKey
     },
 
     initStripePublicKey: function () {
@@ -364,11 +363,15 @@ export default {
   }
   ,
   created() {
+
     this.generatePaymentIntent()
 
-
   },
+
+
   mounted() {
+
+
 
 
     if (this.amountEditPage > 0) {

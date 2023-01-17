@@ -282,16 +282,16 @@ export default {
                       console.log("----------------------------------------------------")
 
                       // window.location.href = '/causecontribution/paymentfailure'
+                      // window.location.href = window.location.hostname + "/paymentsuccess"
+                      window.location.href = '/causecontribution/:id/paymentrestart'
 
-                      this.$router.push('/paymentfailure')
 
                     }
 
                   })
                   .catch(error => {
                     // window.location.href = '/causecontribution/paymentfailure'
-                   '/causecontribution/:id/paymentrestart'
-
+                    window.location.href = '/causecontribution/:id/paymentrestart'
                     console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
 
                     console.log(error);
@@ -300,7 +300,9 @@ export default {
               } catch (e) {
 
                 console.log(e + "Catch $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
-                this.$router.push('/causecontribution/paymentfailure')
+                // window.location.href = window.location.hostname + "/causecontribution/:id/paymentrestart"
+                window.location.href = '/causecontribution/:id/paymentrestart'
+
               }
 
             }

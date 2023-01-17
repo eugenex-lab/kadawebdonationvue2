@@ -35,6 +35,7 @@ export default new Vuex.Store(
                     initSecKey: state.initSecKey,
                     minAmountValidation: state.minAmountValidation,
                     showStripePayment: state.showStripePayment,
+                    anonymousDonation: state.anonymousDonation,
 
 
 
@@ -96,17 +97,19 @@ export default new Vuex.Store(
             causeId: '',
             initStripeData: '',
             // initSecKey: initSecKey ? JSON.parse(initSecKey) : '',
-            initSecKey: '',
+            // initSecKey: '',
 
 
             minAmountValidation: '',
             showStripePayment: false,
+            anonymousDonation: false,
 
 
         },
         getters: {
+            anonymousDonation: state => state.anonymousDonation,
             loadPageCheck: state => state.loadPageCheck,
-            initSecKey: state => state.initSecKey,
+            initSecKey: state => state.initStripeData.gatewaySecretKey,
 
             email: state => state.email.value,
             lastName: state => state.lastName.value,
@@ -148,6 +151,10 @@ export default new Vuex.Store(
 
         },
         mutations: {
+            SET_ANONYMOUS_DONATION(state, payload) {
+                state.anonymousDonation = payload;
+            },
+
             // loadPageCheck
             SET_LOAD_PAGE_CHECK(state, payload) {
                 state.loadPageCheck = payload;
@@ -316,7 +323,12 @@ export default new Vuex.Store(
 
                     }
                 ).catch(error => {
-                        console.log(error);
+                    // implement error handling with route to /cause/error
+
+
+
+
+
                         alert(' Error Occurred' + error);
                         commit('SET_ERROR_PAGE', true);
 
@@ -342,7 +354,7 @@ export default new Vuex.Store(
                     "firstName": state.firstName.value,
                     "lastName": state.lastName.value,
                     "emailAddress": state.email.value,
-                    "payAsAnonymous": false,  // Todo switch from input
+                    "payAsAnonymous": state.anonymousDonation,
                     "paymentFrequency": "NONE",
                     "paymentModeType": "ONE_OFF"
 
@@ -403,7 +415,7 @@ export default new Vuex.Store(
                     "firstName": state.firstName.value,
                     "lastName": state.lastName.value,
                     "emailAddress": state.email.value,
-                    "payAsAnonymous": false,
+                    "payAsAnonymous": state.anonymousDonation,
                     "paymentFrequency": "NONE",
                     "paymentModeType": "ONE_OFF"
 
@@ -430,14 +442,13 @@ export default new Vuex.Store(
                                 "; padding: 5px 10px 5px 10px", response.data.responseContent);
                         } else {
                             /// SET error page to true and show error page
-
                         }
-
                     })
                     .catch(error => {
                         console.log(error);
-                        alert("error --->  " + error);
-                        // implment error handling page here later
+                        // alert("error --->  " + error);
+                        window.location.href = '/causecontribution/:id/paymentrestart'
+
                     });
                 console.log(state.causeXData + " " + state + " " + payload + " " + commit);
 

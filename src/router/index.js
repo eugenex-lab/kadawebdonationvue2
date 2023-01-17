@@ -28,7 +28,7 @@ export default  [
 
     ]
   },
-
+  // { path: '/paymentrestart', component: PaymentFailure ,
     { path: '/causecontribution/:id/paymentrestart', component: PaymentFailure ,
       name : 'paymentrestart',
 
@@ -41,7 +41,7 @@ export default  [
   { path: '/causecontribution/:id/paymentfailure', component: PaymentFailure , name : 'PaymentFailure',  /// <--- WEB FAILURE Page
     // params: true,
     props: true},
-  { path: '/paymentsuccess', component: SuccessPage , name : 'SuccessPage'},
+  { path: '/paymentsuccess', component: SuccessPage , name : 'paymentsuccess'},
 
 
   { path: '/causecontribution/:id/form', component: FormPageTwo , name : 'FormPageTwo',

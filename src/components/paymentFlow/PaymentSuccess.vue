@@ -1,11 +1,9 @@
 <template>
   <div class="formatCompletePage">
 
-
+    <schoolInfoSection id="formatStripeMobile"></schoolInfoSection>
 
     <div class="formatTopView">
-
-      <schoolInfoSection  id="formatStripeMobile"></schoolInfoSection>
 
 
       <div class="topSection">
@@ -43,6 +41,11 @@
     <div class="successTextFormat">
 
       <div class="textFormatAlignment">
+        Successful
+      </div>
+
+      <div class="textFormatAlignment Mobile">
+        Donation
         Successful
       </div>
 
@@ -89,6 +92,8 @@
 
 
 <script>
+import SchoolInfoSection from "@/pages/SchoolInfoSection";
+
 import shareIcon from "@/assets/shareWeb.png";
 // import {mapFields} from "vuex-map-fields";
 import appleLinkStore from '@/assets/lotticeWhiteApple.gif';
@@ -97,6 +102,9 @@ import andriodLinkStore from "@/assets/lotticeAndriodWHite.gif";
 
 export default {
   name: "PaymentSuccess",
+  components: {
+    SchoolInfoSection
+  },
   data() {
     return {
       shareIcon: shareIcon,
@@ -251,7 +259,9 @@ export default {
 
     this.checkCurrency();
 
-    // alert("created success page" + this.currency);
+
+
+
 
   },
   afterMount() {
@@ -266,6 +276,18 @@ export default {
 </script>
 
 <style scoped>
+
+.textFormatAlignment.Mobile {
+  display: none;
+}
+
+.textFormatAlignment {
+  display: block;
+}
+
+#formatStripeMobile {
+  display: none;
+}
 
 .subHeading {
 
@@ -419,12 +441,12 @@ img.imageSuccessformat {
 
 }
 .formatLogo{
-
   display: flex;
   flex-direction: row;
   justify-content: center;
   column-gap: 0.5rem;
 }
+
 @media screen and (min-width: 1399px) {
 
   .topRightSection[data-v-20fb6730] {
@@ -435,4 +457,85 @@ img.imageSuccessformat {
     padding-right: 2rem;
   }
 }
+
+@media screen and (max-width: 900px) {
+
+
+  .textFormatAlignment.Mobile {
+    display: block;
+  }
+
+
+  .textFormatAlignment {
+    display: none;
+  }
+
+
+  #formatStripeMobile {
+    display: flex;
+    flex-direction: column;
+    padding-top: 5rem;
+  }
+
+  .formatTopView[data-v-20fb6730] {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .shareButtonFormat {
+    display: none;
+  }
+
+  img.shareIcon {
+    display: none;
+  }
+
+  .formatTopView[data-v-20fb6730][data-v-20fb6730] {
+    display: flex;
+    justify-content: space-around;
+    padding-left: 4.1rem;
+  }
+
+  .formatCompletePage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .formatTopView[data-v-20fb6730][data-v-20fb6730][data-v-20fb6730] {
+    display: flex;
+    /* padding-left: 4.1rem; */
+    align-items: flex-start;
+    width: 31.8rem;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .topRightSection[data-v-20fb6730] {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+    padding-top: 1rem;
+    padding-right: 1rem;
+  }
+
+  img.imageSuccessformat[data-v-20fb6730] {
+    height: 11rem;
+    width: 11rem;
+  }
+
+  .successTextFormat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .textFormatAlignment.Mobile {
+    width: min-content;
+  }
+
+
+}
+
+
 </style>

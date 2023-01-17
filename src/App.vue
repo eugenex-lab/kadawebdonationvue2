@@ -47,6 +47,11 @@ export default {
     // }
   },
   mounted() {
+
+    // check the host name
+    //  alert(window.location.hostname)
+
+
     // console.log("mounted");
     //
     // const route = useRoute()

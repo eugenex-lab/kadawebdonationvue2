@@ -201,8 +201,14 @@ methods: {
   },
   created() {
 
-
-
+    // if(this.$store.state.initStripeData.gatewaySecretKey !== null) {
+    // alert("stripe key is not null")
+    // } else {
+    //
+    //   alert("stripe key is null")
+    //   this.$router.go(0)
+    //
+    // }
 
     console.log("%c we in here ", "color: pink; font-size: 5" +
         "0px", this.loadingStatus);
