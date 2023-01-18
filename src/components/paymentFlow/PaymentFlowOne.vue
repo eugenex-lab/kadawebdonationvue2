@@ -65,13 +65,13 @@
 
           </div>
           <div class="fixFOrmatError">
-            <p v-if="!firstNameValid" class="validationAlert topFormFOrmat sideleftFormat">Enter your
+            <p v-if="!firstNameValid" class="validationAlert topFormFOrmat sideleftFormat newFormat">Enter your
 
 
               First Name</p>
 
 
-            <p v-if="!lastNameValid" class="validationAlert topFormFOrmat leftFormat ">Enter your Last Name </p>
+            <p v-if="!lastNameValid" class="validationAlert topFormFOrmat leftFormat newFormat">Enter your Last Name </p>
 
 
           </div>
@@ -2063,17 +2063,14 @@ a.editBtn {
 }
 
 
-/*input[type=text] {*/
-/*  font-family: Inter;*/
-/*  color: #1abc9c;*/
-/*}*/
+p.validationAlert.topFormFOrmat.sideleftFormat.newFormat {
+  padding-top: 0.5rem;
+}
 
+p.validationAlert.topFormFOrmat.leftFormat.newFormat {
+  padding-top: 0.5rem;
+}
 
-
-/*input#alightText[type=email] {*/
-/*  background-color: blue;*/
-/*  color: red;*/
-/*}*/
 
 
 </style>

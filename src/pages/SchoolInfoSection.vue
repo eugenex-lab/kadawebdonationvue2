@@ -228,7 +228,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
 .smallWidthContainer {
 
@@ -245,7 +245,7 @@ export default {
 
 
 
-/* everything above is for layout only */
+
 
 span.alignLeft {
   display: inline-block;
@@ -467,7 +467,7 @@ span.totalAmountContributed{
   /* width: 100%; */
   /* height: 3rem; */
   opacity: 0.87;
-  height: -2rem;
+  /*height: -2rem;*/
   color: #010D1C;
   font-family: Inter;
   font-size: 12px;
@@ -581,7 +581,7 @@ background-color: #60C56F;
   /* padding-left: 1rem; */
   width: 99%;
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   justify-content: flex-end;
   flex-wrap: nowrap;
 }
@@ -710,18 +710,17 @@ span.formatLogoSchoolNameSection {
 @media  screen and  (max-width: 899px) {
 
 
-  //.smallWidthContainer {
-  //  padding-top: 4.5rem;
-  //}
+  /*.smallWidthContainer {*/
+  /*  padding-top: 4.5rem;}*/
 
-  section.schoolDetails {
+  /*section.schoolDetails {*/
 
-    padding-top: 0rem;
-  }
+  /*  padding-top: 0rem;*/
 
-  //.centerIMage{
-  //  display: none;
-  //}
+  /*}*/
+  /*.centerIMage{*/
+  /*  display: none;*/
+  /*}*/
 
 
 

@@ -2,19 +2,20 @@
   <div id="app">
 
 
+
 <!--    <LoadingScreen-->
 <!--        v-if = "loading"-->
 <!--    ></LoadingScreen>-->
 
 
 
-    <!--  <router-view v-slot="{ Component }">-->
-    <!--    <transition name="fade" mode="out-in">-->
-    <!--      <component :is="Component" />-->
-    <!--    </transition>-->
-    <!--  </router-view>-->
+      <router-view v-slot="{ Component }">
+        <transition name="fade" mode="out-in">
+          <component :is="Component" />
+        </transition>
+      </router-view>
 
-    <router-view></router-view>
+<!--    <router-view></router-view>-->
 
 
   </div>
@@ -28,6 +29,7 @@
 // import {useRoute} from "vue-router";
 
 
+
 export default {
   name: 'App',
   components: {
@@ -37,32 +39,33 @@ export default {
 
   },
   data() {
-    return {
-
-    }
+    return {}
   },
   computed: {
-    // loading() {
-    //   return this.$store.getters.loadingStatus;
-    // }
+
+
+
   },
-  mounted() {
+  created() {
 
-    // check the host name
-    //  alert(window.location.hostname)
+// alert("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+//     alert("Device Id and DevicE Os ---> " +  this.$device.client.name + " " + this.$device.client.version)
+//     alert("Device Name  ---> " +  this.$device.client.name)
+//     alert("Os version  ---> " + this.$device.machine.os_name)
+//     alert("---------------------------------------------------------------")
 
 
-    // console.log("mounted");
-    //
-    // const route = useRoute()
-    // //  generate id from url  and set it to id
-    // const id = route.params.id
-    // console.log("c% &&$$$$ ZZZZZZZZZZ id is " + id, "color: pink; font-size: 200px;");
-    //
-    //
-    // this.$store.dispatch("getCauseXdata" , id );
-  }
+    this.$store.commit('SET_DEVICE_ID',  JSON.stringify(this.$device.client.name + this.$device.client.version))
+
+    this.$store.commit('SET_DEVICE_NAME', JSON.stringify(this.$device.client.name))
+    this.$store.commit('SET_DEVICE_OS',  JSON.stringify(this.$device.client.name + this.$device.client.version))
+    this.$store.commit('SET_DEVICE_OS_VERSION', JSON.stringify(this.$device.machine.os_name))
+
+
+  },
+
 }
+
 </script>
 
 
@@ -95,7 +98,12 @@ nav {
 
 body{
   margin: 0;
-  font-family: Inter;
+  //font-family: Inter;
+  margin: 0;
+
+  font-family: "SF Pro Text";
+  font-size: 14px;
+  font-weight: 400;
 
 
 }

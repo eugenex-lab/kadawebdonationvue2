@@ -247,7 +247,7 @@ ul.formatList {
 .displayInline{
   display: inline-block;
    display: flex;
-  flex-direction: row
+  /*flex-direction: row*/
 }
 
 .column.col2 {
@@ -346,7 +346,7 @@ display: none;
     background-color: #143c83;
     padding-top: 3em;
     flex-wrap: nowrap;
-    align-content: start;
+    align-content: flex-start;
     align-items: stretch;
   }
 

@@ -263,10 +263,10 @@ export default {
 
                 /// send axios request to the server
                 axios.post("https://kada.identity.stage.wealthtech.ng/transaction/donation/public/collection/verification", {
-                  "deviceId": "string",
-                  "deviceName": "string",
-                  "deviceOS": "string",
-                  "osVersion": "string",
+                  "deviceId":  this.$store.getters.deviceId,
+                  "deviceName": this.$store.getters.deviceName,
+                  "deviceOS": this.$store.getters.deviceOs,
+                  "osVersion": this.$store.getters.deviceOsVersion,
                   "paymentId": response.transaction_id,
 
                   "paymentReference": response.tx_ref,

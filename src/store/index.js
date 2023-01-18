@@ -103,10 +103,19 @@ export default new Vuex.Store(
             minAmountValidation: '',
             showStripePayment: false,
             anonymousDonation: false,
+            deviceId: '',
+            deviceName: '',
+            deviceOsVersion: '',
+            deviceOs: '',
 
 
         },
         getters: {
+            deviceId: state => state.deviceId,
+            deviceName: state => state.deviceName,
+            deviceOs: state => state.deviceOs,
+            deviceOsVersion: state => state.deviceOsVersion,
+
             anonymousDonation: state => state.anonymousDonation,
             loadPageCheck: state => state.loadPageCheck,
             initSecKey: state => state.initStripeData.gatewaySecretKey,
@@ -151,6 +160,24 @@ export default new Vuex.Store(
 
         },
         mutations: {
+
+            SET_DEVICE_ID(state, payload) {
+                state.deviceId = payload;
+            },
+
+            SET_DEVICE_NAME(state, payload) {
+                state.deviceName = payload;
+            },
+
+            SET_DEVICE_OS(state, payload) {
+                state.deviceOs = payload;
+            },
+
+            SET_DEVICE_OS_VERSION(state, payload) {
+                state.deviceOsVersion = payload;
+            }
+            ,
+
             SET_ANONYMOUS_DONATION(state, payload) {
                 state.anonymousDonation = payload;
             },
@@ -341,10 +368,10 @@ export default new Vuex.Store(
                 console.log("%c response.data" + state.amountDonation.donationValue +
                     state.causeId + state.firstName.value + state.lastName.value + state.email.value);
                 axios.post('https://kada.identity.stage.wealthtech.ng/transaction/donation/public/collection/initialization', {
-                    "deviceId": "string",
-                    "deviceName": "string",
-                    "deviceOS": "string",
-                    "osVersion": "string",
+                    "deviceId":  state.deviceId,
+                    "deviceName": state.deviceName,
+                    "deviceOS": state.deviceOs,
+                    "osVersion": state.deviceOsVersion,
                     "donationAmount": state.amountDonation.donationValue,
                     "paymentChannel": "Stripe",
                     "currency": "USD",
@@ -402,10 +429,13 @@ export default new Vuex.Store(
                 axios.post('https://kada.identity.stage.wealthtech.ng/transaction/donation/public/collection/initialization', {
 
 
-                    "deviceId": "string",
-                    "deviceName": "string",
-                    "deviceOS": "string",
-                    "osVersion": "string",
+
+                    "deviceId":  state.deviceId,
+                    "deviceName": state.deviceName,
+                    "deviceOS": state.deviceOs,
+                    "osVersion": state.deviceOsVersion,
+
+
                     "donationAmount": state.amountDonation.donationValue,
                     "paymentChannel": "Flutterwave",
                     "currency": state.causeXData.responseContent.currency,
