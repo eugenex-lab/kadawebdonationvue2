@@ -191,9 +191,6 @@ header {
 
 @media  screen and  (max-width: 899px) {
 
-  body{}
-
-
 
   .mobileHeader[data-v-9778edae] {
     color: #461212;
@@ -246,9 +243,6 @@ header {
     margin-top: -0.02rem;
   }
 
-}
-
-@media  screen and  (max-width: 899px) {
    .mobileHeader {
     color: hsl(0deg 59% 17%);
     text-align: center;
@@ -310,17 +304,7 @@ img.appLOgo {
 
 }
 
-.clickPress{
-  display: inline-block;
 
-  background: #f7fbff;
-  color: #461212;
-  cursor: pointer;
-  &:hover{
-    background: #461212;
-    color: #f7fbff;
-  }
-}
 
 
 
