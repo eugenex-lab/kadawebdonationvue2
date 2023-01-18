@@ -168,7 +168,7 @@ header {
     top: 0.2em;
   }
 
-  .mobileHeader .kadaLogoHomePage[data-v-9778edae][data-v-9778edae][data-v-9778edae] {
+  .mobileHeader .kadaLogoHomePage {
     Width: 10%;
     /* Height: 53%; */
     float: left;
