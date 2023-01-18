@@ -440,7 +440,7 @@ a.button {
 
   a.button[data-v-26c494ba] {
     display: flex;
-    padding-left: 1.3rem;
+    padding-left: 4.3rem;
     padding-top: 0rem;
   }
 

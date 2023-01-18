@@ -9,13 +9,13 @@
 
 
 
-      <router-view v-slot="{ Component }">
-        <transition name="fade" mode="out-in">
-          <component :is="Component" />
-        </transition>
-      </router-view>
+<!--      <router-view v-slot="{ Component }">-->
+<!--        <transition name="fade" mode="out-in">-->
+<!--          <component :is="Component" />-->
+<!--        </transition>-->
+<!--      </router-view>-->
 
-<!--    <router-view></router-view>-->
+    <router-view></router-view>
 
 
   </div>
@@ -69,7 +69,7 @@ export default {
 </script>
 
 
-<style lang="scss">
+<style lang="scss" >
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -78,27 +78,13 @@ export default {
   color: #2c3e50;
 }
 
-//input[type=text] {
-//  font-family: Inter;
-//}
 
 
-nav {
-  padding: 30px;
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
 
 body{
   margin: 0;
-  //font-family: Inter;
+
   margin: 0;
 
   font-family: "SF Pro Text";
@@ -108,15 +94,6 @@ body{
 
 }
 
-/// minimum of 900px width
-@media screen and (max-width: 900px) {
-
-  the-footer{
-    display: none;
-  }
-
-
-}
 
 
 
