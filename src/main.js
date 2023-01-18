@@ -13,7 +13,7 @@ import SkeletonCards from 'vue-ultimate-skeleton-cards'
 
 
 
-Vue.config.productionTip = false
+Vue.config.productionTip = true
 
 
 // store.subscribe((mutation, state) => {
