@@ -5,7 +5,7 @@
     </div>
     <div v-show="!this.$store.getters.errorPage" class="mobileHeaderText">
 
-        Let's Build Togetherr
+        Let's Build Together
     </div>
 
     <div   v-show="this.$store.getters.errorPage" class="mobileHeaderError logoAdded"   >
